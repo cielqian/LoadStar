@@ -1,0 +1,6 @@
+com/ciel/pocket/auth/config/WebSecurityConfig.class
+com/ciel/pocket/auth/config/OAuth2AuthorizationConfig$ResourceServer.class
+com/ciel/pocket/auth/controller/UserController.class
+com/ciel/pocket/auth/domain/User.class
+com/ciel/pocket/auth/AuthApplication.class
+com/ciel/pocket/auth/service/security/MongoUserDetailService.class

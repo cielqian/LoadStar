@@ -1,0 +1,32 @@
+spring:
+  data:
+    mongodb:
+      host: 101.200.55.76
+      database: pocket-link
+      port: 27137
+  application:
+    name: link-service
+  zipkin:
+    enabled: true
+    base-url: http://101.200.55.76:9411
+  sleuth:
+    sampler:
+      percentage: 1.0
+      probability: 1.0
+security:
+  oauth2:
+    client:
+      scope: server
+      client-id: user-service
+      grant-type: client_credentials
+      accessTokenUri: http://gateway:9080/auth-service/oauth/token
+      client-secret: POCKET-USER-SERVICE
+    resource:
+      user-info-uri: http://gateway:9080/auth-service/api/users/current
+      prefer-token-info: false
+server:
+  port: 9083
+eureka:
+  client:
+    service-url:
+      defaultZone: http://registry:9001/eureka/
