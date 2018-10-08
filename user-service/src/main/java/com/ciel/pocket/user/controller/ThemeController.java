@@ -26,14 +26,14 @@ public class ThemeController {
     @ApiOperation("查询当前用户主题")
     @RequestMapping(value = "/current",method = RequestMethod.GET)
     public ReturnModel<Theme> current(Principal principal){
-        Theme theme = themeService.queryByUserId(AuthContext.getUserDetail(principal).getId());
+        Theme theme = themeService.queryByAccountId(AuthContext.getUserDetail(principal).getAccountId());
         return ReturnUtils.ok("查询成功",theme);
     }
 
     @ApiOperation("更新显示方式")
     @RequestMapping(value = "/listType",method = RequestMethod.POST)
     public ReturnModel listTypeEnum(Principal principal, @RequestBody UpdateListType updateListType){
-        themeService.updateListType(AuthContext.getUserDetail(principal).getId(),
+        themeService.updateListType(AuthContext.getUserDetail(principal).getAccountId(),
                 updateListType.getListType());
         return ReturnUtils.ok("更新成功");
     }

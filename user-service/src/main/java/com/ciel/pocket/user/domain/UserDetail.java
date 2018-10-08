@@ -6,8 +6,9 @@ import java.util.UUID;
 
 @Data
 public class UserDetail {
-    private Long id;
+    private String accountId;
 
     private String userName;
+
 
 }

@@ -3,9 +3,9 @@ package com.ciel.pocket.user.service.impl;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
-import com.ciel.pocket.user.domain.Account;
-import com.ciel.pocket.user.domain.Theme;
 import com.ciel.pocket.user.domain.User;
+import com.ciel.pocket.user.domain.Theme;
+import com.ciel.pocket.user.dto.input.CreateUser;
 import com.ciel.pocket.user.infrastructure.enums.ListTypeEnum;
 import com.ciel.pocket.user.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.pocket.user.repository.AccountRepository;
@@ -34,20 +34,20 @@ public class AccountServiceImpl implements AccountService {
     AuthServiceClient authServiceClient;
 
     @Override
-    public Account queryById(Long id) {
-        Account account = accountRepository.findById(id).orElseThrow(() -> new ObjectNotExistingException("用户不存在"));
-        return account;
+    public User queryById(Long id) {
+        User user = accountRepository.findById(id).orElseThrow(() -> new ObjectNotExistingException("用户不存在"));
+        return user;
     }
 
     @Override
-    public Account create(User user) {
-        Account existing = accountRepository.findByUsername(user.getUsername());
+    public User create(CreateUser user) {
+        User existing = accountRepository.findByUsername(user.getUsername());
         Assert.isNull(existing, "用户已存在");
 
         ReturnModel<String> remoteResult = authServiceClient.createUser(user);
         ReturnUtils.checkSuccess(remoteResult);
 
-        Account account = new Account();
+        User account = new User();
         account.setAccountId(remoteResult.getData());
         account.setNickname(user.getNickname());
         account.setUsername(user.getUsername());
@@ -66,13 +66,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void delete(Long userId) {
-        Account account = queryById(userId);
-        authServiceClient.deleteUser(account.getUsername());
-        accountRepository.deleteById(account.getId());
+        User user = queryById(userId);
+        authServiceClient.deleteUser(user.getUsername());
+        accountRepository.deleteById(user.getId());
     }
 
     @Override
-    public Account findByName(String username) {
+    public User findByName(String username) {
         return accountRepository.findByUsername(username);
     }
 

@@ -1,0 +1,2 @@
+com\ciel\pocket\infrastructure\domain\QBaseEntity.class
+com\ciel\pocket\infrastructure\repositories\QueryDslBaseRepository.class

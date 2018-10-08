@@ -1,0 +1,6 @@
+spring:
+  data:
+    mongodb:
+      host: 101.200.55.76
+      database: pocket-link
+      port: 27137

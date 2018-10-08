@@ -1,5 +1,6 @@
 package com.ciel.pocket.user.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import com.ciel.pocket.user.infrastructure.enums.ListTypeEnum;
 import lombok.Data;
@@ -11,9 +12,10 @@ import javax.persistence.*;
 @Data
 public class Theme extends BaseEntity {
 
+    @JSONField(serialize = false)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    Account user;
+    User user;
 
     @Column(name = "userId", insertable = false, updatable = false)
     Long userId;

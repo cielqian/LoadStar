@@ -1,5 +1,7 @@
 package com.ciel.pocket.user;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import javax.persistence.EntityManager;
 
 @SpringBootApplication
 @EnableOAuth2Client
@@ -36,5 +40,11 @@ public class UserApplication {
                         .allowedHeaders("*");
             }
         };
+    }
+
+    @Bean
+    @Autowired
+    public JPAQueryFactory jpaQuery(EntityManager entityManager) {
+        return new JPAQueryFactory(entityManager);
     }
 }

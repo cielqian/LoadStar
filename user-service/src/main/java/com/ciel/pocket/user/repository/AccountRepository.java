@@ -1,13 +1,14 @@
 package com.ciel.pocket.user.repository;
 
-import com.ciel.pocket.infrastructure.repositories.BaseRepository;
-import com.ciel.pocket.user.domain.Account;
+import com.ciel.pocket.infrastructure.repositories.QueryDslBaseRepository;
+import com.ciel.pocket.user.domain.User;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AccountRepository extends BaseRepository<Account, Long> {
+public interface AccountRepository extends QueryDslBaseRepository<User, Long> {
 
-    Account findByUsername(String username);
+    User findByUsername(String username);
+
 
 }

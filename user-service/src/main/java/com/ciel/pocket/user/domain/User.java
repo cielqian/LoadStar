@@ -1,24 +1,27 @@
 package com.ciel.pocket.user.domain;
 
+import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.Date;
+import java.util.List;
 
-/**
- * @Author Ciel Qian
- * @CreateDate 2018/8/15
- * @Comment
- */
+@Entity
+@Table
 @Data
-public class User {
-    @NotEmpty(message = "用户名不能为空")
+public class User extends BaseEntity {
+
+    String accountId;
+
     String username;
 
-    @NotEmpty(message = "密码不能为空")
-    String password;
-
-    @NotEmpty(message = "用户昵称不能为空")
     String nickname;
+
+    Date lastSeen;
+
+    @OneToMany(mappedBy = "user")
+    List<Theme> themes;
 }
