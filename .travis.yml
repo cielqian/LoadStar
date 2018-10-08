@@ -1,0 +1,50 @@
+sudo: required
+services:
+  - docker
+language: java
+jdk: oraclejdk8
+
+branches:
+  only:
+  - master
+
+env:
+  global:
+    - COMMIT=${TRAVIS_COMMIT::7}
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+  #TAG
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+
+  # REGISTRY
+  - export REGISTRY=cielqian/pocket-registry
+  - docker build -t $REGISTRY:$COMMIT ./registry
+  - docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
+  - docker push $REGISTRY
+
+  # GATEWAY
+  - export GATEWAY=cielqian/pocket-gateway
+  - docker build -t $GATEWAY:$COMMIT ./gateway
+  - docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
+  - docker push $GATEWAY
+
+  # AUTH SERVICE
+  - export AUTH_SERVICE=cielqian/pocket-auth-service
+  - docker build -t $AUTH_SERVICE:$COMMIT ./auth-service
+  - docker tag $AUTH_SERVICE:$COMMIT $AUTH_SERVICE:$TAG
+  - docker push $AUTH_SERVICE
+
+  # USER SERVICE
+  - export USER_SERVICE=cielqian/pocket-user-service
+  - docker build -t $USER_SERVICE:$COMMIT ./user-service
+  - docker tag $USER_SERVICE:$COMMIT $USER_SERVICE:$TAG
+  - docker push $USER_SERVICE
+
+  # LINK SERVICE
+  - export LINK_SERVICE=cielqian/pocket-link-service
+  - docker build -t $LINK_SERVICE:$COMMIT ./link-service
+  - docker tag $LINK_SERVICE:$COMMIT $LINK_SERVICE:$TAG
+  - docker push $LINK_SERVICE

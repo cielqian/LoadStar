@@ -1,0 +1,80 @@
+version: "3"
+services:
+ 
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27137:27017
+      
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on: 
+      - mongo
+
+  mysql:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    ports: 
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456!
+    
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    ports:
+      - 9411:9411
+
+  registry:
+    image: cielqian/pocket-registry
+    restart: always
+    ports:
+      - 9001:9001
+    depends_on: 
+      - mongo
+      - mysql
+
+  gateway:
+    image: cielqian/pocket-gateway
+    restart: always
+    ports:
+      - 9080:9080
+    depends_on: 
+      - registry
+
+
+  auth-service:
+    image: cielqian/pocket-auth-service
+    restart: always
+    ports:
+      - 9081:9081
+    depends_on: 
+      - registry
+
+  user-service:
+    image: cielqian/pocket-user-service
+    restart: always
+    ports:
+      - 9082:9082
+    depends_on: 
+      - registry
+
+  link-service:
+    image: cielqian/pocket-link-service
+    restart: always
+    ports:
+      - 9083:9083
+    depends_on: 
+      - registry
+
+  web-container:
+    image: cielqian/pocket-web
+    restart: always
+    ports:
+      - 80:80
+      
