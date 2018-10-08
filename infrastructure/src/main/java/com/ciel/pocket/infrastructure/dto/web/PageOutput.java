@@ -2,6 +2,7 @@ package com.ciel.pocket.infrastructure.dto.web;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @Comment
  */
 @Data
+@NoArgsConstructor
 public class PageOutput<T> {
     @ApiModelProperty(value = "总数")
     long total;
@@ -27,6 +29,9 @@ public class PageOutput<T> {
     @ApiModelProperty(value = "数据")
     List<T> items;
 
-
-
+    public PageOutput(List<T> items, long total, long totalPage) {
+        this.total = total;
+        this.totalPage = totalPage;
+        this.items = items;
+    }
 }

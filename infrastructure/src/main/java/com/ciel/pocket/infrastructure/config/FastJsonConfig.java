@@ -20,13 +20,7 @@ import java.util.List;
 public class FastJsonConfig {
     @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters(){
-        /**
-         * 创建FastJson信息转换对象
-         */
         FastJsonHttpMessageConverter fastJsonHttpMessageConverter = new FastJsonHttpMessageConverter();
-        /**
-         * 创建Fastjosn对象并设定序列化规则
-         */
         com.alibaba.fastjson.support.config.FastJsonConfig fastJsonConfig = new com.alibaba.fastjson.support.config.FastJsonConfig();
         fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat,
                 SerializerFeature.WriteMapNullValue,
@@ -34,22 +28,12 @@ public class FastJsonConfig {
                 SerializerFeature.WriteNullListAsEmpty,
                 SerializerFeature.WriteNullStringAsEmpty
         );
-        /**
-         * 中文乱码解决方案
-         */
         List<MediaType> mediaTypes = new ArrayList<>();
-        /**
-         * 设定json格式且编码为UTF-8
-         */
         mediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
 
         fastJsonHttpMessageConverter.setSupportedMediaTypes(mediaTypes);
-        /**
-         * 规则赋予转换对象
-         */
         fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);
 
         return new HttpMessageConverters(fastJsonHttpMessageConverter);
-
     }
 }

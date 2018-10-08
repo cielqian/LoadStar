@@ -1,6 +1,7 @@
 package com.ciel.pocket.user.service.impl;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.service.BaseCrudService;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
 import com.ciel.pocket.user.domain.User;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @Author Ciel Qian
@@ -23,7 +25,7 @@ import java.util.Date;
  * @Comment
  */
 @Service
-public class AccountServiceImpl implements AccountService {
+public class AccountServiceImpl extends BaseCrudService<User, Long> implements AccountService {
     @Autowired
     AccountRepository accountRepository;
 
@@ -35,7 +37,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public User queryById(Long id) {
-        User user = accountRepository.findById(id).orElseThrow(() -> new ObjectNotExistingException("用户不存在"));
+        User user = findOne(id).orElseThrow(() -> new ObjectNotExistingException("用户不存在"));
         return user;
     }
 
@@ -67,8 +69,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(Long userId) {
         User user = queryById(userId);
-        authServiceClient.deleteUser(user.getUsername());
-        accountRepository.deleteById(user.getId());
+        ReturnModel remoteResult = authServiceClient.deleteUser(user.getUsername());
+        ReturnUtils.checkSuccess(remoteResult);
+
+        repository.deleteById(user.getId());
     }
 
     @Override
