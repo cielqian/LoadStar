@@ -1,6 +1,8 @@
 package com.ciel.pocket.user.service.impl;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.enums.Language;
+import com.ciel.pocket.infrastructure.repositories.BaseRepository;
 import com.ciel.pocket.infrastructure.service.BaseCrudService;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
@@ -36,6 +38,11 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
     AuthServiceClient authServiceClient;
 
     @Override
+    protected BaseRepository<User, Long> getRepository() {
+        return accountRepository;
+    }
+
+    @Override
     public User queryById(Long id) {
         User user = findOne(id).orElseThrow(() -> new ObjectNotExistingException("用户不存在"));
         return user;
@@ -59,6 +66,7 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
 
         Theme theme = new Theme();
         theme.setListTypeEnum(ListTypeEnum.Card);
+        theme.setLanguage(Language.en);
         theme.setUser(account);
 
         themeRepository.save(theme);
@@ -72,7 +80,7 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
         ReturnModel remoteResult = authServiceClient.deleteUser(user.getUsername());
         ReturnUtils.checkSuccess(remoteResult);
 
-        repository.deleteById(user.getId());
+        getRepository().deleteById(user.getId());
     }
 
     @Override

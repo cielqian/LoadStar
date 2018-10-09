@@ -3,6 +3,7 @@ package com.ciel.pocket.user.controller;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.domain.Theme;
+import com.ciel.pocket.user.dto.input.UpdateLanguage;
 import com.ciel.pocket.user.dto.input.UpdateListType;
 import com.ciel.pocket.user.infrastructure.utils.AuthContext;
 import com.ciel.pocket.user.service.ThemeService;
@@ -35,6 +36,14 @@ public class ThemeController {
     public ReturnModel listTypeEnum(Principal principal, @RequestBody UpdateListType updateListType){
         themeService.updateListType(AuthContext.getUserDetail(principal).getAccountId(),
                 updateListType.getListType());
+        return ReturnUtils.ok("更新成功");
+    }
+
+    @ApiOperation("更新语言")
+    @RequestMapping(value = "/language",method = RequestMethod.POST)
+    public ReturnModel changeLanguage(Principal principal, @RequestBody UpdateLanguage language){
+        themeService.changeLanguage(AuthContext.getUserDetail(principal).getAccountId(),
+                language.getLanguage());
         return ReturnUtils.ok("更新成功");
     }
 }

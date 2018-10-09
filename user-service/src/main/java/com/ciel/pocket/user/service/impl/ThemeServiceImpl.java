@@ -1,5 +1,6 @@
 package com.ciel.pocket.user.service.impl;
 
+import com.ciel.pocket.infrastructure.enums.Language;
 import com.ciel.pocket.user.domain.QTheme;
 import com.ciel.pocket.user.domain.QUser;
 import com.ciel.pocket.user.domain.Theme;
@@ -32,6 +33,13 @@ public class ThemeServiceImpl implements ThemeService {
     public void updateListType(String accountId, ListTypeEnum listTypeEnum) {
         Theme theme = queryByAccountId(accountId);
         theme.setListTypeEnum(listTypeEnum);
+        themeRepository.save(theme);
+    }
+
+    @Override
+    public void changeLanguage(String accountId, Language language) {
+        Theme theme = queryByAccountId(accountId);
+        theme.setLanguage(language);
         themeRepository.save(theme);
     }
 }

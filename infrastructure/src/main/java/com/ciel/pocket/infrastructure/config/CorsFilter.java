@@ -1,4 +1,4 @@
-package com.ciel.pocket.user.config;
+package com.ciel.pocket.infrastructure.config;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -9,10 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author cielqian
+ * @email qianhong91@outlook.com
+ * @date 2018/10/9 9:10
+ */
+
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class SimpleCorsFilter implements Filter{
-    public SimpleCorsFilter() {
+public class CorsFilter implements Filter {
+    public CorsFilter() {
     }
 
     @Override

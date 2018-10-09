@@ -2,6 +2,7 @@ package com.ciel.pocket.user.domain;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ciel.pocket.infrastructure.domain.BaseEntity;
+import com.ciel.pocket.infrastructure.enums.Language;
 import com.ciel.pocket.user.infrastructure.enums.ListTypeEnum;
 import lombok.Data;
 
@@ -21,4 +22,6 @@ public class Theme extends BaseEntity {
     Long userId;
 
     ListTypeEnum listTypeEnum;
+
+    Language language;
 }

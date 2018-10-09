@@ -1,21 +1,17 @@
 package com.ciel.pocket.user;
 
-import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import javax.persistence.EntityManager;
 
 @SpringBootApplication
 @EnableOAuth2Client
@@ -23,6 +19,9 @@ import javax.persistence.EntityManager;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableJpaAuditing
+@Import({com.ciel.pocket.infrastructure.config.QueryDslConfig.class,
+com.ciel.pocket.infrastructure.config.CorsFilter.class,
+com.ciel.pocket.infrastructure.config.FastJsonConfig.class,})
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);
@@ -40,11 +39,5 @@ public class UserApplication {
                         .allowedHeaders("*");
             }
         };
-    }
-
-    @Bean
-    @Autowired
-    public JPAQueryFactory jpaQuery(EntityManager entityManager) {
-        return new JPAQueryFactory(entityManager);
     }
 }

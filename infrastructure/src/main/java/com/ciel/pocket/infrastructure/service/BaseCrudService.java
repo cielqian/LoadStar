@@ -20,43 +20,43 @@ import java.util.Optional;
  */
 
 public abstract class BaseCrudService<T extends BaseEntity, ID extends Serializable> implements ICrudService<T, ID>{
-    @Autowired
-    protected BaseRepository<T, ID> repository;
+
+    protected abstract BaseRepository<T, ID> getRepository();
 
     @Override
     public T save(T element) {
-        return repository.save(element);
+        return getRepository().save(element);
     }
 
     @Override
     public boolean exists(ID id) {
-        return repository.existsById(id);
+        return getRepository().existsById(id);
     }
 
     @Override
     public Optional<T> findOne(ID id) {
-        return repository.findById(id);
+        return getRepository().findById(id);
     }
 
     @Override
     public List<T> findAll() {
-        return (List<T>)repository.findAll();
+        return (List<T>)getRepository().findAll();
     }
 
     @Override
     public void delete(ID id) {
-        repository.deleteById(id);
+        getRepository().deleteById(id);
     }
 
     @Override
     public void delete(T element) {
-        repository.delete(element);
+        getRepository().delete(element);
     }
 
     @Override
     public PageOutput<T> findPaged(PageInput pageInput) {
         PageRequest pageRequest = PageRequest.of(pageInput.getCurrentPage(), pageInput.getPageSize());
-        Page<T> result = repository.findAll(pageRequest);
+        Page<T> result = getRepository().findAll(pageRequest);
         return new PageOutput<T>(result.getContent(), result.getTotalElements(), result.getTotalPages());
     }
 }
