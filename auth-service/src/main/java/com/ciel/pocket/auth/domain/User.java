@@ -1,26 +1,30 @@
 package com.ciel.pocket.auth.domain;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
-import javax.annotation.Generated;
+import javax.persistence.*;
 import java.util.Collection;
-import java.util.UUID;
 
-@Document(collection = "users")
+@Table
+@Entity
+@RequiredArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Indexed
+    @NonNull
     private String username;
 
+    @NonNull
     private String password;
 
     public void setUsername(String username) {
@@ -37,15 +41,9 @@ public class User implements UserDetails {
 
     public User newUser(String username, String password){
         User user = new User();
-        user.setId(UUID.randomUUID().toString().replaceAll("-", ""));
         user.setUsername(username);
         user.setPassword(password);
         return user;
-    }
-
-    public User generateId(){
-        this.setId(UUID.randomUUID().toString().replaceAll("-", ""));
-        return this;
     }
 
     @Override
@@ -83,11 +81,11 @@ public class User implements UserDetails {
         return true;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 }

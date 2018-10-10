@@ -10,6 +10,9 @@ spring:
     sampler:
       percentage: 1.0
       probability: 1.0
+  jpa:
+    hibernate:
+      ddl-auto: update
 server:
   port: 9081
 eureka:

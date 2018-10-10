@@ -1,13 +1,12 @@
 package com.ciel.pocket.auth.service.impl;
 
 import com.ciel.pocket.auth.domain.User;
-import com.ciel.pocket.auth.infrastructure.exceptions.ObjectExistingException;
-import com.ciel.pocket.auth.infrastructure.exceptions.ObjectNotExistingException;
-import com.ciel.pocket.auth.repository.UserRepository1;
+import com.ciel.pocket.auth.repository.UserRepository;
 import com.ciel.pocket.auth.service.UserService;
+import com.ciel.pocket.infrastructure.exceptions.ObjectExistingException;
+import com.ciel.pocket.infrastructure.exceptions.ObjectNotExistingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.Optional;
 
@@ -19,16 +18,15 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService{
     @Autowired
-    UserRepository1 userRepository;
+    UserRepository userRepository;
 
     @Override
-    public void createUser(User user) {
+    public User createUser(User user) {
         Optional<User> existing = queryUser(user.getUsername());
         if (existing.isPresent())
             throw new ObjectExistingException("账号已存在");
-        user.generateId()
-            .encodePassword();
-        userRepository.save(user);
+        user.encodePassword();
+        return userRepository.save(user);
     }
 
     @Override

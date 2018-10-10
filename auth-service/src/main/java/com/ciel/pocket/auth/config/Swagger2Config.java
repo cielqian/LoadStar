@@ -32,7 +32,7 @@ public class Swagger2Config {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("认证服务")
-                .description("书签服务")
+                .description("认证服务")
                 .contact(new Contact("ciel", "", "qianhong91@outlook.com"))
                 .version("1.0")
                 .build();

@@ -1,6 +1,14 @@
+com\ciel\pocket\auth\repository\UserRepository.class
+com\ciel\pocket\auth\infrastructure\exceptions\ExceptionControllerAdvice.class
+com\ciel\pocket\auth\config\OAuth2ResourceConfig.class
+com\ciel\pocket\auth\service\UserService.class
 com\ciel\pocket\auth\config\WebSecurityConfig.class
 com\ciel\pocket\auth\controller\UserController.class
 com\ciel\pocket\auth\service\security\MongoUserDetailService.class
-com\ciel\pocket\auth\config\OAuth2AuthorizationConfig$ResourceServer.class
+com\ciel\pocket\auth\domain\QUser.class
 com\ciel\pocket\auth\AuthApplication.class
+com\ciel\pocket\auth\config\Swagger2Config.class
+com\ciel\pocket\auth\service\impl\UserServiceImpl.class
+com\ciel\pocket\auth\config\OAuth2AuthorizationConfig.class
 com\ciel\pocket\auth\domain\User.class
+com\ciel\pocket\auth\dto\input\CreateUser.class
