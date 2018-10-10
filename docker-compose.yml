@@ -33,6 +33,7 @@ services:
   registry:
     image: cielqian/pocket-registry
     restart: always
+    pull: true
     ports:
       - 9001:9001
     depends_on: 
@@ -42,6 +43,7 @@ services:
   gateway:
     image: cielqian/pocket-gateway
     restart: always
+    pull: true
     ports:
       - 9080:9080
     depends_on: 
@@ -51,6 +53,7 @@ services:
   auth-service:
     image: cielqian/pocket-auth-service
     restart: always
+    pull: true
     ports:
       - 9081:9081
     depends_on: 
@@ -59,6 +62,7 @@ services:
   user-service:
     image: cielqian/pocket-user-service
     restart: always
+    pull: true
     ports:
       - 9082:9082
     depends_on: 
@@ -67,6 +71,7 @@ services:
   link-service:
     image: cielqian/pocket-link-service
     restart: always
+    pull: true
     ports:
       - 9083:9083
     depends_on: 
@@ -75,6 +80,7 @@ services:
   web-container:
     image: cielqian/pocket-web
     restart: always
+    pull: true
     ports:
-      - 80:80
+      - 81:80
       

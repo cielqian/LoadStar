@@ -35,21 +35,9 @@ import javax.crypto.KeyGenerator;
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter{
-//
-//    @Autowired
-//    MongoOAuth2AccessTokenRepository mongoOAuth2AccessTokenRepository;
-//
-//    @Autowired
-//    MongoOAuth2RefreshTokenRepository mongoOAuth2RefreshTokenRepository;
-//
-//    AuthenticationKeyGenerator authenticationKeyGenerator = new DefaultAuthenticationKeyGenerator();
-
-//    TokenStore tokenStore = new MongoTokenStore(mongoOAuth2AccessTokenRepository, mongoOAuth2RefreshTokenRepository, authenticationKeyGenerator);
 
     @Autowired
     MongoTokenStore mongoTokenStore;
-
-    private TokenStore tokenStore = new InMemoryTokenStore();
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -76,6 +64,11 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .withClient("user-service")
                 .secret("POCKET-USER-SERVICE")
                 .authorizedGrantTypes("client_credentials", "refresh_token")
+                .scopes("server")
+                .and()
+                .withClient("link-service")
+                .secret("POCKET-LINK-SERVICE")
+                .authorizedGrantTypes("client_credentials", "refresh_token")
                 .scopes("server");
     }
 
@@ -97,7 +90,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                     .authorizeRequests()
                     .antMatchers("/swagger-ui.html","/swagger-resources/**", "/v2/api-docs/**").permitAll()
                     .antMatchers("/**").authenticated()
-//            .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
                     .and().csrf().disable();
         }
 

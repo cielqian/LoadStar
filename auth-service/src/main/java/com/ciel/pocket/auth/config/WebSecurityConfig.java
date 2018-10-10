@@ -22,24 +22,12 @@ public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
     MongoUserDetailService userDetailService;
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-//        http.anonymous()
-////                .and()
-////            .authorizeRequests()
-////                .antMatchers("/v2/api-docs/**").permitAll()
-//////                .anyRequest().permitAll()
-//////            .antMatchers(HttpMethod.OPTIONS, "/oauth/token").permitAll()
-////            .and().csrf().disable();
-        super.configure(http);
-    }
-
-    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailService)
         .passwordEncoder(new BCryptPasswordEncoder());
     }
 
-    @Override
+//    @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
