@@ -15,7 +15,7 @@ public class AuthContext {
         Object userName = detail.get("username");
 
         UserDetail userDetail = new UserDetail();
-        userDetail.setAccountId(id.toString());
+        userDetail.setAccountId(Long.parseLong(id.toString()));
         userDetail.setUserName(userName.toString());
 
         return userDetail;

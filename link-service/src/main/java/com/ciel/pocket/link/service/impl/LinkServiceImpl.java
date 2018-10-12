@@ -29,12 +29,12 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public void delete(String linkId) {
+    public void delete(Long linkId) {
         linkRepository.deleteById(linkId);
     }
 
     @Override
-    public void visit(String linkId) {
+    public void visit(Long linkId) {
         Optional<Link> existing = linkRepository.findById(linkId);
         Link  link= existing.get();
         Assert.notNull(link, "链接不存在");

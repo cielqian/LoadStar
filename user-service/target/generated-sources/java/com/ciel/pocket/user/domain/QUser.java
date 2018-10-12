@@ -22,7 +22,7 @@ public class QUser extends EntityPathBase<User> {
 
     public final com.ciel.pocket.infrastructure.domain.QBaseEntity _super = new com.ciel.pocket.infrastructure.domain.QBaseEntity(this);
 
-    public final StringPath accountId = createString("accountId");
+    public final NumberPath<Long> accountId = createNumber("accountId", Long.class);
 
     //inherited
     public final DateTimePath<java.util.Date> createTime = _super.createTime;

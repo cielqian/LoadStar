@@ -33,6 +33,8 @@ public class QTheme extends EntityPathBase<Theme> {
     //inherited
     public final BooleanPath isDelete = _super.isDelete;
 
+    public final EnumPath<com.ciel.pocket.infrastructure.enums.Language> language = createEnum("language", com.ciel.pocket.infrastructure.enums.Language.class);
+
     public final EnumPath<com.ciel.pocket.user.infrastructure.enums.ListTypeEnum> listTypeEnum = createEnum("listTypeEnum", com.ciel.pocket.user.infrastructure.enums.ListTypeEnum.class);
 
     //inherited

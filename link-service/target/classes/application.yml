@@ -3,6 +3,10 @@ spring:
     active: dev
   application:
     name: link-service
+  jpa:
+      hibernate:
+        ddl-auto: update
+      show-sql: true
   zipkin:
     enabled: true
     base-url: http://101.200.55.76:9411

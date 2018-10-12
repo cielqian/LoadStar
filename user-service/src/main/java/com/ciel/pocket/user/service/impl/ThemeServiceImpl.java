@@ -20,7 +20,7 @@ public class ThemeServiceImpl implements ThemeService {
     JPAQueryFactory queryFactory;
 
     @Override
-    public Theme queryByAccountId(String accountId) {
+    public Theme queryByAccountId(Long accountId) {
         QTheme _theme = QTheme.theme;
         QUser _user = QUser.user;
         return queryFactory.selectFrom(_theme)
@@ -30,14 +30,14 @@ public class ThemeServiceImpl implements ThemeService {
     }
 
     @Override
-    public void updateListType(String accountId, ListTypeEnum listTypeEnum) {
+    public void updateListType(Long accountId, ListTypeEnum listTypeEnum) {
         Theme theme = queryByAccountId(accountId);
         theme.setListTypeEnum(listTypeEnum);
         themeRepository.save(theme);
     }
 
     @Override
-    public void changeLanguage(String accountId, Language language) {
+    public void changeLanguage(Long accountId, Language language) {
         Theme theme = queryByAccountId(accountId);
         theme.setLanguage(language);
         themeRepository.save(theme);

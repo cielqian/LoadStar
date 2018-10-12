@@ -10,9 +10,9 @@ import java.util.UUID;
 public interface LinkService {
     Long create(Link link);
 
-    void delete(String linkId);
+    void delete(Long linkId);
 
-    void visit(String linkId);
+    void visit(Long linkId);
 
     PageableListModel<Link> queryList(Long accountId);
 

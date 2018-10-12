@@ -10,7 +10,6 @@ com\ciel\pocket\user\domain\UserDetail.class
 com\ciel\pocket\user\infrastructure\exceptions\ExceptionControllerAdvice.class
 com\ciel\pocket\user\client\model\CreateUserReturnModel.class
 com\ciel\pocket\user\UserApplication$1.class
-com\ciel\pocket\user\config\SimpleCorsFilter.class
 com\ciel\pocket\user\domain\QUser.class
 com\ciel\pocket\user\service\security\CustomUserInfoTokenServices.class
 com\ciel\pocket\user\infrastructure\exceptions\ObjectNotExistingException.class

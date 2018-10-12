@@ -40,7 +40,7 @@ public class LinkController {
     @ApiOperation("浏览链接")
     @ApiImplicitParam(name = "linkId", value = "链接Id")
     @RequestMapping(path = "/{linkId}/visit", method = RequestMethod.PUT)
-    public ReturnModel visitLink(@PathVariable(name = "linkId") String linkId){
+    public ReturnModel visitLink(@PathVariable(name = "linkId") Long linkId){
         linkService.visit(linkId);
         return ReturnModel.OK();
     }
@@ -56,8 +56,12 @@ public class LinkController {
     @ApiOperation("删除链接")
     @ApiParam(name = "linkId", value = "链接ID")
     @RequestMapping(path = "/{linkId}", method = RequestMethod.DELETE)
-    public ReturnModel deleteLink(@PathVariable(name = "linkId") String linkId){
+    public ReturnModel deleteLink(@PathVariable(name = "linkId") Long linkId){
         linkService.delete(linkId);
         return ReturnModel.OK();
     }
+
+//    public ReturnModel upLink(){
+//
+//    }
 }
