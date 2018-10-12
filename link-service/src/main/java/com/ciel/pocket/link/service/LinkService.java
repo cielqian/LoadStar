@@ -14,6 +14,12 @@ public interface LinkService {
 
     void visit(Long linkId);
 
+    void up(Long linkId);
+
+    void down(Long linkId);
+
+    Link query(Long linkId);
+
     PageableListModel<Link> queryList(Long accountId);
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);

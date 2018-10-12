@@ -14,7 +14,6 @@ import org.springframework.util.Assert;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class LinkServiceImpl implements LinkService {
@@ -23,13 +22,21 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public Long create(Link link) {
+        Integer totalCount = linkRepository.countByUserId(link.getUserId());
+
+        link.setSortIndex(totalCount + 1);
         link.setCreateTime(new Date());
         linkRepository.save(link);
+
         return link.getId();
     }
 
     @Override
     public void delete(Long linkId) {
+        Link link = query(linkId);
+
+        linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
+
         linkRepository.deleteById(linkId);
     }
 
@@ -46,9 +53,46 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
+    public void up(Long linkId) {
+        Link link = query(linkId);
+        if (link.getSortIndex() == 1){
+            return;
+        }
+
+        Link preLink = linkRepository.findByUserIdEqualsAndSortIndexEquals(link.getUserId(), link.getSortIndex() - 1);
+        link.setSortIndex(link.getSortIndex() - 1);
+        preLink.setSortIndex(preLink.getSortIndex() + 1);
+
+        linkRepository.save(link);
+        linkRepository.save(preLink);
+
+    }
+
+    @Override
+    public void down(Long linkId) {
+        Link link = query(linkId);
+
+        Link nextLink = linkRepository.findByUserIdEqualsAndSortIndexEquals(link.getUserId(), link.getSortIndex() + 1);
+        link.setSortIndex(link.getSortIndex() + 1);
+        nextLink.setSortIndex(nextLink.getSortIndex() - 1);
+
+        linkRepository.save(link);
+        linkRepository.save(nextLink);
+    }
+
+    @Override
+    public Link query(Long linkId) {
+        Optional<Link> existing = linkRepository.findById(linkId);
+        Link link= existing.get();
+        Assert.notNull(link, "链接不存在");
+
+        return link;
+    }
+
+    @Override
     public PageableListModel<Link> queryList(Long accountId) {
         PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
-        List links = linkRepository.findAllByUserId(accountId);
+        List links = linkRepository.findAllByUserIdOrderBySortIndex(accountId);
         linkPageableListModel.setItems(links);
         linkPageableListModel.setTotal(links.size());
 

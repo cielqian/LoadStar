@@ -61,7 +61,19 @@ public class LinkController {
         return ReturnModel.OK();
     }
 
-//    public ReturnModel upLink(){
-//
-//    }
+    @ApiOperation("上移链接")
+    @ApiParam(name = "linkId", value = "链接ID")
+        @RequestMapping(path = "/{linkId}/up", method = RequestMethod.PUT)
+    public ReturnModel upLink(@PathVariable(name = "linkId") Long linkId){
+        linkService.up(linkId);
+        return ReturnModel.OK();
+    }
+
+    @ApiOperation("下移链接")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/{linkId}/down", method = RequestMethod.PUT)
+    public ReturnModel downLink(@PathVariable(name = "linkId") Long linkId){
+        linkService.down(linkId);
+        return ReturnModel.OK();
+    }
 }

@@ -27,6 +27,8 @@ public class Link {
 
     private String comment;
 
+    private Integer sortIndex;
+
     private Date createTime;
 
     private Date lastSeen;
