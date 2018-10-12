@@ -8,13 +8,13 @@ import com.ciel.pocket.link.dto.output.PageableListModel;
 import java.util.UUID;
 
 public interface LinkService {
-    String create(Link link);
+    Long create(Link link);
 
     void delete(String linkId);
 
     void visit(String linkId);
 
-    PageableListModel<Link> queryList(String accountId);
+    PageableListModel<Link> queryList(Long accountId);
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 }

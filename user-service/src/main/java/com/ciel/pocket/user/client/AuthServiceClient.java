@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @FeignClient(name = "auth-service")
 public interface AuthServiceClient {
     @RequestMapping(method = RequestMethod.POST, value = "/api/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    ReturnModel<String> createUser(CreateUser user);
+    ReturnModel<Long> createUser(CreateUser user);
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/api/users/{username}", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     ReturnModel deleteUser(@PathVariable("username") String username);

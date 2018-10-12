@@ -9,5 +9,5 @@ import java.util.UUID;
 
 @Repository
 public interface LinkRepository extends CrudRepository<Link, String> {
-    List<Link> findAllByUserId(String userId);
+    List<Link> findAllByUserId(Long userId);
 }

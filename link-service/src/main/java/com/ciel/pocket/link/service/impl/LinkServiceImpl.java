@@ -4,22 +4,13 @@ import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
-import com.ciel.pocket.link.infrastructure.exceptions.FriendlyException;
-import com.ciel.pocket.link.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.pocket.link.repository.LinkRepository;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -31,12 +22,10 @@ public class LinkServiceImpl implements LinkService {
     LinkRepository linkRepository;
 
     @Override
-    public String create(Link link) {
-        String linkId = UUID.randomUUID().toString().replaceAll("-", "");
-        link.setId(linkId);
+    public Long create(Link link) {
         link.setCreateTime(new Date());
         linkRepository.save(link);
-        return linkId;
+        return link.getId();
     }
 
     @Override
@@ -57,7 +46,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public PageableListModel<Link> queryList(String accountId) {
+    public PageableListModel<Link> queryList(Long accountId) {
         PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
         List links = linkRepository.findAllByUserId(accountId);
         linkPageableListModel.setItems(links);

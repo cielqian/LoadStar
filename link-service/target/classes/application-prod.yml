@@ -1,6 +1,6 @@
 spring:
-  data:
-    mongodb:
-      host: 101.200.55.76
-      database: pocket-link
-      port: 27137
+  datasource:
+    druid:
+      url: jdbc:mysql://101.200.55.76:3306/LoadStar_Link?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      username: root
+      password: 123456!

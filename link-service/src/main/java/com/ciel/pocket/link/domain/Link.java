@@ -1,19 +1,21 @@
 package com.ciel.pocket.link.domain;
 
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.UUID;
 
-@Document(collection = "links")
+@Entity
 @Data
 public class Link {
     @Id
-    String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
 
-    private String userId;
+    private Long userId;
 
     private String url;
 

@@ -53,7 +53,7 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
         User existing = accountRepository.findByUsername(user.getUsername());
         Assert.isNull(existing, "用户已存在");
 
-        ReturnModel<String> remoteResult = authServiceClient.createUser(user);
+        ReturnModel<Long> remoteResult = authServiceClient.createUser(user);
         ReturnUtils.checkSuccess(remoteResult);
 
         User account = new User();

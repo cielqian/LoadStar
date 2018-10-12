@@ -25,7 +25,7 @@ public class LinkController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建链接")
-    public ReturnModel<String> createLink(@RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
+    public ReturnModel<Long> createLink(@RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         Link link = new Link();
         link.setUserId(userDetail.getId());
@@ -33,7 +33,7 @@ public class LinkController {
         link.setTitle(input.getTitle());
         link.setName(input.getName());
         link.setIcon(input.getIcon());
-        String linkId = linkService.create(link);
+        Long linkId = linkService.create(link);
         return ReturnModel.OK("", linkId);
     }
 
