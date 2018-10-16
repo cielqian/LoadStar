@@ -24,4 +24,6 @@ public class Theme extends BaseEntity {
     ListTypeEnum listTypeEnum;
 
     Language language;
+
+    String modules;
 }

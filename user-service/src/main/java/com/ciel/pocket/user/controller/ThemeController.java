@@ -3,17 +3,16 @@ package com.ciel.pocket.user.controller;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.domain.Theme;
+import com.ciel.pocket.user.domain.ThemeModule;
 import com.ciel.pocket.user.dto.input.UpdateLanguage;
 import com.ciel.pocket.user.dto.input.UpdateListType;
+import com.ciel.pocket.user.infrastructure.enums.ThemeModuleEnum;
 import com.ciel.pocket.user.infrastructure.utils.AuthContext;
 import com.ciel.pocket.user.service.ThemeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -44,6 +43,13 @@ public class ThemeController {
     public ReturnModel changeLanguage(Principal principal, @RequestBody UpdateLanguage language){
         themeService.changeLanguage(AuthContext.getUserDetail(principal).getAccountId(),
                 language.getLanguage());
+        return ReturnUtils.ok("更新成功");
+    }
+
+    @ApiOperation("更新模块显示")
+    @RequestMapping(value = "/modules/{moduleName}",method = RequestMethod.POST)
+    public ReturnModel triggerShowModules(Principal principal, @PathVariable(name = "moduleName") ThemeModuleEnum moduleName){
+        themeService.triggerModule(AuthContext.getUserDetail(principal).getAccountId(), moduleName);
         return ReturnUtils.ok("更新成功");
     }
 }

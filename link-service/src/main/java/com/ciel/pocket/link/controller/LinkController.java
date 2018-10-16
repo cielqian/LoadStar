@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.UUID;
 
 @Api("链接相关api")
@@ -50,6 +51,22 @@ public class LinkController {
     public ReturnModel<PageableListModel<Link>> queryList(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         PageableListModel<Link> links = linkService.queryList(userDetail.getId());
+        return ReturnModel.OK(links);
+    }
+
+    @ApiOperation("查询最近访问链接")
+    @RequestMapping(path = "/recent", method = RequestMethod.GET)
+    public ReturnModel<List<Link>> queryRecentList(Principal principal){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        List<Link> links = linkService.queryRecent5List(userDetail.getId());
+        return ReturnModel.OK(links);
+    }
+
+    @ApiOperation("查询最常访问链接")
+    @RequestMapping(path = "/top", method = RequestMethod.GET)
+    public ReturnModel<List<Link>> queryTopList(Principal principal){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        List<Link> links = linkService.queryTop5List(userDetail.getId());
         return ReturnModel.OK(links);
     }
 

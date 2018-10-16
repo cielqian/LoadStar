@@ -1,15 +1,12 @@
 package com.ciel.pocket.user.service.impl;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
-import com.ciel.pocket.infrastructure.enums.Language;
 import com.ciel.pocket.infrastructure.repositories.BaseRepository;
 import com.ciel.pocket.infrastructure.service.BaseCrudService;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
 import com.ciel.pocket.user.domain.User;
-import com.ciel.pocket.user.domain.Theme;
 import com.ciel.pocket.user.dto.input.CreateUser;
-import com.ciel.pocket.user.infrastructure.enums.ListTypeEnum;
 import com.ciel.pocket.user.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.pocket.user.repository.AccountRepository;
 import com.ciel.pocket.user.repository.ThemeRepository;
@@ -19,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Date;
-import java.util.Optional;
 
 /**
  * @Author Ciel Qian
@@ -36,6 +32,9 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
 
     @Autowired
     AuthServiceClient authServiceClient;
+
+    @Autowired
+    ThemeServiceImpl themeService;
 
     @Override
     protected BaseRepository<User, Long> getRepository() {
@@ -64,12 +63,7 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
 
         accountRepository.save(account);
 
-        Theme theme = new Theme();
-        theme.setListTypeEnum(ListTypeEnum.Card);
-        theme.setLanguage(Language.en);
-        theme.setUser(account);
-
-        themeRepository.save(theme);
+        themeService.create(account);
 
         return account;
     }

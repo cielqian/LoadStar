@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.repository;
 
+import com.ciel.pocket.infrastructure.repositories.QueryDslBaseRepository;
 import com.ciel.pocket.link.domain.Link;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface LinkRepository extends CrudRepository<Link, Long> {
+public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
     List<Link> findAllByUserIdOrderBySortIndex(Long userId);
 
     Integer countByUserId(Long userId);

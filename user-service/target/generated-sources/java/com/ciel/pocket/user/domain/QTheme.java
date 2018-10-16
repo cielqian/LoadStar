@@ -37,6 +37,8 @@ public class QTheme extends EntityPathBase<Theme> {
 
     public final EnumPath<com.ciel.pocket.user.infrastructure.enums.ListTypeEnum> listTypeEnum = createEnum("listTypeEnum", com.ciel.pocket.user.infrastructure.enums.ListTypeEnum.class);
 
+    public final StringPath modules = createString("modules");
+
     //inherited
     public final DateTimePath<java.util.Date> updateTime = _super.updateTime;
 

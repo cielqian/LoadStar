@@ -1,6 +1,7 @@
 package com.ciel.pocket.link.service.impl;
 
 import com.ciel.pocket.link.domain.Link;
+import com.ciel.pocket.link.domain.QLink;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
@@ -8,6 +9,9 @@ import com.ciel.pocket.link.repository.LinkRepository;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -97,6 +101,20 @@ public class LinkServiceImpl implements LinkService {
         linkPageableListModel.setTotal(links.size());
 
         return linkPageableListModel;
+    }
+
+    @Override
+    public List<Link> queryTop5List(Long accountId) {
+        Sort sort = new Sort(Sort.Direction.DESC, "visitedCount");
+        Pageable pageable = new PageRequest(1, 5, sort);
+        return linkRepository.findAll(pageable).getContent();
+    }
+
+    @Override
+    public List<Link> queryRecent5List(Long accountId) {
+        Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
+        Pageable pageable = new PageRequest(1, 5, sort);
+        return linkRepository.findAll(pageable).getContent();
     }
 
     @Override
