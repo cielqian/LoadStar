@@ -106,15 +106,15 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public List<Link> queryTop5List(Long accountId) {
         Sort sort = new Sort(Sort.Direction.DESC, "visitedCount");
-        Pageable pageable = new PageRequest(1, 5, sort);
-        return linkRepository.findAll(pageable).getContent();
+        Pageable pageable = PageRequest.of(0, 5, sort);
+        return linkRepository.findAllByUserId(pageable, accountId).getContent();
     }
 
     @Override
     public List<Link> queryRecent5List(Long accountId) {
         Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
-        Pageable pageable = new PageRequest(1, 5, sort);
-        return linkRepository.findAll(pageable).getContent();
+        Pageable pageable = PageRequest.of(0, 5, sort);
+        return linkRepository.findAllByUserId(pageable, accountId).getContent();
     }
 
     @Override

@@ -2,6 +2,9 @@ package com.ciel.pocket.link.repository;
 
 import com.ciel.pocket.infrastructure.repositories.QueryDslBaseRepository;
 import com.ciel.pocket.link.domain.Link;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,4 +26,6 @@ public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
     @Modifying
     @Query("update Link l set l.sortIndex = l.sortIndex - 1 where l.userId = ?1 and l.sortIndex > ?2")
     Integer updateSortIndexBatch(Long userId, Integer sortIndex);
+
+    Page<Link> findAllByUserId(Pageable pageable, Long userId);
 }
