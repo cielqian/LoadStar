@@ -6,4 +6,4 @@ spring:
       password: 123456!
 global:
   auth:
-    prefix: LoadStarDev
+    prefix: LoadStarAuthDev

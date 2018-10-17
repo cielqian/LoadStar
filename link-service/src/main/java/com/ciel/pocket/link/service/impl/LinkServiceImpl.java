@@ -64,6 +64,9 @@ public class LinkServiceImpl implements LinkService {
         }
 
         Link preLink = linkRepository.findByUserIdEqualsAndSortIndexEquals(link.getUserId(), link.getSortIndex() - 1);
+        if (preLink == null){
+            return;
+        }
         link.setSortIndex(link.getSortIndex() - 1);
         preLink.setSortIndex(preLink.getSortIndex() + 1);
 
@@ -77,6 +80,9 @@ public class LinkServiceImpl implements LinkService {
         Link link = query(linkId);
 
         Link nextLink = linkRepository.findByUserIdEqualsAndSortIndexEquals(link.getUserId(), link.getSortIndex() + 1);
+        if (nextLink == null){
+            return;
+        }
         link.setSortIndex(link.getSortIndex() + 1);
         nextLink.setSortIndex(nextLink.getSortIndex() - 1);
 
