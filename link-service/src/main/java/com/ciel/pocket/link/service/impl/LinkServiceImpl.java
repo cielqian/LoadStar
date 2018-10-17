@@ -2,10 +2,12 @@ package com.ciel.pocket.link.service.impl;
 
 import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.domain.QLink;
+import com.ciel.pocket.link.domain.VisitRecord;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.repository.LinkRepository;
+import com.ciel.pocket.link.repository.VisitRecordRepository;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class LinkServiceImpl implements LinkService {
     @Autowired
     LinkRepository linkRepository;
 
+    @Autowired
+    VisitRecordRepository visitRecordRepository;
+
     @Override
     public Long create(Link link) {
         Integer totalCount = linkRepository.countByUserId(link.getUserId());
@@ -38,20 +43,27 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public void delete(Long linkId) {
         Link link = query(linkId);
+        Assert.notNull(link, "链接不存在");
+
+        link.setDelete(true);
 
         linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
-
-        linkRepository.deleteById(linkId);
+        linkRepository.save(link);
     }
 
     @Override
     public void visit(Long linkId) {
         Optional<Link> existing = linkRepository.findById(linkId);
-        Link  link= existing.get();
+        Link link= existing.get();
         Assert.notNull(link, "链接不存在");
 
         link.setLastSeen(new Date());
         link.setVisitedCount(link.getVisitedCount()+1);
+
+        VisitRecord visitRecord = new VisitRecord();
+        visitRecord.setLink(link);
+        visitRecord.setUserId(link.getUserId());
+        visitRecordRepository.save(visitRecord);
 
         linkRepository.save(link);
     }
@@ -102,7 +114,7 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public PageableListModel<Link> queryList(Long accountId) {
         PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
-        List links = linkRepository.findAllByUserIdOrderBySortIndex(accountId);
+        List links = linkRepository.findAllByUserIdAndIsDeleteEqualsOrderBySortIndex(accountId, false);
         linkPageableListModel.setItems(links);
         linkPageableListModel.setTotal(links.size());
 

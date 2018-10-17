@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Repository
 public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
-    List<Link> findAllByUserIdOrderBySortIndex(Long userId);
+    List<Link> findAllByUserIdAndIsDeleteEqualsOrderBySortIndex(Long userId, boolean isDelete);
 
     Integer countByUserId(Long userId);
 
@@ -28,4 +28,5 @@ public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
     Integer updateSortIndexBatch(Long userId, Integer sortIndex);
 
     Page<Link> findAllByUserId(Pageable pageable, Long userId);
+
 }

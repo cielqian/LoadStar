@@ -1,19 +1,14 @@
 package com.ciel.pocket.link.domain;
 
+import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import java.util.Date;
 
 @Entity
 @Data
-public class Link {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+public class Link extends BaseEntity {
 
     private Long userId;
 
@@ -28,8 +23,6 @@ public class Link {
     private String comment;
 
     private Integer sortIndex;
-
-    private Date createTime;
 
     private Date lastSeen;
 
