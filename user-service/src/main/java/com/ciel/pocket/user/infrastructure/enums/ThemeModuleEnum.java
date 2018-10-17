@@ -10,4 +10,5 @@ package com.ciel.pocket.user.infrastructure.enums;
 public enum ThemeModuleEnum {
     Recently,//最近访问
     Top,//最常访问
+    Private,//隐藏
 }

@@ -32,6 +32,7 @@ public class ThemeServiceImpl implements ThemeService {
         List<ThemeModule> modules = new ArrayList<>();
         modules.add(new ThemeModule(ThemeModuleEnum.Recently, false));
         modules.add(new ThemeModule(ThemeModuleEnum.Top, false));
+        modules.add(new ThemeModule(ThemeModuleEnum.Private, false));
 
         theme.setModules(JSON.toJSONString(modules));
         return themeRepository.save(theme);
