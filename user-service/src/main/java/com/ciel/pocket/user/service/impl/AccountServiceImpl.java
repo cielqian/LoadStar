@@ -5,6 +5,7 @@ import com.ciel.pocket.infrastructure.repositories.BaseRepository;
 import com.ciel.pocket.infrastructure.service.BaseCrudService;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
+import com.ciel.pocket.user.client.FolderServiceClient;
 import com.ciel.pocket.user.domain.User;
 import com.ciel.pocket.user.dto.input.CreateUser;
 import com.ciel.pocket.user.infrastructure.exceptions.ObjectNotExistingException;
@@ -32,6 +33,9 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
 
     @Autowired
     AuthServiceClient authServiceClient;
+
+    @Autowired
+    FolderServiceClient folderServiceClient;
 
     @Autowired
     ThemeServiceImpl themeService;
@@ -64,6 +68,9 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
         accountRepository.save(account);
 
         themeService.create(account);
+
+        remoteResult = folderServiceClient.createDefault(remoteResult.getData());
+        ReturnUtils.checkSuccess(remoteResult);
 
         return account;
     }

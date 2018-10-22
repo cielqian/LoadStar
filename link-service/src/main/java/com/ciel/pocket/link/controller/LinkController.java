@@ -34,7 +34,9 @@ public class LinkController {
         link.setTitle(input.getTitle());
         link.setName(input.getName());
         link.setIcon(input.getIcon());
+        link.setFolderId(input.getFolderId());
         Long linkId = linkService.create(link);
+
         return ReturnModel.OK("", linkId);
     }
 

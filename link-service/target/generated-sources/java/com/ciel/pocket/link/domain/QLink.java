@@ -19,13 +19,20 @@ public class QLink extends EntityPathBase<Link> {
 
     public static final QLink link = new QLink("link");
 
+    public final com.ciel.pocket.infrastructure.domain.QBaseEntity _super = new com.ciel.pocket.infrastructure.domain.QBaseEntity(this);
+
     public final StringPath comment = createString("comment");
 
-    public final DateTimePath<java.util.Date> createTime = createDateTime("createTime", java.util.Date.class);
+    //inherited
+    public final DateTimePath<java.util.Date> createTime = _super.createTime;
 
     public final StringPath icon = createString("icon");
 
-    public final NumberPath<Long> id = createNumber("id", Long.class);
+    //inherited
+    public final NumberPath<Long> id = _super.id;
+
+    //inherited
+    public final BooleanPath isDelete = _super.isDelete;
 
     public final DateTimePath<java.util.Date> lastSeen = createDateTime("lastSeen", java.util.Date.class);
 
@@ -34,6 +41,9 @@ public class QLink extends EntityPathBase<Link> {
     public final NumberPath<Integer> sortIndex = createNumber("sortIndex", Integer.class);
 
     public final StringPath title = createString("title");
+
+    //inherited
+    public final DateTimePath<java.util.Date> updateTime = _super.updateTime;
 
     public final StringPath url = createString("url");
 

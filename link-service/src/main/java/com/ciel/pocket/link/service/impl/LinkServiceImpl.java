@@ -1,11 +1,13 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.ciel.pocket.link.domain.Folder;
 import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.domain.QLink;
 import com.ciel.pocket.link.domain.VisitRecord;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
+import com.ciel.pocket.link.repository.FolderRepository;
 import com.ciel.pocket.link.repository.LinkRepository;
 import com.ciel.pocket.link.repository.VisitRecordRepository;
 import com.ciel.pocket.link.service.LinkService;
@@ -27,6 +29,9 @@ public class LinkServiceImpl implements LinkService {
     LinkRepository linkRepository;
 
     @Autowired
+    FolderRepository folderRepository;
+
+    @Autowired
     VisitRecordRepository visitRecordRepository;
 
     @Override
@@ -35,6 +40,14 @@ public class LinkServiceImpl implements LinkService {
 
         link.setSortIndex(totalCount + 1);
         link.setCreateTime(new Date());
+
+        if (link.getFolderId() == null || link.getFolderId() == 0){
+            Folder folder = folderRepository.findFirstByUserIdAndCodeEquals(link.getUserId(), "default");
+            if (folder != null){
+                link.setFolder(folder);
+            }
+        }
+
         linkRepository.save(link);
 
         return link.getId();
@@ -125,14 +138,14 @@ public class LinkServiceImpl implements LinkService {
     public List<Link> queryTop5List(Long accountId) {
         Sort sort = new Sort(Sort.Direction.DESC, "visitedCount");
         Pageable pageable = PageRequest.of(0, 5, sort);
-        return linkRepository.findAllByUserId(pageable, accountId).getContent();
+        return linkRepository.findAllByUserIdAndIsDeleteEquals(pageable, accountId, false).getContent();
     }
 
     @Override
     public List<Link> queryRecent5List(Long accountId) {
         Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
         Pageable pageable = PageRequest.of(0, 5, sort);
-        return linkRepository.findAllByUserId(pageable, accountId).getContent();
+        return linkRepository.findAllByUserIdAndIsDeleteEquals(pageable, accountId, false).getContent();
     }
 
     @Override

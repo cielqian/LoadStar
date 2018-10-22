@@ -18,4 +18,7 @@ public class CreateLinkInput {
 
     @ApiModelProperty(value = "图标")
     private String icon;
+
+    @ApiModelProperty(value = "文件夹Id")
+    private Long folderId;
 }

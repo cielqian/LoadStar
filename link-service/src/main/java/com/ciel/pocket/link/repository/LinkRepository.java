@@ -27,6 +27,6 @@ public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
     @Query("update Link l set l.sortIndex = l.sortIndex - 1 where l.userId = ?1 and l.sortIndex > ?2")
     Integer updateSortIndexBatch(Long userId, Integer sortIndex);
 
-    Page<Link> findAllByUserId(Pageable pageable, Long userId);
+    Page<Link> findAllByUserIdAndIsDeleteEquals(Pageable pageable, Long userId, boolean isDelete);
 
 }
