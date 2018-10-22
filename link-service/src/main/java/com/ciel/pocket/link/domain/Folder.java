@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
 
@@ -32,6 +33,7 @@ public class Folder extends BaseEntity {
 
     private boolean isSystem;
 
+    @JSONField(serialize = false)
     @OneToMany(mappedBy = "folder")
     private List<Link> links;
 }
