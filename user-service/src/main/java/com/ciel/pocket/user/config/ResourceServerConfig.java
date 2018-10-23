@@ -59,6 +59,9 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .authorizeRequests()
         .antMatchers( HttpMethod.GET,"/v2/api-docs").anonymous()
         .antMatchers( HttpMethod.POST,"/api/account").anonymous()
+        .antMatchers("/hystrix","/hystrix**","/hystrix/**", "/proxy**").anonymous()
+        .antMatchers("/actuator/**").anonymous()
+        .antMatchers("/webjars/**").anonymous()
         .anyRequest().authenticated()
         .and()
         .csrf().disable();

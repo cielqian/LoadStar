@@ -31,3 +31,6 @@ eureka:
   client:
     service-url:
       defaultZone: http://registry:9001/eureka/
+feign:
+  hystrix:
+    enabled: true
