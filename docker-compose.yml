@@ -6,7 +6,16 @@ services:
     command: redis-server --requirepass 123456!
     ports:
       - 6379:6379
-      
+  
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 4369:4369
+      - 5672:5672
+      - 15672:15672
+      - 25672:25672 
+
   mysql:
     image: mysql
     restart: always

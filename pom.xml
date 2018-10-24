@@ -23,6 +23,7 @@
         <module>link-service</module>
         <module>infrastructure</module>
         <module>turbine</module>
+        <module>turbine-dashboard</module>
     </modules>
 
     <properties>

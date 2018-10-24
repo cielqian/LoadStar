@@ -3,9 +3,13 @@ server:
 spring:
   application:
     name: turbine
+  rabbitmq:
+    addresses: 101.200.55.76
+    port: 5672
+    virtual-host: LoadStar_Dev
 turbine:
   app-config: user-service
-  combine-host-port: true
+  combine-host-port:
 eureka:
   client:
     registerWithEureka: true
