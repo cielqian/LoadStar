@@ -1,6 +1,7 @@
 package com.ciel.pocket.user;
 
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
+import feign.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -43,6 +44,11 @@ public class UserApplication {
                         .allowedHeaders("*");
             }
         };
+    }
+
+    @Bean
+    Logger.Level feignLoggerLevel(){
+        return Logger.Level.FULL;
     }
 
     @Bean(name = "hystrixRegistrationBean")

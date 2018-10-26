@@ -31,6 +31,21 @@ eureka:
   client:
     service-url:
       defaultZone: http://registry:9001/eureka/
+  instance:
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
 feign:
   hystrix:
     enabled: true
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ribbon:
+  eager-load:
+    enabled: true
+logging:
+  level: debug
