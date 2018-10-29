@@ -47,5 +47,3 @@ management:
 ribbon:
   eager-load:
     enabled: true
-logging:
-  level: debug
