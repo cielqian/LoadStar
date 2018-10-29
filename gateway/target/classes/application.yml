@@ -5,9 +5,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://registry:9001/eureka/
-  instance:
-    lease-expiration-duration-in-seconds: 15
-    lease-renewal-interval-in-seconds: 5
+    registry-fetch-interval-seconds: 10
 
 server:
   port: 9080

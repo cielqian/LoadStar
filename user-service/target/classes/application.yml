@@ -34,6 +34,7 @@ eureka:
   instance:
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
+
 feign:
   hystrix:
     enabled: true
@@ -44,6 +45,14 @@ management:
     web:
       exposure:
         include: "*"
+
 ribbon:
   eager-load:
     enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000

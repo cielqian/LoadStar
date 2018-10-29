@@ -31,3 +31,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://registry:9001/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+ribbon:
+  eager-load:
+    enabled: true

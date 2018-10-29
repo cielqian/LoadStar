@@ -13,3 +13,5 @@ eureka:
     register-with-eureka: false
     service-url:
       defaultZone: http://registry:9001/eureka/
+  server:
+    eviction-interval-timer-in-ms: 5000
