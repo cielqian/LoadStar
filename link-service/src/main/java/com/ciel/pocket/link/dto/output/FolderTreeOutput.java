@@ -18,9 +18,12 @@ public class FolderTreeOutput {
 
     private boolean isSystem;
 
+    private boolean isFolder;
+
     private List<FolderTreeOutput> childs;
 
     public FolderTreeOutput() {
+        isFolder = true;
         childs = new ArrayList<>();
     }
 }

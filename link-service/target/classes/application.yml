@@ -7,13 +7,13 @@ spring:
       hibernate:
         ddl-auto: update
       show-sql: true
-  zipkin:
-    enabled: true
-    base-url: http://101.200.55.76:9411
-  sleuth:
-    sampler:
-      percentage: 1.0
-      probability: 1.0
+#  zipkin:
+#    enabled: true
+#    base-url: http://101.200.55.76:9411
+#  sleuth:
+#    sampler:
+#      percentage: 1.0
+#      probability: 1.0
 security:
   oauth2:
     client:

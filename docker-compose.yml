@@ -7,14 +7,14 @@ services:
     ports:
       - 6379:6379
   
-  rabbitmq:
-    image: rabbitmq:3-management
-    restart: always
-    ports:
-      - 4369:4369
-      - 5672:5672
-      - 15672:15672
-      - 25672:25672 
+#  rabbitmq:
+#    image: rabbitmq:3-management
+#    restart: always
+#    ports:
+#      - 4369:4369
+#      - 5672:5672
+#      - 15672:15672
+#      - 25672:25672
 
   mysql:
     image: mysql
@@ -25,11 +25,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 123456!
     
-  zipkin:
-    image: openzipkin/zipkin
-    restart: always
-    ports:
-      - 9411:9411
+#  zipkin:
+#    image: openzipkin/zipkin
+#    restart: always
+#    ports:
+#      - 9411:9411
 
   registry:
     image: cielqian/pocket-registry

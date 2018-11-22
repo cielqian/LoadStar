@@ -16,5 +16,7 @@ public interface FolderRepository extends QueryDslBaseRepository<Folder, Long> {
 
     List<Folder> queryAllByUserIdAndIsDeleteEquals(Long userId, boolean isDelete);
 
+    List<Folder> queryAllByUserIdAndIsDeleteEqualsAndParentIdEquals(Long userId, boolean isDelete, Long parentId);
+
     Folder findFirstByUserIdAndCodeEquals(Long userId, String code);
 }

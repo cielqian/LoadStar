@@ -63,6 +63,23 @@ public class FolderServiceImpl implements FolderService {
         return folderTreeOutputs;
     }
 
+    @Override
+    public List<FolderTreeOutput> queryFolderTree(Long folderId, Long userId) {
+        List<FolderTreeOutput> folderTreeOutputs = new ArrayList<>();
+
+        List<Folder> folders = folderRepository.queryAllByUserIdAndIsDeleteEqualsAndParentIdEquals(userId, false, folderId);
+        if (folders != null && folders.size() > 0) {
+            folders.forEach(x -> {
+                FolderTreeOutput element = new FolderTreeOutput();
+                element.setId(x.getId());
+                element.setName(x.getName());
+                element.setSystem(x.isSystem());
+                folderTreeOutputs.add(element);
+            });
+        }
+        return folderTreeOutputs;
+    }
+
     private void c(List<Folder> all, FolderTreeOutput root){
         List<Folder> elements = all.stream().filter(y -> y.getParentId().equals(root.getId())).collect(Collectors.toList());
         elements.forEach(z -> {

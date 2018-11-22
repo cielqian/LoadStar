@@ -15,4 +15,6 @@ public interface FolderService {
     Long create(Folder folder);
 
     List<FolderTreeOutput> queryFolderTree(Long userId);
+
+    List<FolderTreeOutput> queryFolderTree(Long folderId, Long userId);
 }

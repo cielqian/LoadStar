@@ -38,6 +38,14 @@ public class FolderController {
         return ReturnModel.OK(links);
     }
 
+    @ApiOperation("查询文件夹")
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public ReturnModel<List<FolderTreeOutput>> queryById(@PathVariable(name = "id") Long folderId, Principal principal){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, userDetail.getId());
+        return ReturnModel.OK(links);
+    }
+
     @ApiOperation("创建文件夹")
     @RequestMapping(path = "/{userId}", method = RequestMethod.POST)
     public ReturnModel createFolderForUser(Principal principal,@RequestBody CreateFolderInput createFolderInput){
@@ -85,8 +93,16 @@ public class FolderController {
         trashFolder.setUserId(userId);
         trashFolder.setSystem(true);
 
+        Folder loadStarFolder = new Folder();
+        loadStarFolder.setParentId(0L);
+        loadStarFolder.setName("快捷");
+        loadStarFolder.setCode("loadstar");
+        loadStarFolder.setUserId(userId);
+        loadStarFolder.setSystem(true);
+
         folderService.create(defaultFolder);
         folderService.create(trashFolder);
+        folderService.create(loadStarFolder);
 
         return ReturnModel.OK();
     }
