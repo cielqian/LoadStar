@@ -1,3 +1,4 @@
 com\ciel\pocket\link\domain\QFolder.class
+com\ciel\pocket\link\domain\QTag.class
 com\ciel\pocket\link\domain\QLink.class
 com\ciel\pocket\link\domain\QVisitRecord.class

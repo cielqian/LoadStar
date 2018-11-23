@@ -18,6 +18,8 @@ import java.util.UUID;
 public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
     List<Link> findAllByUserIdAndIsDeleteEqualsOrderBySortIndex(Long userId, boolean isDelete);
 
+    List<Link> findAllByUserIdAndIsDeleteEqualsAndFolderIdEquals(Long userId, boolean isDelete, Long folderId);
+
     Integer countByUserId(Long userId);
 
     Link findByUserIdEqualsAndSortIndexEquals(Long userId, Integer sortIndex);

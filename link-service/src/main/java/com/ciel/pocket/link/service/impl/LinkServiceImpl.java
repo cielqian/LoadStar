@@ -1,9 +1,6 @@
 package com.ciel.pocket.link.service.impl;
 
-import com.ciel.pocket.link.domain.Folder;
-import com.ciel.pocket.link.domain.Link;
-import com.ciel.pocket.link.domain.QLink;
-import com.ciel.pocket.link.domain.VisitRecord;
+import com.ciel.pocket.link.domain.*;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
@@ -12,6 +9,8 @@ import com.ciel.pocket.link.repository.LinkRepository;
 import com.ciel.pocket.link.repository.VisitRecordRepository;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
+import com.querydsl.core.QueryFactory;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +18,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +34,10 @@ public class LinkServiceImpl implements LinkService {
 
     @Autowired
     VisitRecordRepository visitRecordRepository;
+
+    @Autowired
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public Long create(Link link) {
@@ -146,6 +151,21 @@ public class LinkServiceImpl implements LinkService {
         Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
         Pageable pageable = PageRequest.of(0, 5, sort);
         return linkRepository.findAllByUserIdAndIsDeleteEquals(pageable, accountId, false).getContent();
+    }
+
+    @Override
+    public List<Link> queryLinksUnderFolder(Long accountId, Long folderId) {
+        return linkRepository.findAllByUserIdAndIsDeleteEqualsAndFolderIdEquals(accountId, false, folderId);
+    }
+
+    @Override
+    public List<Link> queryLinksUnderTag(Long accountId, Long tagId) {
+        QTag q = QTag.tag;
+        QueryFactory queryFactory = new JPAQueryFactory(entityManager);
+
+
+
+        return linkRepository.findAllByUserIdAndIsDeleteEqualsAndFolderIdEquals(accountId, false, tagId);
     }
 
     @Override

@@ -28,5 +28,9 @@ public interface LinkService {
 
     List<Link> queryRecent5List(Long accountId);
 
+    List<Link> queryLinksUnderFolder(Long accountId, Long folderId);
+
+    List<Link> queryLinksUnderTag(Long accountId, Long tagId);
+
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 }

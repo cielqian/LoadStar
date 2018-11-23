@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
 
@@ -32,11 +33,13 @@ public class Link extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "folderId")
+    @JSONField(serialize = false)
     private Folder folder;
 
     @Column(name = "folderId", insertable = false, updatable = false)
     Long folderId;
 
     @ManyToMany(mappedBy = "links")
+    @JSONField(serialize = false)
     private Set<Tag> tags;
 }

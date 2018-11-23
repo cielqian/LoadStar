@@ -2,6 +2,7 @@ package com.ciel.pocket.link.config;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -28,6 +29,9 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
+
+    @Value("${security.oauth2.client.accessTokenUri}")
+    String authorizationUri;
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()

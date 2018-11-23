@@ -3,6 +3,8 @@ package com.ciel.pocket.link.domain;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

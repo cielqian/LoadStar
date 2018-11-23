@@ -9,6 +9,7 @@ import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
 import com.ciel.pocket.link.infrastructure.utils.AuthContext;
 import com.ciel.pocket.link.service.FolderService;
+import com.ciel.pocket.link.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class FolderController {
     @Autowired
     FolderService folderService;
 
+    @Autowired
+    LinkService linkService;
+
     @ApiOperation("查询文件夹")
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> query(Principal principal){
@@ -43,6 +47,14 @@ public class FolderController {
     public ReturnModel<List<FolderTreeOutput>> queryById(@PathVariable(name = "id") Long folderId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, userDetail.getId());
+        return ReturnModel.OK(links);
+    }
+
+    @ApiOperation("查询文件夹下的书签")
+    @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
+    public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") Long folderId, Principal principal){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        List<Link> links = linkService.queryLinksUnderFolder(userDetail.getId(), folderId);
         return ReturnModel.OK(links);
     }
 
