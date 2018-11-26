@@ -175,11 +175,11 @@ public class LinkServiceImpl implements LinkService {
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
-        return queryFactory.select(l)
+        return queryFactory.selectFrom(l)
                 .where(l.tags.contains(tagOptional.get())
                         .and(l.userId.eq(accountId))
                         .and(l.isDelete.eq(false)))
-                .fetch();
+                .fetchResults().getResults();
     }
 
     @Override

@@ -9,7 +9,7 @@
     <artifactId>user-service</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>user-service</name>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
 
     <parent>
