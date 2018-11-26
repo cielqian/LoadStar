@@ -1,11 +1,13 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.ciel.pocket.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.pocket.link.domain.*;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.repository.FolderRepository;
 import com.ciel.pocket.link.repository.LinkRepository;
+import com.ciel.pocket.link.repository.TagRepository;
 import com.ciel.pocket.link.repository.VisitRecordRepository;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
@@ -31,6 +33,9 @@ public class LinkServiceImpl implements LinkService {
 
     @Autowired
     FolderRepository folderRepository;
+
+    @Autowired
+    TagRepository tagRepository;
 
     @Autowired
     VisitRecordRepository visitRecordRepository;
@@ -160,12 +165,21 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<Link> queryLinksUnderTag(Long accountId, Long tagId) {
-        QTag q = QTag.tag;
-        QueryFactory queryFactory = new JPAQueryFactory(entityManager);
+        QTag t = QTag.tag;
+        QLink l = QLink.link;
 
+        Optional<Tag> tagOptional = tagRepository.findById(tagId);
+        if (!tagOptional.isPresent()){
+            throw new ObjectNotExistingException("Tag不存在");
+        }
 
+        JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
-        return linkRepository.findAllByUserIdAndIsDeleteEqualsAndFolderIdEquals(accountId, false, tagId);
+        return queryFactory.select(l)
+                .where(l.tags.contains(tagOptional.get())
+                        .and(l.userId.eq(accountId))
+                        .and(l.isDelete.eq(false)))
+                .fetch();
     }
 
     @Override

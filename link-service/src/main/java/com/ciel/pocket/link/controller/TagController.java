@@ -2,10 +2,12 @@ package com.ciel.pocket.link.controller;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
+import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.domain.Tag;
 import com.ciel.pocket.link.domain.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateTagInput;
 import com.ciel.pocket.link.infrastructure.utils.AuthContext;
+import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +30,9 @@ public class TagController {
     @Autowired
     TagService tagService;
 
+    @Autowired
+    LinkService linkService;
+
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建标签")
     public ReturnModel<Long> createTag(@RequestBody @ApiParam(name = "创建链接参数") CreateTagInput input, Principal principal){
@@ -40,6 +45,14 @@ public class TagController {
         Long tagId = tagService.create(tag);
 
         return ReturnUtils.ok("", tagId);
+    }
+
+    @ApiOperation("查询文件夹下的书签")
+    @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
+    public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@PathVariable(name = "id") Long tagId, Principal principal){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        List<Link> links = linkService.queryLinksUnderTag(userDetail.getId(), tagId);
+        return com.ciel.pocket.link.dto.output.ReturnModel.OK(links);
     }
 
     @RequestMapping(path = "/current", method = RequestMethod.GET)

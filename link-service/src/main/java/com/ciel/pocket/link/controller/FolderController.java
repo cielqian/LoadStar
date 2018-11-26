@@ -50,7 +50,7 @@ public class FolderController {
         return ReturnModel.OK(links);
     }
 
-    @ApiOperation("查询文件夹下的书签")
+    @ApiOperation("查询标签下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") Long folderId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);

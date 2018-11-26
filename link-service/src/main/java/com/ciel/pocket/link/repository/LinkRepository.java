@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface LinkRepository extends QueryDslBaseRepository<Link, Long> {
+public interface LinkRepository extends QueryDslBaseRepository<Link, Long>, CrudRepository<Link, Long> {
     List<Link> findAllByUserIdAndIsDeleteEqualsOrderBySortIndex(Long userId, boolean isDelete);
 
     List<Link> findAllByUserIdAndIsDeleteEqualsAndFolderIdEquals(Long userId, boolean isDelete, Long folderId);
