@@ -17,5 +17,7 @@ public interface TagService {
 
     List<Tag> queryAllTag(Long userId);
 
+    List<Tag> queryAllTag(Long userId, String keyword);
+
     void delete(Long tagId);
 }

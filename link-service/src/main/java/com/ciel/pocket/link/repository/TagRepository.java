@@ -14,4 +14,6 @@ import java.util.List;
 @Repository
 public interface TagRepository  extends QueryDslBaseRepository<Tag, Long> {
     List<Tag> findAllByUserId(Long userId);
+
+    List<Tag> findAllByUserIdAndNameLike(Long userId, String name);
 }

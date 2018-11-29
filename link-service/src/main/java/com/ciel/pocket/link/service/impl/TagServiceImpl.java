@@ -31,6 +31,11 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
+    public List<Tag> queryAllTag(Long userId, String keyword) {
+        return tagRepository.findAllByUserIdAndNameLike(userId, keyword);
+    }
+
+    @Override
     public void delete(Long tagId) {
         tagRepository.deleteById(tagId);
     }

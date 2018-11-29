@@ -64,6 +64,14 @@ public class TagController {
         return ReturnUtils.ok("", tags);
     }
 
+    @RequestMapping(path = "", method = RequestMethod.GET)
+    @ApiOperation("查询标签")
+    public ReturnModel<List<Tag>> queryTag(Principal principal, @RequestParam("keyword") String keyword ){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        List<Tag> tags = tagService.queryAllTag(userDetail.getId(), keyword);
+        return ReturnUtils.ok("", tags);
+    }
+
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation("删除标签")
     public ReturnModel deleteTag(@PathVariable("id") Long tagId){
