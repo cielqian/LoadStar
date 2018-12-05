@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class Link extends BaseEntity {
     @Column(name = "folderId", insertable = false, updatable = false)
     Long folderId;
 
-    @ManyToMany(mappedBy = "links")
+    @ManyToMany(mappedBy = "links", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JSONField(serialize = false)
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 }

@@ -5,10 +5,7 @@ import com.ciel.pocket.link.domain.*;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
-import com.ciel.pocket.link.repository.FolderRepository;
-import com.ciel.pocket.link.repository.LinkRepository;
-import com.ciel.pocket.link.repository.TagRepository;
-import com.ciel.pocket.link.repository.VisitRecordRepository;
+import com.ciel.pocket.link.repository.*;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
 import com.querydsl.core.QueryFactory;
@@ -38,7 +35,13 @@ public class LinkServiceImpl implements LinkService {
     TagRepository tagRepository;
 
     @Autowired
+    LinkTagRepository linkTagRepository;
+
+    @Autowired
     VisitRecordRepository visitRecordRepository;
+
+    @Autowired
+    LinkRepository1 linkRepository1;
 
     @Autowired
     @PersistenceContext
@@ -60,6 +63,9 @@ public class LinkServiceImpl implements LinkService {
 
         linkRepository.save(link);
 
+        link.getTags().forEach(t -> {
+            linkTagRepository.test(link.getId(), t.getId());
+        });
         return link.getId();
     }
 
@@ -175,11 +181,7 @@ public class LinkServiceImpl implements LinkService {
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
-        return queryFactory.selectFrom(l)
-                .where(l.tags.contains(tagOptional.get())
-                        .and(l.userId.eq(accountId))
-                        .and(l.isDelete.eq(false)))
-                .fetchResults().getResults();
+        return linkRepository1.findAllByUserIdAndIsDeleteEqualsAndTagIdEquals(accountId, tagId);
     }
 
     @Override

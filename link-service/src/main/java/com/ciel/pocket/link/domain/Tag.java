@@ -3,10 +3,8 @@ package com.ciel.pocket.link.domain;
 import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +26,9 @@ public class Tag extends BaseEntity {
 
     private boolean isSystem;
 
-    @ManyToMany
-    @JoinTable(name="link_tag",joinColumns={@JoinColumn(name="link_id")},inverseJoinColumns={@JoinColumn(name="tag_id")})
-    private Set<Link> links;
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name="link_tag"
+            ,joinColumns={@JoinColumn(name="link_id")}
+            ,inverseJoinColumns={@JoinColumn(name="tag_id")})
+    private Set<Link> links = new HashSet<>();
 }

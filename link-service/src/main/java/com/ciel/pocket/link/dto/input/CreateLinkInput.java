@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @ApiModel
 @Data
 public class CreateLinkInput {
@@ -21,4 +23,7 @@ public class CreateLinkInput {
 
     @ApiModelProperty(value = "文件夹Id")
     private Long folderId;
+
+    @ApiModelProperty(value = "标签")
+    private ArrayList<Long> tags;
 }

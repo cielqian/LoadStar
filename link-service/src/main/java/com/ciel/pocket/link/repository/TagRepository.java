@@ -1,6 +1,7 @@
 package com.ciel.pocket.link.repository;
 
 import com.ciel.pocket.infrastructure.repositories.QueryDslBaseRepository;
+import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.domain.Tag;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,5 @@ public interface TagRepository  extends QueryDslBaseRepository<Tag, Long> {
     List<Tag> findAllByUserId(Long userId);
 
     List<Tag> findAllByUserIdAndNameLike(Long userId, String name);
+
 }

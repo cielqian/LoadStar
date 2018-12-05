@@ -20,4 +20,6 @@ public interface TagService {
     List<Tag> queryAllTag(Long userId, String keyword);
 
     void delete(Long tagId);
+
+    List<Tag> queryTags(List<Long> tagIds);
 }

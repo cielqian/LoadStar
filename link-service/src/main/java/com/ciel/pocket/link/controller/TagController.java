@@ -68,7 +68,7 @@ public class TagController {
     @ApiOperation("查询标签")
     public ReturnModel<List<Tag>> queryTag(Principal principal, @RequestParam("keyword") String keyword ){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Tag> tags = tagService.queryAllTag(userDetail.getId(), keyword);
+        List<Tag> tags = tagService.queryAllTag(userDetail.getId(), "%" + keyword + "%");
         return ReturnUtils.ok("", tags);
     }
 

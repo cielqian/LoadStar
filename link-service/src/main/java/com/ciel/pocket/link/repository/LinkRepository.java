@@ -2,6 +2,9 @@ package com.ciel.pocket.link.repository;
 
 import com.ciel.pocket.infrastructure.repositories.QueryDslBaseRepository;
 import com.ciel.pocket.link.domain.Link;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +17,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.UUID;
 
+
+@Mapper
 @Repository
 public interface LinkRepository extends QueryDslBaseRepository<Link, Long>, CrudRepository<Link, Long> {
     List<Link> findAllByUserIdAndIsDeleteEqualsOrderBySortIndex(Long userId, boolean isDelete);
