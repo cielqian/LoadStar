@@ -1,6 +1,6 @@
 package com.ciel.pocket.link.service;
 
-import com.ciel.pocket.link.domain.Folder;
+import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
 
 import java.util.List;

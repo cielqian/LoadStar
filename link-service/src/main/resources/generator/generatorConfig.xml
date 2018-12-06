@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties resource="application-dev.yml"/>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.ciel.pocket.link.infrastructure.mapper.MyMapper"/>
+        </plugin>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://101.200.55.76:3306/LoadStar_Link_Dev?useUnicode=true"
+                        userId="root"
+                        password="123456!">
+        </jdbcConnection>
+
+        <javaModelGenerator targetPackage="com.ciel.pocket.link.model" targetProject="src/main/java"/>
+
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+
+        <javaClientGenerator targetPackage="com.ciel.pocket.link.mapper" targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="%" />
+    </context>
+</generatorConfiguration>

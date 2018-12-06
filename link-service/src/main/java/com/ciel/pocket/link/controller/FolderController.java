@@ -1,13 +1,12 @@
 package com.ciel.pocket.link.controller;
 
-import com.ciel.pocket.link.domain.Folder;
-import com.ciel.pocket.link.domain.Link;
-import com.ciel.pocket.link.domain.UserDetail;
+import com.ciel.pocket.infrastructure.security.AuthContext;
+import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateFolderInput;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
-import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
-import com.ciel.pocket.link.infrastructure.utils.AuthContext;
+import com.ciel.pocket.link.model.Folder;
+import com.ciel.pocket.link.model.Link;
 import com.ciel.pocket.link.service.FolderService;
 import com.ciel.pocket.link.service.LinkService;
 import io.swagger.annotations.Api;
@@ -38,7 +37,7 @@ public class FolderController {
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> query(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<FolderTreeOutput> links = folderService.queryFolderTree(userDetail.getId());
+        List<FolderTreeOutput> links = folderService.queryFolderTree(userDetail.getAccountId());
         return ReturnModel.OK(links);
     }
 
@@ -46,7 +45,7 @@ public class FolderController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> queryById(@PathVariable(name = "id") Long folderId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, userDetail.getId());
+        List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, userDetail.getAccountId());
         return ReturnModel.OK(links);
     }
 
@@ -54,7 +53,7 @@ public class FolderController {
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") Long folderId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryLinksUnderFolder(userDetail.getId(), folderId);
+        List<Link> links = linkService.queryLinksUnderFolder(userDetail.getAccountId(), folderId);
         return ReturnModel.OK(links);
     }
 
@@ -66,8 +65,8 @@ public class FolderController {
         Folder folder = new Folder();
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
-        folder.setUserId(userDetail.getId());
-        folder.setSystem(false);
+        folder.setUserId(userDetail.getAccountId());
+        folder.setIsSystem(false);
 
         folderService.create(folder);
 
@@ -81,7 +80,7 @@ public class FolderController {
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
         folder.setUserId(userId);
-        folder.setSystem(false);
+        folder.setIsSystem(false);
 
         folderService.create(folder);
 
@@ -96,21 +95,21 @@ public class FolderController {
         defaultFolder.setName("未归档");
         defaultFolder.setCode("default");
         defaultFolder.setUserId(userId);
-        defaultFolder.setSystem(true);
+        defaultFolder.setIsSystem(true);
 
         Folder trashFolder = new Folder();
         trashFolder.setParentId(0L);
         trashFolder.setName("回收站");
         trashFolder.setCode("trash");
         trashFolder.setUserId(userId);
-        trashFolder.setSystem(true);
+        trashFolder.setIsSystem(true);
 
         Folder loadStarFolder = new Folder();
         loadStarFolder.setParentId(0L);
         loadStarFolder.setName("快捷");
         loadStarFolder.setCode("loadstar");
         loadStarFolder.setUserId(userId);
-        loadStarFolder.setSystem(true);
+        loadStarFolder.setIsSystem(true);
 
         folderService.create(defaultFolder);
         folderService.create(trashFolder);

@@ -1,17 +1,16 @@
 package com.ciel.pocket.link.controller.open;
 
-import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
-import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
 import com.ciel.pocket.link.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @Api("公开链接相关api")
 @RestController

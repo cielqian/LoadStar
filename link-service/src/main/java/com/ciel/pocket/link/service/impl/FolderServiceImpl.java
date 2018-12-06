@@ -1,13 +1,14 @@
 package com.ciel.pocket.link.service.impl;
 
 import com.ciel.pocket.infrastructure.exceptions.ObjectNotExistingException;
-import com.ciel.pocket.link.domain.Folder;
+import com.ciel.pocket.link.mapper.FolderMapper;
+import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
-import com.ciel.pocket.link.repository.FolderRepository;
 import com.ciel.pocket.link.service.FolderService;
 import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -23,8 +24,9 @@ import java.util.stream.Stream;
  */
 @Service
 public class FolderServiceImpl implements FolderService {
+
     @Autowired
-    FolderRepository folderRepository;
+    FolderMapper folderMapper;
 
     @Override
     public Long create(Folder folder) {
@@ -32,13 +34,12 @@ public class FolderServiceImpl implements FolderService {
             folder.setDeep(0);
         }
         else{
-            Optional<Folder> parent = folderRepository.findById(folder.getParentId());
-            if (!parent.isPresent())
-                throw new ObjectNotExistingException("父级文件夹不存在");
-            folder.setDeep(parent.get().getDeep() + 1);
+            Folder parent = folderMapper.selectByPrimaryKey(folder.getParentId());
+            Assert.notNull(parent, "父级文件夹不存在");
+            folder.setDeep(parent.getDeep() + 1);
         }
 
-        folderRepository.save(folder);
+        folderMapper.insert(folder);
         return folder.getId();
     }
 
@@ -46,7 +47,7 @@ public class FolderServiceImpl implements FolderService {
     public List<FolderTreeOutput> queryFolderTree(Long userId) {
         List<FolderTreeOutput> folderTreeOutputs = new ArrayList<>();
 
-        List<Folder> folders = folderRepository.queryAllByUserIdAndIsDeleteEquals(userId, false);
+        List<Folder> folders = folderMapper.queryAllByUserIdAndIsDeleteEquals(userId, false);
         if (folders != null && folders.size() > 0) {
             List<Folder> roots = folders.stream().filter(x -> x.getDeep() == 0).collect(Collectors.toList());
             List<Long> parentIds = new ArrayList<>();

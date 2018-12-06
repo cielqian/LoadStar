@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import tk.mybatis.spring.annotation.MapperScan;
 
 @SpringBootApplication
 @EnableOAuth2Client
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Import({com.ciel.pocket.infrastructure.config.QueryDslConfig.class,
         com.ciel.pocket.infrastructure.config.CorsFilter.class,
         com.ciel.pocket.infrastructure.config.FastJsonConfig.class,})
+@MapperScan(basePackages = "com.ciel.pocket.link.mapper")
 public class LinkApplication {
     public static void main(String[] args) {
         SpringApplication.run(LinkApplication.class, args);

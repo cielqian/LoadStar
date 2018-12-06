@@ -128,9 +128,6 @@
     <orderEntry type="library" name="Maven: org.latencyutils:LatencyUtils:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-security:2.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security.oauth.boot:spring-security-oauth2-autoconfigure:2.0.0.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework.security.oauth:spring-security-oauth2:2.2.1.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
-    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-jwt:1.0.9.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-starter-zipkin:2.0.0.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.cloud:spring-cloud-sleuth-zipkin:2.0.0.RELEASE" level="project" />
@@ -230,13 +227,24 @@
     <orderEntry type="library" name="Maven: com.google.code.findbugs:annotations:2.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.jdo:jdo-api:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.transaction:jta:1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-starter:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.security.oauth:spring-security-oauth2:2.0.15.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-mapper-asl:1.9.13" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.jackson:jackson-core-asl:1.9.13" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-starter-jdbc:2.0.3.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: com.zaxxer:HikariCP:2.7.9" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:5.0.7.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:1.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.2" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis.spring.boot:mybatis-spring-boot-autoconfigure:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.mybatis:mybatis:3.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.mybatis:mybatis-spring:1.3.1" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-spring-boot-starter:1.2.4" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper-spring-boot-autoconfigure:1.2.4" level="project" />
+    <orderEntry type="library" name="Maven: tk.mybatis:mapper:3.5.3" level="project" />
+    <orderEntry type="library" name="Maven: javax.persistence:persistence-api:1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper-spring-boot-starter:1.2.5" level="project" />
+    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper-spring-boot-autoconfigure:1.2.5" level="project" />
+    <orderEntry type="library" name="Maven: com.github.pagehelper:pagehelper:5.1.4" level="project" />
+    <orderEntry type="library" name="Maven: com.github.jsqlparser:jsqlparser:1.0" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-swagger-ui:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: io.springfox:springfox-spring-web:2.9.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.16.18" level="project" />

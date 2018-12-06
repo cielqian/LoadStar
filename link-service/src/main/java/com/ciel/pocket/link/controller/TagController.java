@@ -6,7 +6,6 @@ import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.domain.Tag;
 import com.ciel.pocket.link.domain.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateTagInput;
-import com.ciel.pocket.link.infrastructure.utils.AuthContext;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.Api;
@@ -51,7 +50,7 @@ public class TagController {
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@PathVariable(name = "id") Long tagId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryLinksUnderTag(userDetail.getId(), tagId);
+        List<com.ciel.pocket.link.model.Link> links = linkService.queryLinksUnderTag(userDetail.getId(), tagId);
         return com.ciel.pocket.link.dto.output.ReturnModel.OK(links);
     }
 

@@ -1,13 +1,11 @@
 package com.ciel.pocket.link.service;
 
-import com.ciel.pocket.link.domain.Link;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
-import org.springframework.data.domain.Sort;
+import com.ciel.pocket.link.model.Link;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface LinkService {
     Long create(Link link);
@@ -30,7 +28,7 @@ public interface LinkService {
 
     List<Link> queryLinksUnderFolder(Long accountId, Long folderId);
 
-    List<Link> queryLinksUnderTag(Long accountId, Long tagId);
+    List<com.ciel.pocket.link.model.Link> queryLinksUnderTag(Long accountId, Long tagId);
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 }

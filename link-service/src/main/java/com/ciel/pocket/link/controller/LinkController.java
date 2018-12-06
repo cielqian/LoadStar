@@ -6,14 +6,10 @@ import com.ciel.pocket.link.domain.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateLinkInput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
-import com.ciel.pocket.link.infrastructure.utils.AuthContext;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.*;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.SetUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

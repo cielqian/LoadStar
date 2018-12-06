@@ -5,10 +5,12 @@ import com.ciel.pocket.link.domain.*;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
+import com.ciel.pocket.link.mapper.LinkMapper;
+import com.ciel.pocket.link.mapper.LinkTagMapper;
+import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.repository.*;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
-import com.querydsl.core.QueryFactory;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -35,13 +37,13 @@ public class LinkServiceImpl implements LinkService {
     TagRepository tagRepository;
 
     @Autowired
-    LinkTagRepository linkTagRepository;
-
-    @Autowired
     VisitRecordRepository visitRecordRepository;
 
     @Autowired
-    LinkRepository1 linkRepository1;
+    LinkTagMapper linkTagMapper;
+
+    @Autowired
+    LinkMapper linkMapper;
 
     @Autowired
     @PersistenceContext
@@ -64,7 +66,10 @@ public class LinkServiceImpl implements LinkService {
         linkRepository.save(link);
 
         link.getTags().forEach(t -> {
-            linkTagRepository.test(link.getId(), t.getId());
+            LinkTag linkTag = new LinkTag();
+            linkTag.setLinkId(link.getId());
+            linkTag.setTagId(t.getId());
+            linkTagMapper.insert(linkTag);
         });
         return link.getId();
     }
@@ -170,7 +175,7 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
-    public List<Link> queryLinksUnderTag(Long accountId, Long tagId) {
+    public List<com.ciel.pocket.link.model.Link> queryLinksUnderTag(Long accountId, Long tagId) {
         QTag t = QTag.tag;
         QLink l = QLink.link;
 
@@ -181,7 +186,7 @@ public class LinkServiceImpl implements LinkService {
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 
-        return linkRepository1.findAllByUserIdAndIsDeleteEqualsAndTagIdEquals(accountId, tagId);
+        return linkMapper.findAllByUserIdAndIsDeleteEqualsAndTagIdEquals(accountId, tagId);
     }
 
     @Override

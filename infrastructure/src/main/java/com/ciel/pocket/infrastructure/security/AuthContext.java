@@ -1,11 +1,15 @@
-package com.ciel.pocket.link.infrastructure.utils;
+package com.ciel.pocket.infrastructure.security;
 
-import com.ciel.pocket.link.domain.UserDetail;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import java.security.Principal;
 import java.util.Map;
-import java.util.UUID;
+
+/**
+ * @author cielqian
+ * @email qianhong91@outlook.com
+ * @date 2018/12/6 17:25
+ */
 
 public class AuthContext {
     public final static UserDetail getUserDetail(Principal principal){
@@ -15,7 +19,7 @@ public class AuthContext {
         Object userName = detail.get("username");
 
         UserDetail userDetail = new UserDetail();
-        userDetail.setId(Long.parseLong(id.toString()));
+        userDetail.setAccountId(Long.parseLong(id.toString()));
         userDetail.setUserName(userName.toString());
 
         return userDetail;

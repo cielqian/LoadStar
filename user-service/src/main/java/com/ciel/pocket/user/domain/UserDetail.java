@@ -9,6 +9,4 @@ public class UserDetail {
     private Long accountId;
 
     private String userName;
-
-
 }
