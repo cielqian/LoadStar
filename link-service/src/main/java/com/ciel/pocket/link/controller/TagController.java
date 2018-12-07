@@ -1,11 +1,12 @@
 package com.ciel.pocket.link.controller;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.security.AuthContext;
+import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
-import com.ciel.pocket.link.domain.Link;
-import com.ciel.pocket.link.domain.Tag;
-import com.ciel.pocket.link.domain.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateTagInput;
+import com.ciel.pocket.link.model.Link;
+import com.ciel.pocket.link.model.Tag;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.Api;
@@ -39,8 +40,8 @@ public class TagController {
         Tag tag = new Tag();
         tag.setName(input.getName());
         tag.setSortIndex(0);
-        tag.setUserId(userDetail.getId());
-        tag.setSystem(true);
+        tag.setUserId(userDetail.getAccountId());
+        tag.setIsSystem(true);
         Long tagId = tagService.create(tag);
 
         return ReturnUtils.ok("", tagId);
@@ -50,7 +51,7 @@ public class TagController {
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@PathVariable(name = "id") Long tagId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<com.ciel.pocket.link.model.Link> links = linkService.queryLinksUnderTag(userDetail.getId(), tagId);
+        List<com.ciel.pocket.link.model.Link> links = linkService.queryLinksUnderTag(userDetail.getAccountId(), tagId);
         return com.ciel.pocket.link.dto.output.ReturnModel.OK(links);
     }
 
@@ -58,7 +59,7 @@ public class TagController {
     @ApiOperation("查询标签")
     public ReturnModel<List<Tag>> queryTag(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Tag> tags = tagService.queryAllTag(userDetail.getId());
+        List<Tag> tags = tagService.queryAllTag(userDetail.getAccountId());
 
         return ReturnUtils.ok("", tags);
     }
@@ -67,7 +68,7 @@ public class TagController {
     @ApiOperation("查询标签")
     public ReturnModel<List<Tag>> queryTag(Principal principal, @RequestParam("keyword") String keyword ){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Tag> tags = tagService.queryAllTag(userDetail.getId(), "%" + keyword + "%");
+        List<Tag> tags = tagService.queryAllTag(userDetail.getAccountId(), "%" + keyword + "%");
         return ReturnUtils.ok("", tags);
     }
 

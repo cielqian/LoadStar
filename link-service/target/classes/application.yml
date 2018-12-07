@@ -39,7 +39,7 @@ ribbon:
     enabled: true
 
 mybatis:
-    type-aliases-package: tk.mybatis.springboot.model
+    type-aliases-package: com.ciel.pocket.link.model
     mapper-locations: classpath:mapper/*.xml
 
 mapper:
@@ -47,3 +47,9 @@ mapper:
         - com.ciel.pocket.link.infrastructure.mapper.MyMapper
     not-empty: false
     identity: MYSQL
+
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql

@@ -1,8 +1,11 @@
 package com.ciel.pocket.link.model;
 
+import org.apache.ibatis.type.Alias;
+
 import java.util.Date;
 import javax.persistence.*;
 
+@Alias("Folder")
 public class Folder {
     @Id
     private Long id;

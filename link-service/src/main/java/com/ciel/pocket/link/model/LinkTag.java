@@ -1,8 +1,11 @@
 package com.ciel.pocket.link.model;
 
+import org.apache.ibatis.type.Alias;
+
 import javax.persistence.*;
 
 @Table(name = "link_tag")
+@Alias("LinkTag")
 public class LinkTag {
     @Id
     @Column(name = "link_id")

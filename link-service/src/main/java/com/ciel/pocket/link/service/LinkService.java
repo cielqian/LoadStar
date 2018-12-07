@@ -8,7 +8,7 @@ import com.ciel.pocket.link.model.Link;
 import java.util.List;
 
 public interface LinkService {
-    Long create(Link link);
+    Long create(Link link, List<Long> tags);
 
     void delete(Long linkId);
 

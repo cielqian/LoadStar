@@ -1,7 +1,7 @@
 package com.ciel.pocket.link.service.impl;
 
-import com.ciel.pocket.link.domain.Tag;
-import com.ciel.pocket.link.repository.TagRepository;
+import com.ciel.pocket.link.mapper.TagMapper;
+import com.ciel.pocket.link.model.Tag;
 import com.ciel.pocket.link.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,31 +17,27 @@ import java.util.List;
 @Service
 public class TagServiceImpl implements TagService {
     @Autowired
-    TagRepository tagRepository;
+    TagMapper tagMapper;
 
     @Override
     public Long create(Tag tag) {
-        tagRepository.save(tag);
+        tagMapper.insert(tag);
         return tag.getId();
     }
 
     @Override
     public List<Tag> queryAllTag(Long userId) {
-        return tagRepository.findAllByUserId(userId);
+        return tagMapper.queryAll(userId);
     }
 
     @Override
     public List<Tag> queryAllTag(Long userId, String keyword) {
-        return tagRepository.findAllByUserIdAndNameLike(userId, keyword);
+        return tagMapper.queryAllLike(userId, keyword);
     }
 
     @Override
     public void delete(Long tagId) {
-        tagRepository.deleteById(tagId);
+        tagMapper.deleteByPrimaryKey(tagId);
     }
 
-    @Override
-    public List<Tag> queryTags(List<Long> tagIds) {
-        return tagRepository.findAllById(tagIds);
-    }
 }

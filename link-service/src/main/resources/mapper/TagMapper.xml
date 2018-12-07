@@ -15,4 +15,18 @@
     <result column="sort_index" property="sortIndex" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
+  
+  <select id="queryAll" resultType="Tag">
+    select *
+    from tag
+    where user_id = #{userId}
+  </select>
+
+  <select id="queryAllLike" resultType="Tag">
+    select *
+    from tag
+    where user_id = #{userId}
+    and name like #{keyword}
+  </select>
+
 </mapper>

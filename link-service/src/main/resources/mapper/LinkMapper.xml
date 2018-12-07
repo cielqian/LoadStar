@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ciel.pocket.link.mapper.LinkMapper" >
-  <resultMap id="BaseResultMap" type="com.ciel.pocket.link.domain.Link" >
+  <resultMap id="BaseResultMap" type="com.ciel.pocket.link.model.Link" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -21,7 +21,14 @@
     <result column="visited_count" property="visitedCount" jdbcType="INTEGER" />
   </resultMap>
 
-  <select id="findAllByUserIdAndIsDeleteEqualsAndTagIdEquals" resultMap="BaseResultMap">
+    <insert id="insert" parameterType="Link">
+      INSERT INTO link (create_time, is_delete, update_time, comment, folder_id, icon, last_seen, name, sort_index,title
+      ,url, user_id, visited_count )
+      values (#{createTime},0, #{updateTime}, #{comment}, #{folderId}, #{icon}, #{lastSeen}, #{name}, #{sortIndex}, #{title}
+      ,#{url}, #{user_id},#{visited_count})
+    </insert>
+
+  <select id="queryAllUnderTag" resultType="Link">
       SELECT l.*
       FROM link_tag AS lt
       LEFT JOIN link AS l
@@ -30,5 +37,32 @@
       AND l.user_id = #{userId}
       AND lt.tag_id = #{tagId}
   </select>
+    
+    <select id="queryAllUnderFolder" resultType="Link">
+      SELECT *
+      from link
+      where is_delete = 0
+      and folder_id = #{folderId}
+      and user_id = #{userId}
+    </select>
 
+    <select id="queryAll" resultType="Link">
+        select *
+        from link
+        where user_id = #{userId}
+        and is_delete = 0
+    </select>
+
+    <select id="countByUser" resultType="Integer">
+      SELECT count(*)
+      from link
+      where user_id = #{userId}
+      and is_delete = 0
+  </select>
+
+    <update id="deleteById">
+      update link
+      set is_delete = 1
+      where id = #{linkId}
+    </update>
 </mapper>

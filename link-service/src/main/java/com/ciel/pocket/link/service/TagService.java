@@ -1,8 +1,6 @@
 package com.ciel.pocket.link.service;
 
-import com.ciel.pocket.link.domain.Folder;
-import com.ciel.pocket.link.domain.Tag;
-import com.ciel.pocket.link.dto.output.FolderTreeOutput;
+import com.ciel.pocket.link.model.Tag;
 
 import java.util.List;
 
@@ -21,5 +19,4 @@ public interface TagService {
 
     void delete(Long tagId);
 
-    List<Tag> queryTags(List<Long> tagIds);
 }

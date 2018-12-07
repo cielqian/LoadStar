@@ -1,9 +1,12 @@
 package com.ciel.pocket.link.model;
 
+import org.apache.ibatis.type.Alias;
+
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "visit_record")
+@Alias("VisitRecord")
 public class VisitRecord {
     @Id
     private Long id;

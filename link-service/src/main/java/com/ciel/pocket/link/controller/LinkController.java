@@ -1,11 +1,11 @@
 package com.ciel.pocket.link.controller;
 
-import com.ciel.pocket.link.domain.Link;
-import com.ciel.pocket.link.domain.Tag;
-import com.ciel.pocket.link.domain.UserDetail;
+import com.ciel.pocket.infrastructure.security.AuthContext;
+import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateLinkInput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
+import com.ciel.pocket.link.model.Link;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.*;
@@ -31,16 +31,14 @@ public class LinkController {
     public ReturnModel<Long> createLink(@RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         Link link = new Link();
-        link.setUserId(userDetail.getId());
+        link.setUserId(userDetail.getAccountId());
         link.setUrl(input.getUrl());
         link.setTitle(input.getTitle());
         link.setName(input.getName());
         link.setIcon(input.getIcon());
         link.setFolderId(input.getFolderId());
 
-        List<Tag> tags = tagService.queryTags(input.getTags());
-        link.setTags(new HashSet<>(tags));
-        Long linkId = linkService.create(link);
+        Long linkId = linkService.create(link, input.getTags());
 
         return ReturnModel.OK("", linkId);
     }
@@ -57,7 +55,7 @@ public class LinkController {
     @RequestMapping(path = "", method = RequestMethod.GET)
     public ReturnModel<PageableListModel<Link>> queryList(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        PageableListModel<Link> links = linkService.queryList(userDetail.getId());
+        PageableListModel<Link> links = linkService.queryList(userDetail.getAccountId());
         return ReturnModel.OK(links);
     }
 
@@ -65,7 +63,7 @@ public class LinkController {
     @RequestMapping(path = "/recent", method = RequestMethod.GET)
     public ReturnModel<List<Link>> queryRecentList(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryRecent5List(userDetail.getId());
+        List<Link> links = linkService.queryRecent5List(userDetail.getAccountId());
         return ReturnModel.OK(links);
     }
 
@@ -73,7 +71,7 @@ public class LinkController {
     @RequestMapping(path = "/top", method = RequestMethod.GET)
     public ReturnModel<List<Link>> queryTopList(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryTop5List(userDetail.getId());
+        List<Link> links = linkService.queryTop5List(userDetail.getAccountId());
         return ReturnModel.OK(links);
     }
 
