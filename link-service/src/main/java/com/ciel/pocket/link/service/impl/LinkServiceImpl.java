@@ -81,8 +81,13 @@ public class LinkServiceImpl implements LinkService {
     public void trash(Long linkId, Long accountId) {
         Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
         if (folder != null){
-            linkMapper.updateFolderById(linkId, accountId);
+            linkMapper.updateFolderById(linkId, folder.getId());
         }
+    }
+
+    @Override
+    public void move(Long linkId, Long folderId) {
+        linkMapper.updateFolderById(linkId, folderId);
     }
 
     @Override

@@ -83,6 +83,14 @@ public class LinkController {
         return ReturnModel.OK();
     }
 
+    @ApiOperation("移动链接")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/{linkId}/to/{folderId}", method = RequestMethod.PUT)
+    public ReturnModel moveLink(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "folderId") Long folderId){
+        linkService.move(linkId, folderId);
+        return ReturnModel.OK();
+    }
+
     @ApiOperation("链接移到回收站")
     @ApiParam(name = "linkId", value = "链接ID")
     @RequestMapping(path = "/trash/{linkId}", method = RequestMethod.PUT)

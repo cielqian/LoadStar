@@ -14,6 +14,8 @@ public interface LinkService {
 
     void trash(Long linkId, Long accountId);
 
+    void move(Long linkId, Long folderId);
+
     void visit(Long linkId);
 
     void up(Long linkId);
@@ -33,4 +35,5 @@ public interface LinkService {
     List<com.ciel.pocket.link.model.Link> queryLinksUnderTag(Long accountId, Long tagId);
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
+
 }
