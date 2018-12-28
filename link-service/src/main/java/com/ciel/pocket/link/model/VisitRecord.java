@@ -109,4 +109,8 @@ public class VisitRecord {
     public void setLinkId(Long linkId) {
         this.linkId = linkId;
     }
+
+    public VisitRecord() {
+        isDelete = false;
+    }
 }

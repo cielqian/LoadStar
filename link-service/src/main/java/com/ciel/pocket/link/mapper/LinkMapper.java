@@ -22,4 +22,5 @@ public interface LinkMapper extends MyMapper<Link> {
 
     void deleteById(@Param("linkId") Long linkId);
 
+    void updateFolderById(@Param("linkId") Long linkId, @Param("folderId") Long folderId);
 }

@@ -12,6 +12,8 @@ public interface LinkService {
 
     void delete(Long linkId);
 
+    void trash(Long linkId, Long accountId);
+
     void visit(Long linkId);
 
     void up(Long linkId);

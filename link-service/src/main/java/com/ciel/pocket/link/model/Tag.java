@@ -157,4 +157,8 @@ public class Tag {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    public Tag() {
+        isDelete = false;
+    }
 }

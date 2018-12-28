@@ -78,6 +78,14 @@ public class LinkServiceImpl implements LinkService {
     }
 
     @Override
+    public void trash(Long linkId, Long accountId) {
+        Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
+        if (folder != null){
+            linkMapper.updateFolderById(linkId, accountId);
+        }
+    }
+
+    @Override
     public void visit(Long linkId) {
         Link link = linkMapper.selectByPrimaryKey(linkId);
         Assert.notNull(link, "链接不存在");

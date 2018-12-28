@@ -83,6 +83,15 @@ public class LinkController {
         return ReturnModel.OK();
     }
 
+    @ApiOperation("链接移到回收站")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/trash/{linkId}", method = RequestMethod.PUT)
+    public ReturnModel trashLink(@PathVariable(name = "linkId") Long linkId, Principal principal){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+        linkService.trash(linkId, userDetail.getAccountId());
+        return ReturnModel.OK();
+    }
+
     @ApiOperation("上移链接")
     @ApiParam(name = "linkId", value = "链接ID")
         @RequestMapping(path = "/{linkId}/up", method = RequestMethod.PUT)
