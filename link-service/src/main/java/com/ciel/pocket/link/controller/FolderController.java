@@ -49,12 +49,19 @@ public class FolderController {
         return ReturnModel.OK(links);
     }
 
-    @ApiOperation("查询标签下的书签")
+    @ApiOperation("查询文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") Long folderId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         List<Link> links = linkService.queryLinksUnderFolder(userDetail.getAccountId(), folderId);
         return ReturnModel.OK(links);
+    }
+
+    @ApiOperation("清空文件夹下的书签")
+    @RequestMapping(path = "/{id}/link", method = RequestMethod.DELETE)
+    public ReturnModel deleteLinkUnderFolder(@PathVariable(name = "id") Long folderId){
+        linkService.deleteLinksUnderFolder(folderId);
+        return ReturnModel.OK();
     }
 
     @ApiOperation("创建文件夹")
@@ -75,11 +82,13 @@ public class FolderController {
 
     @ApiOperation("创建文件夹")
     @RequestMapping(path = "/current", method = RequestMethod.POST)
-    public ReturnModel createFolderForCurrent(@PathVariable Long userId,@RequestBody CreateFolderInput createFolderInput){
+    public ReturnModel createFolderForCurrent(Principal principal,@RequestBody CreateFolderInput createFolderInput){
+        UserDetail userDetail = AuthContext.getUserDetail(principal);
+
         Folder folder = new Folder();
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
-        folder.setUserId(userId);
+        folder.setUserId(userDetail.getAccountId());
         folder.setIsSystem(false);
 
         folderService.create(folder);

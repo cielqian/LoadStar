@@ -98,7 +98,7 @@ public class LinkServiceImpl implements LinkService {
         link.setLastSeen(new Date());
         link.setVisitedCount(link.getVisitedCount()+1);
 
-        linkMapper.insert(link);
+        linkMapper.updateByPrimaryKey(link);
 
         VisitRecord visitRecord = new VisitRecord();
         visitRecord.setLinkId(linkId);
@@ -179,6 +179,11 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public List<Link> queryLinksUnderFolder(Long accountId, Long folderId) {
         return linkMapper.queryAllUnderFolder(accountId, folderId);
+    }
+
+    @Override
+    public void deleteLinksUnderFolder(Long folderId) {
+        linkMapper.deleteByFolder(folderId);
     }
 
     @Override

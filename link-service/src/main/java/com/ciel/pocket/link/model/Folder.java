@@ -190,4 +190,8 @@ public class Folder {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    public Folder() {
+        this.isDelete = false;
+    }
 }

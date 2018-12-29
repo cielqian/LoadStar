@@ -71,4 +71,10 @@
       set folder_id = #{folderId}
       where id = #{linkId}
     </update>
+
+    <update id="deleteByFolder">
+        update link
+        set is_delete = true
+        where folder_id = #{folderId}
+    </update>
 </mapper>
