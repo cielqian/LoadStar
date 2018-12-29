@@ -16,10 +16,11 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
   
-  <select id="queryAll" resultType="Tag">
-    select *
-    from tag
+  <select id="queryAll" resultType="com.ciel.pocket.link.dto.output.QueryTagListOutput">
+    select id, name, (select count(*) from link_tag as lt where lt.tag_id =  t.id) as linkCount
+    from tag as t
     where user_id = #{userId}
+    and is_delete = false
   </select>
 
   <select id="queryAllLike" resultType="Tag">

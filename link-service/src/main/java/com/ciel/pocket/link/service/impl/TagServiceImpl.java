@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.ciel.pocket.link.dto.output.QueryTagListOutput;
 import com.ciel.pocket.link.mapper.TagMapper;
 import com.ciel.pocket.link.model.Tag;
 import com.ciel.pocket.link.service.TagService;
@@ -26,7 +27,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public List<Tag> queryAllTag(Long userId) {
+    public List<QueryTagListOutput> queryAllTag(Long userId) {
         return tagMapper.queryAll(userId);
     }
 

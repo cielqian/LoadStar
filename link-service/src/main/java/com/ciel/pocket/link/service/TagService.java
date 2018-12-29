@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.service;
 
+import com.ciel.pocket.link.dto.output.QueryTagListOutput;
 import com.ciel.pocket.link.model.Tag;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 public interface TagService {
     Long create(Tag tag);
 
-    List<Tag> queryAllTag(Long userId);
+    List<QueryTagListOutput> queryAllTag(Long userId);
 
     List<Tag> queryAllTag(Long userId, String keyword);
 

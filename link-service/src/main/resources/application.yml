@@ -39,7 +39,7 @@ ribbon:
     enabled: true
 
 mybatis:
-    type-aliases-package: com.ciel.pocket.link.model
+    type-aliases-package: com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output
     mapper-locations: classpath:mapper/*.xml
 
 mapper:

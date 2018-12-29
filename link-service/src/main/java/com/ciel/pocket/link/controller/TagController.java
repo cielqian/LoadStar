@@ -5,6 +5,7 @@ import com.ciel.pocket.infrastructure.security.AuthContext;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.link.dto.input.CreateTagInput;
+import com.ciel.pocket.link.dto.output.QueryTagListOutput;
 import com.ciel.pocket.link.model.Link;
 import com.ciel.pocket.link.model.Tag;
 import com.ciel.pocket.link.service.LinkService;
@@ -57,10 +58,9 @@ public class TagController {
 
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     @ApiOperation("查询标签")
-    public ReturnModel<List<Tag>> queryTag(Principal principal){
+    public ReturnModel<List<QueryTagListOutput>> queryTag(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Tag> tags = tagService.queryAllTag(userDetail.getAccountId());
-
+        List<QueryTagListOutput> tags = tagService.queryAllTag(userDetail.getAccountId());
         return ReturnUtils.ok("", tags);
     }
 
