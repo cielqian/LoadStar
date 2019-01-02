@@ -1,6 +1,7 @@
 package com.ciel.pocket.user.client.fallback;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.exceptions.FriendlyException;
 import com.ciel.pocket.user.client.AuthServiceClient;
 import com.ciel.pocket.user.dto.input.CreateUser;
 import feign.hystrix.FallbackFactory;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class HystrixClientFactory implements FallbackFactory<AuthServiceClient> {
     @Override
     public AuthServiceClient create(Throwable throwable) {
-        System.out.println(throwable);
+//        throw new FriendlyException("请稍后重试");
 
         return new AuthServiceClientWithFactory() {
             @Override

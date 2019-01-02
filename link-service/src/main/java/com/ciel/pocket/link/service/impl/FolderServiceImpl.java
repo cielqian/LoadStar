@@ -1,10 +1,10 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
 import com.ciel.pocket.link.mapper.FolderMapper;
 import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.service.FolderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -18,23 +18,21 @@ import java.util.stream.Collectors;
  * @date 2018/10/22 13:28
  */
 @Service
-public class FolderServiceImpl implements FolderService {
-
-    @Autowired
-    FolderMapper folderMapper;
+public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> implements FolderService {
 
     @Override
     public Long create(Folder folder) {
+
         if (folder.getParentId() == 0 || folder.getParentId() == null){
             folder.setDeep(0);
         }
         else{
-            Folder parent = folderMapper.selectByPrimaryKey(folder.getParentId());
+            Folder parent = baseMapper.selectById(folder.getParentId());
             Assert.notNull(parent, "父级文件夹不存在");
             folder.setDeep(parent.getDeep() + 1);
         }
 
-        folderMapper.insert(folder);
+        baseMapper.insert(folder);
         return folder.getId();
     }
 
@@ -42,7 +40,7 @@ public class FolderServiceImpl implements FolderService {
     public List<FolderTreeOutput> queryFolderTree(Long userId) {
         List<FolderTreeOutput> folderTreeOutputs = new ArrayList<>();
 
-        List<Folder> folders = folderMapper.queryAll(userId);
+        List<Folder> folders = baseMapper.queryAll(userId);
         if (folders != null && folders.size() > 0) {
             List<Folder> roots = folders.stream().filter(x -> x.getDeep() == 0).collect(Collectors.toList());
             List<Long> parentIds = new ArrayList<>();
@@ -63,7 +61,7 @@ public class FolderServiceImpl implements FolderService {
     public List<FolderTreeOutput> queryFolderTree(Long folderId, Long userId) {
         List<FolderTreeOutput> folderTreeOutputs = new ArrayList<>();
 
-        List<Folder> folders = folderMapper.queryAllUnderFolder(userId, folderId);
+        List<Folder> folders = baseMapper.queryAllUnderFolder(userId, folderId);
         if (folders != null && folders.size() > 0) {
             folders.forEach(x -> {
                 FolderTreeOutput element = new FolderTreeOutput();

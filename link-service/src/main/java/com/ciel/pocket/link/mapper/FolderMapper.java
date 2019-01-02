@@ -1,12 +1,12 @@
 package com.ciel.pocket.link.mapper;
 
-import com.ciel.pocket.link.infrastructure.mapper.MyMapper;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.ciel.pocket.link.model.Folder;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface FolderMapper extends MyMapper<Folder> {
+public interface FolderMapper extends BaseMapper<Folder> {
     List<Folder> queryAll(@Param("userId") Long userId);
 
     List<Folder> queryAllUnderFolder(@Param("userId") Long userId, @Param("folderId") Long folderId);

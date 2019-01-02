@@ -1,10 +1,10 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.output.QueryTagListOutput;
 import com.ciel.pocket.link.mapper.TagMapper;
 import com.ciel.pocket.link.model.Tag;
 import com.ciel.pocket.link.service.TagService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,29 +16,27 @@ import java.util.List;
  */
 
 @Service
-public class TagServiceImpl implements TagService {
-    @Autowired
-    TagMapper tagMapper;
+public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagService {
 
     @Override
     public Long create(Tag tag) {
-        tagMapper.insert(tag);
+        baseMapper.insert(tag);
         return tag.getId();
     }
 
     @Override
     public List<QueryTagListOutput> queryAllTag(Long userId) {
-        return tagMapper.queryAll(userId);
+        return baseMapper.queryAll(userId);
     }
 
     @Override
     public List<Tag> queryAllTag(Long userId, String keyword) {
-        return tagMapper.queryAllLike(userId, keyword);
+        return baseMapper.queryAllLike(userId, keyword);
     }
 
     @Override
     public void delete(Long tagId) {
-        tagMapper.deleteByPrimaryKey(tagId);
+        baseMapper.deleteById(tagId);
     }
 
 }

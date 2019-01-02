@@ -9,6 +9,7 @@ import com.ciel.pocket.link.model.Link;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.*;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,13 @@ public class LinkController {
         Link link = new Link();
         link.setUserId(userDetail.getAccountId());
         link.setUrl(input.getUrl());
-        link.setTitle(input.getTitle());
+
+        if (StringUtils.isBlank(input.getTitle())){
+            link.setTitle(input.getName());
+        }else{
+            link.setTitle(input.getTitle());
+        }
+
         link.setName(input.getName());
         link.setIcon(input.getIcon());
         link.setFolderId(input.getFolderId());

@@ -1,5 +1,7 @@
 package com.ciel.pocket.link.service;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.mybatisplus.service.IService;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
@@ -7,7 +9,7 @@ import com.ciel.pocket.link.model.Link;
 
 import java.util.List;
 
-public interface LinkService {
+public interface LinkService extends IService<Link> {
     Long create(Link link, List<Long> tags);
 
     void delete(Long linkId);

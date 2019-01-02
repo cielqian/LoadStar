@@ -1,7 +1,8 @@
 package com.ciel.pocket.link.service;
 
-import com.ciel.pocket.link.model.Folder;
+import com.baomidou.mybatisplus.service.IService;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
+import com.ciel.pocket.link.model.Folder;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @date 2018/10/22 13:27
  */
 
-public interface FolderService {
+public interface FolderService extends IService<Folder> {
     Long create(Folder folder);
 
     List<FolderTreeOutput> queryFolderTree(Long userId);

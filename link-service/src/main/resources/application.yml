@@ -38,18 +38,7 @@ ribbon:
   eager-load:
     enabled: true
 
-mybatis:
+mybatis-plus:
     type-aliases-package: com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output
-    mapper-locations: classpath:mapper/*.xml
+    mapper-locations: classpath:/mapper/*.xml
 
-mapper:
-    mappers:
-        - com.ciel.pocket.link.infrastructure.mapper.MyMapper
-    not-empty: false
-    identity: MYSQL
-
-pagehelper:
-    helperDialect: mysql
-    reasonable: true
-    supportMethodsArguments: true
-    params: count=countSql

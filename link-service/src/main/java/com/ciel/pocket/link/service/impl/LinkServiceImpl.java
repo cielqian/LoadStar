@@ -1,5 +1,7 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
@@ -13,10 +15,7 @@ import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.model.VisitRecord;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
-import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -25,13 +24,10 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class LinkServiceImpl implements LinkService {
+public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements LinkService {
 
     @Autowired
     LinkTagMapper linkTagMapper;
-
-    @Autowired
-    LinkMapper linkMapper;
 
     @Autowired
     FolderMapper folderMapper;
@@ -41,7 +37,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public Long create(Link link, List<Long> tags) {
-        Integer totalCount = linkMapper.countByUser(link.getUserId());
+        Integer totalCount = baseMapper.countByUser(link.getUserId());
 
         Date now = new Date();
 
@@ -58,7 +54,7 @@ public class LinkServiceImpl implements LinkService {
             }
         }
 
-        linkMapper.insert(link);
+        baseMapper.insert(link);
 
         tags.forEach(tagId -> {
             LinkTag linkTag = new LinkTag();
@@ -73,7 +69,7 @@ public class LinkServiceImpl implements LinkService {
     public void delete(Long linkId) {
         Link link = query(linkId);
         Assert.notNull(link, "链接不存在");
-        linkMapper.deleteById(linkId);
+        baseMapper.deleteById(linkId);
         //linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
     }
 
@@ -81,24 +77,24 @@ public class LinkServiceImpl implements LinkService {
     public void trash(Long linkId, Long accountId) {
         Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
         if (folder != null){
-            linkMapper.updateFolderById(linkId, folder.getId());
+            baseMapper.updateFolderById(linkId, folder.getId());
         }
     }
 
     @Override
     public void move(Long linkId, Long folderId) {
-        linkMapper.updateFolderById(linkId, folderId);
+        baseMapper.updateFolderById(linkId, folderId);
     }
 
     @Override
     public void visit(Long linkId) {
-        Link link = linkMapper.selectByPrimaryKey(linkId);
+        Link link = baseMapper.selectById(linkId);
         Assert.notNull(link, "链接不存在");
 
         link.setLastSeen(new Date());
         link.setVisitedCount(link.getVisitedCount()+1);
 
-        linkMapper.updateByPrimaryKey(link);
+        baseMapper.updateById(link);
 
         VisitRecord visitRecord = new VisitRecord();
         visitRecord.setLinkId(linkId);
@@ -143,7 +139,7 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public Link query(Long linkId) {
-        Link link = linkMapper.selectByPrimaryKey(linkId);
+        Link link = baseMapper.selectById(linkId);
         Assert.notNull(link, "链接不存在");
 
         return link;
@@ -152,7 +148,8 @@ public class LinkServiceImpl implements LinkService {
     @Override
     public PageableListModel<Link> queryList(Long accountId) {
         PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
-        List links = linkMapper.queryAll(accountId);
+        Page<Link> page = new Page<>();
+        List links = baseMapper.queryAll(page, accountId);
         linkPageableListModel.setItems(links);
         linkPageableListModel.setTotal(links.size());
 
@@ -161,34 +158,36 @@ public class LinkServiceImpl implements LinkService {
 
     @Override
     public List<Link> queryTop5List(Long accountId) {
-        PageHelper.startPage(1, 5);
+//        PageHelper.startPage(1, 5);
+        Page<Link> page = new Page<>(1, 5);
 
-        Sort sort = new Sort(Sort.Direction.DESC, "visitedCount");
-        Pageable pageable = PageRequest.of(0, 5, sort);
-        return linkMapper.queryAll(accountId);
+//        Sort sort = new Sort(Sort.Direction.DESC, "visitedCount");
+//        Pageable pageable = PageRequest.of(0, 5, sort);
+        return baseMapper.queryAll(page, accountId);
     }
 
     @Override
     public List<Link> queryRecent5List(Long accountId) {
-        PageHelper.startPage(1, 5);
+//        PageHelper.startPage(1, 5);
+        Page<Link> page = new Page<>(1, 5);
 
         Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
-        return linkMapper.queryAll(accountId);
+        return baseMapper.queryAll(page, accountId);
     }
 
     @Override
     public List<Link> queryLinksUnderFolder(Long accountId, Long folderId) {
-        return linkMapper.queryAllUnderFolder(accountId, folderId);
+        return baseMapper.queryAllUnderFolder(accountId, folderId);
     }
 
     @Override
     public void deleteLinksUnderFolder(Long folderId) {
-        linkMapper.deleteByFolder(folderId);
+        baseMapper.deleteByFolder(folderId);
     }
 
     @Override
     public List<com.ciel.pocket.link.model.Link> queryLinksUnderTag(Long accountId, Long tagId) {
-        return linkMapper.queryAllUnderTag(accountId, tagId);
+        return baseMapper.queryAllUnderTag(accountId, tagId);
     }
 
     @Override

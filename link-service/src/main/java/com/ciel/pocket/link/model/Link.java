@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotations.TableLogic;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ public class Link {
     @Column(name = "create_time")
     private Date createTime;
 
+    @TableLogic
     @Column(name = "is_delete")
     private Boolean isDelete;
 
