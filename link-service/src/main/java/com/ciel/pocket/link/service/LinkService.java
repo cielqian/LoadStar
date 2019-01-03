@@ -27,6 +27,8 @@ public interface LinkService extends IService<Link> {
 
     PageableListModel<Link> queryList(Long accountId);
 
+    List<Link> queryList(Long accountId, String keyword);
+
     List<Link> queryTop5List(Long accountId);
 
     List<Link> queryRecent5List(Long accountId);

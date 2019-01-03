@@ -160,6 +160,12 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     }
 
     @Override
+    public List<Link> queryList(Long accountId, String keyword) {
+
+        return null;
+    }
+
+    @Override
     public List<Link> queryTop5List(Long accountId) {
 //        PageHelper.startPage(1, 5);
         Page<Link> page = new Page<>(1, 5);

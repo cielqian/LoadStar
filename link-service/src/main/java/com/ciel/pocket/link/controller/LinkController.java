@@ -13,6 +13,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.security.Principal;
 import java.util.*;
 
@@ -60,7 +61,7 @@ public class LinkController {
 
     @ApiOperation("查询链接")
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public ReturnModel<PageableListModel<Link>> queryList(Principal principal){
+    public ReturnModel<PageableListModel<Link>> queryList(Principal principal, @PathParam("keyword") String keyword){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         PageableListModel<Link> links = linkService.queryList(userDetail.getAccountId());
         return ReturnModel.OK(links);
