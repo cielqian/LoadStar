@@ -1,6 +1,6 @@
 package com.ciel.pocket.link.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.output.QueryTagListOutput;
 import com.ciel.pocket.link.mapper.TagMapper;
 import com.ciel.pocket.link.model.Tag;

@@ -1,5 +1,8 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
@@ -8,11 +11,13 @@ import javax.persistence.*;
 @Alias("Tag")
 public class Tag {
     @Id
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     @Column(name = "create_time")
     private Date createTime;
 
+    @TableLogic
     @Column(name = "is_delete")
     private Boolean isDelete;
 

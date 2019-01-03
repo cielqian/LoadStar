@@ -14,6 +14,8 @@ import java.util.List;
 public class FolderTreeOutput {
     private Long id;
 
+    private String code;
+
     private String name;
 
     private boolean isSystem;

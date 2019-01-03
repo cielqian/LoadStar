@@ -1,7 +1,7 @@
 package com.ciel.pocket.link.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ciel.pocket.link.model.Link;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Param;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface LinkMapper extends BaseMapper<Link> {
 
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    Integer insert(Link link);
+    int insert(Link link);
 
     List<Link> queryAllUnderTag(@Param("userId") Long userId, @Param("tagId") Long tagId);
 

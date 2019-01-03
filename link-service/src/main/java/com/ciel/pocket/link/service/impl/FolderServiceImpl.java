@@ -1,6 +1,6 @@
 package com.ciel.pocket.link.service.impl;
 
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
 import com.ciel.pocket.link.mapper.FolderMapper;
 import com.ciel.pocket.link.model.Folder;
@@ -49,6 +49,7 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
                 element.setId(x.getId());
                 element.setName(x.getName());
                 element.setSystem(x.getIsSystem());
+                element.setCode(x.getCode());
                 folderTreeOutputs.add(element);
                 parentIds.add(x.getId());
                 c(folders, element);
@@ -68,6 +69,7 @@ public class FolderServiceImpl extends ServiceImpl<FolderMapper, Folder> impleme
                 element.setId(x.getId());
                 element.setName(x.getName());
                 element.setSystem(x.getIsSystem());
+                element.setCode(x.getCode());
                 folderTreeOutputs.add(element);
             });
         }

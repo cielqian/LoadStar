@@ -1,7 +1,7 @@
 package com.ciel.pocket.link.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
@@ -56,12 +56,15 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
         baseMapper.insert(link);
 
-        tags.forEach(tagId -> {
-            LinkTag linkTag = new LinkTag();
-            linkTag.setLinkId(link.getId());
-            linkTag.setTagId(tagId);
-            linkTagMapper.insert(linkTag);
-        });
+        if (tags != null){
+            tags.forEach(tagId -> {
+                LinkTag linkTag = new LinkTag();
+                linkTag.setLinkId(link.getId());
+                linkTag.setTagId(tagId);
+                linkTagMapper.insert(linkTag);
+            });
+        }
+
         return link.getId();
     }
 

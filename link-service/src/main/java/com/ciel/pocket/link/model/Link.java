@@ -1,10 +1,11 @@
 package com.ciel.pocket.link.model;
 
-import com.baomidou.mybatisplus.annotations.TableLogic;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import java.util.Date;
-import javax.persistence.*;
 
 @Alias("Link")
 public class Link {

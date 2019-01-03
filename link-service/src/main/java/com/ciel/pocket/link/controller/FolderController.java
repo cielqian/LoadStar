@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author cielqian
@@ -74,7 +75,7 @@ public class FolderController {
         folder.setName(createFolderInput.getName());
         folder.setUserId(userDetail.getAccountId());
         folder.setIsSystem(false);
-
+        folder.setCode(UUID.randomUUID().toString());
         folderService.create(folder);
 
         return ReturnModel.OK();
@@ -93,6 +94,13 @@ public class FolderController {
 
         folderService.create(folder);
 
+        return ReturnModel.OK();
+    }
+
+    @ApiOperation("删除文件夹")
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public ReturnModel deleteFolderForCurrent(@PathVariable(name = "id") Long folderId){
+        folderService.removeById(folderId);
         return ReturnModel.OK();
     }
 
