@@ -33,4 +33,7 @@ public class PageInput {
         return offSet == 0 ? offSet : (offSet - pageSize);
     }
 
+    public PageInput() {
+        pageSize = DEFAULT_PAGESIZE_;
+    }
 }

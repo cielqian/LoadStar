@@ -2,6 +2,7 @@ package com.ciel.pocket.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
+import com.ciel.pocket.link.dto.input.QueryLinkListInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.model.Link;
@@ -25,9 +26,7 @@ public interface LinkService extends IService<Link> {
 
     Link query(Long linkId);
 
-    PageableListModel<Link> queryList(Long accountId);
-
-    List<Link> queryList(Long accountId, String keyword);
+    PageableListModel<Link> queryPageList(Long accountId, QueryLinkListInput queryInput);
 
     List<Link> queryTop5List(Long accountId);
 

@@ -1,8 +1,10 @@
 package com.ciel.pocket.link.controller;
 
+import com.ciel.pocket.infrastructure.dto.web.PageInput;
 import com.ciel.pocket.infrastructure.security.AuthContext;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateLinkInput;
+import com.ciel.pocket.link.dto.input.QueryLinkListInput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
 import com.ciel.pocket.link.model.Link;
@@ -59,11 +61,11 @@ public class LinkController {
         return ReturnModel.OK();
     }
 
-    @ApiOperation("查询链接")
+    @ApiOperation("分页查询链接")
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public ReturnModel<PageableListModel<Link>> queryList(Principal principal, @PathParam("keyword") String keyword){
+    public ReturnModel<PageableListModel<Link>> queryList(Principal principal, QueryLinkListInput queryInput){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
-        PageableListModel<Link> links = linkService.queryList(userDetail.getAccountId());
+        PageableListModel<Link> links = linkService.queryPageList(userDetail.getAccountId(), queryInput);
         return ReturnModel.OK(links);
     }
 

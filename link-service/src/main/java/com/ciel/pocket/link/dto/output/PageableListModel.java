@@ -10,7 +10,7 @@ public class PageableListModel<T> {
         total = 0;
     }
 
-    private int total;
+    private long total;
 
     private List<T> items;
 }

@@ -1,8 +1,11 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
+import com.ciel.pocket.link.dto.input.QueryLinkListInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.mapper.FolderMapper;
@@ -15,6 +18,7 @@ import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.model.VisitRecord;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -149,21 +153,26 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     }
 
     @Override
-    public PageableListModel<Link> queryList(Long accountId) {
+    public PageableListModel<Link> queryPageList(Long accountId, QueryLinkListInput queryInput) {
         PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
-        Page<Link> page = new Page<>();
-        List links = baseMapper.queryAll(page, accountId);
-        linkPageableListModel.setItems(links);
-        linkPageableListModel.setTotal(links.size());
+        Page<Link> page = new Page<Link>();
+        page.setSize(queryInput.getPageSize());
+        page.setPages(queryInput.getCurrentPage());
+
+        QueryWrapper<Link> qw = new QueryWrapper<Link>();
+        qw.eq("is_delete", "0");
+        qw.eq("user_id", accountId);
+        if (StringUtils.isNotBlank(queryInput.getKeyword())){
+            qw.and(l -> l.like("name", queryInput.getKeyword()));
+        }
+
+        IPage links = baseMapper.selectPage(page, qw);
+        linkPageableListModel.setItems(links.getRecords());
+        linkPageableListModel.setTotal(links.getTotal());
 
         return linkPageableListModel;
     }
 
-    @Override
-    public List<Link> queryList(Long accountId, String keyword) {
-
-        return null;
-    }
 
     @Override
     public List<Link> queryTop5List(Long accountId) {
@@ -172,7 +181,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
 //        Sort sort = new Sort(Sort.Direction.DESC, "visitedCount");
 //        Pageable pageable = PageRequest.of(0, 5, sort);
-        return baseMapper.queryAll(page, accountId);
+        return baseMapper.queryAll(page, null);
     }
 
     @Override
@@ -181,7 +190,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         Page<Link> page = new Page<>(1, 5);
 
         Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
-        return baseMapper.queryAll(page, accountId);
+        return baseMapper.queryAll(page, null);
     }
 
     @Override

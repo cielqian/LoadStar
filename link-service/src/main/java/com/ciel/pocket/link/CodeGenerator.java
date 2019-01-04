@@ -1,7 +1,5 @@
 package com.ciel.pocket.link;
 
-import com.baomidou.mybatisplus.generator.AutoGenerator;
-
 /**
  * @author cielqian
  * @email qianhong91@outlook.com
@@ -10,8 +8,6 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 
 public class CodeGenerator {
     public static void main(String[] args) {
-        AutoGenerator mpg = new AutoGenerator();
-
 
     }
 }

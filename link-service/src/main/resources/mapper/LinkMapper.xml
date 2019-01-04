@@ -46,13 +46,6 @@
       and user_id = #{userId}
     </select>
 
-    <select id="queryAll" resultType="Link">
-        select *
-        from link
-        where user_id = #{userId}
-        and is_delete = 0
-    </select>
-
     <select id="countByUser" resultType="Integer">
       SELECT count(*)
       from link
