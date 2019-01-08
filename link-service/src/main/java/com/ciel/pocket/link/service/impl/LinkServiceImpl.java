@@ -20,7 +20,6 @@ import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
@@ -189,7 +188,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 //        PageHelper.startPage(1, 5);
         Page<Link> page = new Page<>(1, 5);
 
-        Sort sort = new Sort(Sort.Direction.DESC, "lastSeen");
         return baseMapper.queryAll(page, null);
     }
 

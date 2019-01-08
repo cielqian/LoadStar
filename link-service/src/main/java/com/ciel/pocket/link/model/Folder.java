@@ -1,40 +1,35 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
-import javax.persistence.*;
 
 @Alias("Folder")
 public class Folder {
-    @Id
+    @TableId
     private Long id;
 
-    @Column(name = "create_time")
     private Date createTime;
 
-    @Column(name = "is_delete")
+    @TableLogic
     private Boolean isDelete;
 
-    @Column(name = "update_time")
     private Date updateTime;
 
     private String code;
 
     private Integer deep;
 
-    @Column(name = "is_system")
     private Boolean isSystem;
 
     private String name;
 
-    @Column(name = "parent_id")
     private Long parentId;
 
-    @Column(name = "sort_index")
     private Integer sortIndex;
 
-    @Column(name = "user_id")
     private Long userId;
 
     /**

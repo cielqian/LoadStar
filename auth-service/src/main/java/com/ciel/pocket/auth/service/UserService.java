@@ -14,5 +14,5 @@ public interface UserService {
 
     void deleteUser(String username);
 
-    Optional<User> queryUser(String username);
+    User queryUser(String username);
 }

@@ -1,29 +1,25 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
-import javax.persistence.*;
 
-@Table(name = "visit_record")
 @Alias("VisitRecord")
 public class VisitRecord {
-    @Id
+    @TableId
     private Long id;
 
-    @Column(name = "create_time")
     private Date createTime;
 
-    @Column(name = "is_delete")
+    @TableLogic
     private Boolean isDelete;
 
-    @Column(name = "update_time")
     private Date updateTime;
 
-    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "link_id")
     private Long linkId;
 
     /**

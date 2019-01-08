@@ -1,50 +1,41 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
 import java.util.Date;
 
 @Alias("Link")
 public class Link {
-    @Id
+    @TableId
     private Long id;
 
-    @Column(name = "create_time")
     private Date createTime;
 
     @TableLogic
-    @Column(name = "is_delete")
     private Boolean isDelete;
 
-    @Column(name = "update_time")
     private Date updateTime;
 
     private String comment;
 
-    @Column(name = "folder_id")
     private Long folderId;
 
     private String icon;
 
-    @Column(name = "last_seen")
     private Date lastSeen;
 
     private String name;
 
-    @Column(name = "sort_index")
     private Integer sortIndex;
 
     private String title;
 
     private String url;
 
-    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "visited_count")
     private Integer visitedCount;
 
     /**

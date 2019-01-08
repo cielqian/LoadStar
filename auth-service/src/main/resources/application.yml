@@ -10,9 +10,6 @@ spring:
 #    sampler:
 #      percentage: 1.0
 #      probability: 1.0
-  jpa:
-    hibernate:
-      ddl-auto: update
   redis:
     host: 101.200.55.76
     port: 6379

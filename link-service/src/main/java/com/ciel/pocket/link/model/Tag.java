@@ -1,40 +1,31 @@
 package com.ciel.pocket.link.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
-import javax.persistence.*;
 
 @Alias("Tag")
 public class Tag {
-    @Id
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
-    @Column(name = "create_time")
     private Date createTime;
 
     @TableLogic
-    @Column(name = "is_delete")
     private Boolean isDelete;
 
-    @Column(name = "update_time")
     private Date updateTime;
 
     private String code;
 
-    @Column(name = "is_system")
     private Boolean isSystem;
 
     private String name;
 
-    @Column(name = "sort_index")
     private Integer sortIndex;
 
-    @Column(name = "user_id")
     private Long userId;
 
     /**

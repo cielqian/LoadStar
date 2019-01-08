@@ -1,18 +1,14 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import org.apache.ibatis.type.Alias;
 
-import javax.persistence.*;
-
-@Table(name = "link_tag")
 @Alias("LinkTag")
 public class LinkTag {
-    @Id
-    @Column(name = "link_id")
+    @TableId
     private Long linkId;
 
-    @Id
-    @Column(name = "tag_id")
+    @TableId
     private Long tagId;
 
     /**

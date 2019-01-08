@@ -4,11 +4,8 @@ import com.ciel.pocket.auth.domain.User;
 import com.ciel.pocket.auth.repository.UserRepository;
 import com.ciel.pocket.auth.service.UserService;
 import com.ciel.pocket.infrastructure.exceptions.ObjectExistingException;
-import com.ciel.pocket.infrastructure.exceptions.ObjectNotExistingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * @Author Ciel Qian
@@ -22,20 +19,24 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User createUser(User user) {
-        Optional<User> existing = queryUser(user.getUsername());
-        if (existing.isPresent())
+        User existing = queryUser(user.getUsername());
+        if (existing != null)
             throw new ObjectExistingException("账号已存在");
         user.encodePassword();
-        return userRepository.save(user);
+        userRepository.insert(user);
+        return user;
     }
 
     @Override
     public void deleteUser(String username) {
-        userRepository.delete(queryUser(username).orElseThrow(() -> new ObjectNotExistingException("账号不存在")));
+        User existing = queryUser(username);
+        if (existing != null){
+            userRepository.deleteById(existing.getId());
+        }
     }
 
     @Override
-    public Optional<User> queryUser(String username) {
+    public User queryUser(String username) {
         return userRepository.findUserByUsername(username);
     }
 

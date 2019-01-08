@@ -1,6 +1,6 @@
 package com.ciel.pocket.auth.domain;
 
-import lombok.AllArgsConstructor;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -8,17 +8,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import javax.persistence.*;
 import java.util.Collection;
 
-@Table
-@Entity
 @RequiredArgsConstructor
 @NoArgsConstructor
 public class User implements UserDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @TableId
     private Long id;
 
     @NonNull

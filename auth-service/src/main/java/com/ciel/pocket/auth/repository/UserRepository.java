@@ -1,12 +1,12 @@
 package com.ciel.pocket.auth.repository;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.ciel.pocket.auth.domain.User;
-import com.ciel.pocket.infrastructure.repositories.QueryDslBaseRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
-import java.util.Optional;
+public interface UserRepository extends BaseMapper<User> {
 
-@Repository
-public interface UserRepository extends QueryDslBaseRepository<User,String> {
-    Optional<User> findUserByUsername(String username);
+    @Select("SELECT * FROM user WHERE username = #{username}")
+    User findUserByUsername(@Param("username") String username);
 }

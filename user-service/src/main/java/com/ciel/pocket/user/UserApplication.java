@@ -10,7 +10,6 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableOAuth2Client;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -22,10 +21,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableJpaAuditing
 @EnableHystrix
-@Import({com.ciel.pocket.infrastructure.config.QueryDslConfig.class,
-com.ciel.pocket.infrastructure.config.CorsFilter.class,
+@Import({com.ciel.pocket.infrastructure.config.CorsFilter.class,
 com.ciel.pocket.infrastructure.config.FastJsonConfig.class,})
 public class UserApplication {
     public static void main(String[] args) {

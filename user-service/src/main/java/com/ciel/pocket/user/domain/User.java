@@ -1,18 +1,12 @@
 package com.ciel.pocket.user.domain;
 
-import com.ciel.pocket.infrastructure.domain.BaseEntity;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
-@Entity
-@Table
 @Data
-public class User extends BaseEntity {
+public class User {
 
     Long accountId;
 
@@ -22,6 +16,5 @@ public class User extends BaseEntity {
 
     Date lastSeen;
 
-    @OneToMany(mappedBy = "user")
     List<Theme> themes;
 }
