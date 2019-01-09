@@ -56,3 +56,14 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 20000
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  type-enums-package: com.ciel.pocket.user.infrastructure.enums
+
+logging:
+  level:
+    root: info

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ciel.pocket.user.repository.UserRepository" >
+    <resultMap id="BaseResultMap" type="com.ciel.pocket.user.domain.User" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="is_delete" property="isDelete" jdbcType="BIT" />
+        <result column="username" property="username" jdbcType="VARCHAR" />
+        <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+        <result column="lastSeen" property="lastSeen" jdbcType="DATE" />
+        <result column="create_time" property="createTime" jdbcType="DATE" />
+        <result column="update_time" property="updateTime" jdbcType="DATE" />
+    </resultMap>
+</mapper>

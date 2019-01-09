@@ -1,15 +1,14 @@
 package com.ciel.pocket.user.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
-import com.ciel.pocket.infrastructure.repositories.BaseRepository;
-import com.ciel.pocket.infrastructure.service.BaseCrudService;
+import com.ciel.pocket.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
 import com.ciel.pocket.user.client.FolderServiceClient;
 import com.ciel.pocket.user.domain.User;
 import com.ciel.pocket.user.dto.input.CreateUser;
-import com.ciel.pocket.user.infrastructure.exceptions.ObjectNotExistingException;
-import com.ciel.pocket.user.repository.AccountRepository;
+import com.ciel.pocket.user.repository.UserRepository;
 import com.ciel.pocket.user.repository.ThemeRepository;
 import com.ciel.pocket.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +23,9 @@ import java.util.Date;
  * @Comment
  */
 @Service
-public class AccountServiceImpl extends BaseCrudService<User, Long> implements AccountService {
+public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implements AccountService {
     @Autowired
-    AccountRepository accountRepository;
+    UserRepository accountRepository;
 
     @Autowired
     ThemeRepository themeRepository;
@@ -41,13 +40,10 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
     ThemeServiceImpl themeService;
 
     @Override
-    protected BaseRepository<User, Long> getRepository() {
-        return accountRepository;
-    }
-
-    @Override
     public User queryById(Long id) {
-        User user = findOne(id).orElseThrow(() -> new ObjectNotExistingException("用户不存在"));
+        User user = accountRepository.selectById(id);
+        if (user == null)
+            new ObjectNotExistingException("用户不存在");
         return user;
     }
 
@@ -65,7 +61,7 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
         account.setUsername(user.getUsername());
         account.setLastSeen(new Date());
 
-        accountRepository.save(account);
+        accountRepository.insert(account);
 
         themeService.create(account);
 
@@ -81,7 +77,7 @@ public class AccountServiceImpl extends BaseCrudService<User, Long> implements A
         ReturnModel remoteResult = authServiceClient.deleteUser(user.getUsername());
         ReturnUtils.checkSuccess(remoteResult);
 
-        getRepository().deleteById(user.getId());
+        accountRepository.deleteById(userId);
     }
 
     @Override

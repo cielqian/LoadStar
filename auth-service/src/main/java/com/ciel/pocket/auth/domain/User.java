@@ -1,5 +1,6 @@
 package com.ciel.pocket.auth.domain;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -14,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 public class User implements UserDetails {
 
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     @NonNull

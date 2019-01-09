@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
@@ -8,7 +9,7 @@ import java.util.Date;
 
 @Alias("Link")
 public class Link {
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     private Date createTime;

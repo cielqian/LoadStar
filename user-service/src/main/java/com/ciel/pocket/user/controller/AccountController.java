@@ -1,14 +1,15 @@
 package com.ciel.pocket.user.controller;
 
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.exceptions.FriendlyException;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.domain.User;
 import com.ciel.pocket.user.dto.input.CreateUser;
 import com.ciel.pocket.user.dto.output.UserInfo;
-import com.ciel.pocket.user.infrastructure.exceptions.FriendlyException;
 import com.ciel.pocket.user.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -22,12 +23,11 @@ import java.security.Principal;
  * @CreateDate 2018/8/15
  * @Comment
  */
+@Slf4j
 @Api("用户账号相关api")
 @RestController
 @RequestMapping(path = "/api/account")
 public class AccountController {
-
-    private final org.slf4j.Logger logger = LoggerFactory.getLogger(AccountController.class);
 
     @Autowired
     AccountService accountService;
@@ -39,7 +39,7 @@ public class AccountController {
             throw new FriendlyException(bindingResult.getFieldError().getDefaultMessage());
         }
         User account = accountService.create(user);
-        logger.info("create account");
+        log.info("create account");
         return ReturnUtils.ok("创建成功",account);
     }
 

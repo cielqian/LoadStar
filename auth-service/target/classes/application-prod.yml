@@ -1,9 +1,9 @@
 spring:
   datasource:
-    druid:
-      url: jdbc:mysql://101.200.55.76:3306/LoadStar_Account?useUnicode=true&characterEncoding=utf-8&useSSL=false
-      username: root
-      password: 123456!
+    url: jdbc:mysql://101.200.55.76:3306/LoadStar_Account?useUnicode=true&characterEncoding=utf-8&useSSL=false
+    username: root
+    password: 123456!
+    type: com.alibaba.druid.pool.DruidDataSource
 global:
   auth:
     prefix: LoadStarAuth
