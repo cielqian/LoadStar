@@ -6,10 +6,9 @@ import org.apache.ibatis.type.Alias;
 
 @Alias("LinkTag")
 public class LinkTag {
-    @TableId(type = IdType.AUTO)
+
     private Long linkId;
 
-    @TableId
     private Long tagId;
 
     /**
