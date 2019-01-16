@@ -43,7 +43,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     public User queryById(Long id) {
         User user = accountRepository.selectById(id);
         if (user == null)
-            new ObjectNotExistingException("用户不存在");
+            throw new ObjectNotExistingException("用户不存在");
         return user;
     }
 

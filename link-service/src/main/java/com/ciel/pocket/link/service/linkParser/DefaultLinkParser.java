@@ -61,24 +61,23 @@ public class DefaultLinkParser {
         Pattern pt = Pattern.compile(titlePattern);
         Matcher matcher = pt.matcher(content);
 
-        while (matcher.find()) {
+        if (matcher.find()) {
             String title = matcher.group().trim();
             result.setTitle(title);
             result.setName(title.length() > 12 ? title.substring(0,12) + "...": title);
-            break;
          }
 
 
         Pattern icoLinkPt = Pattern.compile(icon1Pattern);
         Matcher icoLinkMatcher = icoLinkPt.matcher(content);
 
-        while (icoLinkMatcher.find()) {
+        if (icoLinkMatcher.find()) {
             String icoLink = icoLinkMatcher.group();
 
             Pattern icoPt = Pattern.compile(icon2Pattern);
             Matcher icoMatcher = icoPt.matcher(icoLink);
 
-            while (icoMatcher.find()) {
+            if (icoMatcher.find()) {
                 String ico = icoMatcher.group();
                 if (ico.startsWith("//")){
                     ico = url.getProtocol() + "://" + ico.substring(2);
@@ -91,10 +90,7 @@ public class DefaultLinkParser {
                 }
                 ico = ico.replace("https:", "http:");
                 result.setIcon(ico);
-                break;
             }
-
-            break;
         }
         if(StringUtils.isEmpty(result.getIcon())){
             result.setIcon(defaultIcon);
@@ -115,7 +111,8 @@ public class DefaultLinkParser {
 
     private String httpGet(String uri){
         boolean isHttps = uri.startsWith("https://");
-        HttpClient client = HttpClients.createDefault();
+        HttpClient client = null;
+        client = HttpClients.createDefault();
 
         HttpGet request = new HttpGet(uri);
         HttpResponse response = null;
@@ -126,7 +123,7 @@ public class DefaultLinkParser {
         }
 
         /**请求发送成功，并得到响应**/
-        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+        if (response.getStatusLine() != null && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             try {
                 String strResult = EntityUtils.toString(response.getEntity(), "gb2312");
                 return strResult;
@@ -134,6 +131,7 @@ public class DefaultLinkParser {
                 e.printStackTrace();
             }
         }
+
         return "";
     }
 }
