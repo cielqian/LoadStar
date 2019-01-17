@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ThemeRepository extends BaseMapper<Theme>{
 
-    @Select("SELECT * FROM theme WHERE userId = #{userId}")
+    @Select("SELECT * FROM theme WHERE user_id = #{userId}")
     Theme findByUserId (@Param("userId")Long user);
 }
