@@ -6,9 +6,10 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
+@TableName("user")
 public class User {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ID_WORKER)
     Long id;
 
     @TableLogic

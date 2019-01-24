@@ -63,6 +63,8 @@ mybatis-plus:
       logic-not-delete-value: 0
       logic-delete-value: 1
   type-enums-package: com.ciel.pocket.user.infrastructure.enums
+  configuration:
+    map-underscore-to-camel-case: true
 
 logging:
   level:

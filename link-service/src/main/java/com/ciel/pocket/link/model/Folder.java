@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Alias("Folder")
 public class Folder {
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ID_WORKER)
     private Long id;
 
     private Date createTime;

@@ -9,9 +9,10 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
+@TableName("theme")
 public class Theme {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ID_WORKER)
     Long id;
 
     @TableLogic

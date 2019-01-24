@@ -51,7 +51,7 @@ public class MyBatisPlusConfig {
         configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
         configuration.setJdbcTypeForNull(JdbcType.NULL);
         configuration.setDefaultEnumTypeHandler(EnumOrdinalTypeHandler.class);
-
+        configuration.setMapUnderscoreToCamelCase(true);
         sqlSessionFactory.setConfiguration(configuration);
         sqlSessionFactory.setPlugins(new Interceptor[]{
                 new PaginationInterceptor(),
