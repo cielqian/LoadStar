@@ -14,7 +14,7 @@ spring:
 #      probability: 1.0
   redis:
     host: ${Redis_Host:'101.200.55.76'}
-    port: ${Redis_Port:'6379'}
+    port: ${Redis_Port:6379}
     password: ${Redis_Pwd:'123456!'}
 server:
   port: 9081
