@@ -8,3 +8,5 @@ spring:
 global:
   auth:
     prefix: LoadStarAuthDev
+apollo:
+  meta: http://10.0.75.2:7092

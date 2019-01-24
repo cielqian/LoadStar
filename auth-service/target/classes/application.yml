@@ -1,3 +1,5 @@
+app:
+  id: Loadstar
 spring:
   profiles:
     active: dev
@@ -11,9 +13,9 @@ spring:
 #      percentage: 1.0
 #      probability: 1.0
   redis:
-    host: 101.200.55.76
-    port: 6379
-    password: 123456!
+    host: ${Redis_Host:'101.200.55.76'}
+    port: ${Redis_Port:'6379'}
+    password: ${Redis_Pwd:'123456!'}
 server:
   port: 9081
 eureka:
@@ -23,3 +25,7 @@ eureka:
   instance:
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
+
+apollo:
+  bootstrap:
+    enabled: true
