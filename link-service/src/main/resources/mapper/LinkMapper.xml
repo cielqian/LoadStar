@@ -21,12 +21,12 @@
     <result column="visited_count" property="visitedCount" jdbcType="INTEGER" />
   </resultMap>
 
-    <insert id="insert" parameterType="Link" useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-      INSERT INTO link (create_time, is_delete, update_time, comment, folder_id, icon, last_seen, name, sort_index,title
-      ,url, user_id, visited_count )
-      values (#{createTime},0, #{updateTime}, #{comment}, #{folderId}, #{icon}, #{lastSeen}, #{name}, #{sortIndex}, #{title}
-      ,#{url}, #{userId},#{visitedCount})
-    </insert>
+    <!--<insert id="insert" parameterType="Link" useGeneratedKeys="true" keyColumn="id" keyProperty="id">-->
+      <!--INSERT INTO link (create_time, is_delete, update_time, comment, folder_id, icon, last_seen, name, sort_index,title-->
+      <!--,url, user_id, visited_count )-->
+      <!--values (#{createTime},0, #{updateTime}, #{comment}, #{folderId}, #{icon}, #{lastSeen}, #{name}, #{sortIndex}, #{title}-->
+      <!--,#{url}, #{userId},#{visitedCount})-->
+    <!--</insert>-->
 
   <select id="queryAllUnderTag" resultType="Link">
       SELECT l.*

@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.security.AuthContext;
 import com.ciel.pocket.infrastructure.security.UserDetail;
@@ -61,6 +62,9 @@ public class TagController {
     public ReturnModel<List<QueryTagListOutput>> queryTag(Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);
         List<QueryTagListOutput> tags = tagService.queryAllTag(userDetail.getAccountId());
+
+        String json = JSON.toJSONString(tags);
+
         return ReturnUtils.ok("", tags);
     }
 

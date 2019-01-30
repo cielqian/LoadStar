@@ -13,9 +13,6 @@ import java.util.List;
 
 public interface LinkMapper extends BaseMapper<Link> {
 
-    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "id")
-    int insert(Link link);
-
     List<Link> queryAllUnderTag(@Param("userId") Long userId, @Param("tagId") Long tagId);
 
     List<Link> queryAllUnderFolder(@Param("userId") Long userId, @Param("folderId") Long folderId);
