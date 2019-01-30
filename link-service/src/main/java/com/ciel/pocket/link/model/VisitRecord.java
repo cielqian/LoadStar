@@ -9,7 +9,7 @@ import java.util.Date;
 
 @Alias("VisitRecord")
 public class VisitRecord {
-    @TableId(type = IdType.ID_WORKER)
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     private Date createTime;
