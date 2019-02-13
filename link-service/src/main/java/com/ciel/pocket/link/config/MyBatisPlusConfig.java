@@ -8,10 +8,12 @@ import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.PerformanceInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.ciel.pocket.link.infrastructure.AuditMetaObjectHandler;
+import lombok.extern.java.Log;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
 import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.boot.autoconfigure.SpringBootVFS;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ResourceLoader;
@@ -28,6 +30,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan("com.ciel.pocket.link.mapper")
+//@Log
 public class MyBatisPlusConfig {
     /**
      * 分页插件
@@ -37,10 +40,11 @@ public class MyBatisPlusConfig {
         return new PaginationInterceptor();
     }
 
-    @Bean("mybatisSqlSession")
+    @Bean("sqlSessionFactoryBean")
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ResourceLoader resourceLoader, GlobalConfig globalConfiguration) throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
+        sqlSessionFactory.setVfs(SpringBootVFS.class);
         sqlSessionFactory.setTypeAliasesPackage("com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output");
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         sqlSessionFactory.setMapperLocations(resolver.getResources("classpath:/mapper/*.xml"));

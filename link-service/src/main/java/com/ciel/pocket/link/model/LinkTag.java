@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import org.apache.ibatis.type.Alias;
 
-@Alias("LinkTag")
 public class LinkTag {
 
     private Long linkId;

@@ -73,6 +73,8 @@ services:
       - 9083:9083
     depends_on: 
       - registry
+    volumes: 
+      - /root/logs/link-service:/logs
 
   web-container:
     image: cielqian/pocket-web

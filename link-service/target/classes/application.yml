@@ -37,12 +37,3 @@ eureka:
 ribbon:
   eager-load:
     enabled: true
-
-mybatis-plus:
-  type-aliases-package: com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output
-  mapper-locations: classpath:/mapper/*.xml
-  global-config:
-    db-config:
-      logic-delete-value: 1
-      logic-not-delete-value: 0
-      id-type: auto

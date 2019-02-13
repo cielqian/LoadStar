@@ -18,7 +18,7 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
   
-  <select id="queryAll" resultMap="BaseResultMap">
+  <select id="queryAll" resultType="Folder">
       select *
       from folder
       where user_id = #{userId}

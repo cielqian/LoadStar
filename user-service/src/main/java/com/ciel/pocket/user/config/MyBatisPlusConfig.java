@@ -40,7 +40,7 @@ public class MyBatisPlusConfig {
         return new PaginationInterceptor();
     }
 
-    @Bean("mybatisSqlSession")
+    @Bean("sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ResourceLoader resourceLoader, GlobalConfig globalConfiguration) throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
