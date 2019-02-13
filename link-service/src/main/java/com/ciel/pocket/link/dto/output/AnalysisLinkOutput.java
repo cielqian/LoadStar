@@ -17,5 +17,6 @@ public class AnalysisLinkOutput {
 
     private String icon;
 
+    private String host;
 
 }

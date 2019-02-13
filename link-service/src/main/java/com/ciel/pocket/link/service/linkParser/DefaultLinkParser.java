@@ -27,8 +27,8 @@ import java.util.regex.Pattern;
 public class DefaultLinkParser {
     static String icon1Pattern = "(?<=link).*href.*(png|ico|svg).*(?=>)";
     static String icon2Pattern = "(?<=(href|mec_href)\\=\").*?\\.(png|ico|svg)";
-    static String titlePattern = "(?<=<title>\r?\n?).*?(?=\r?\n?</title>)";
-
+    static String titlePattern = "<title.*?</title>";//"(?<=<title>\r?\n?).*?(?=\r?\n?</title>)";
+    //static String titlePattern2 = "(?<=<title.*>)(.*?)(?=</title>)";
     static String defaultIcon = "/static/logo.png";
 
     static Map<String, String> DEFAULT_SITE_MAP = new HashMap<>();
@@ -50,7 +50,9 @@ public class DefaultLinkParser {
         }
 
         result.setUri(uri);
+        result.setHost(url.getHost());
 
+        result.setIcon(url.getProtocol() + "://" + url.getHost() + "/favicon.ico");
         String content = null;
         try {
             content = HttpUtil.get(uri, null, null);
@@ -59,47 +61,52 @@ public class DefaultLinkParser {
         }
 
         Pattern pt = Pattern.compile(titlePattern);
-        Matcher matcher = pt.matcher(content);
+        Matcher matcher = pt.matcher(content.replaceAll("\r\n", ""));
 
         if (matcher.find()) {
-            String title = matcher.group().trim();
-            result.setTitle(title);
-            result.setName(title.length() > 12 ? title.substring(0,12) + "...": title);
-         }
+            String titleContent = matcher.group().trim();
+            if (StringUtils.isNotBlank(titleContent)){
 
-
-        Pattern icoLinkPt = Pattern.compile(icon1Pattern);
-        Matcher icoLinkMatcher = icoLinkPt.matcher(content);
-
-        if (icoLinkMatcher.find()) {
-            String icoLink = icoLinkMatcher.group();
-
-            Pattern icoPt = Pattern.compile(icon2Pattern);
-            Matcher icoMatcher = icoPt.matcher(icoLink);
-
-            if (icoMatcher.find()) {
-                String ico = icoMatcher.group();
-                if (ico.startsWith("//")){
-                    ico = url.getProtocol() + "://" + ico.substring(2);
-                }
-                if (ico.startsWith("/")){
-                    ico = url.getProtocol() + "://" + url.getHost() + ico;
-                }
-                if (!ico.startsWith("http")){
-                    ico =  "http://" + url.getHost() + "/" + ico;
-                }
-                ico = ico.replace("https:", "http:");
-                result.setIcon(ico);
+                int startIdx = StringUtils.indexOf(titleContent, ">");
+                int endIdx = StringUtils.lastIndexOf(titleContent, "<");
+                String title = StringUtils.substring(titleContent, startIdx+1, endIdx).trim();
+                result.setTitle(title);
+                result.setName(title.length() > 12 ? title.substring(0,12) + "...": title);
             }
         }
-        if(StringUtils.isEmpty(result.getIcon())){
-            result.setIcon(defaultIcon);
-        }
+
+//        Pattern icoLinkPt = Pattern.compile(icon1Pattern);
+//        Matcher icoLinkMatcher = icoLinkPt.matcher(content);
+//
+//        if (icoLinkMatcher.find()) {
+//            String icoLink = icoLinkMatcher.group();
+//
+//            Pattern icoPt = Pattern.compile(icon2Pattern);
+//            Matcher icoMatcher = icoPt.matcher(icoLink);
+//
+//            if (icoMatcher.find()) {
+//                String ico = icoMatcher.group();
+//                if (ico.startsWith("//")){
+//                    ico = url.getProtocol() + "://" + ico.substring(2);
+//                }
+//                if (ico.startsWith("/")){
+//                    ico = url.getProtocol() + "://" + url.getHost() + ico;
+//                }
+//                if (!ico.startsWith("http")){
+//                    ico =  "http://" + url.getHost() + "/" + ico;
+//                }
+//                ico = ico.replace("https:", "http:");
+//                result.setIcon(ico);
+//            }
+//        }
+//        if(StringUtils.isEmpty(result.getIcon())){
+//            result.setIcon(defaultIcon);
+//        }
 
         DEFAULT_SITE_MAP.forEach((key, val) -> {
             if (uri.contains(key)){
                 String[] tmp = StringUtils.split(val, "|");
-                result.setIcon(tmp[0]);
+                //result.setIcon(tmp[0]);
                 if (StringUtils.isEmpty(result.getName())){
                     result.setName(tmp[1]);
                 }
