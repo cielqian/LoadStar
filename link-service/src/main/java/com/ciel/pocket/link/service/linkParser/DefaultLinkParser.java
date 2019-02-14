@@ -71,7 +71,7 @@ public class DefaultLinkParser {
                 int endIdx = StringUtils.lastIndexOf(titleContent, "<");
                 String title = StringUtils.substring(titleContent, startIdx+1, endIdx).trim();
                 result.setTitle(title);
-                result.setName(title.length() > 12 ? title.substring(0,12) + "...": title);
+                result.setName(title.length() > 24 ? title.substring(0,24) + "...": title);
             }
         }
 
