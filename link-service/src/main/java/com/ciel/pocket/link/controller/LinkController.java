@@ -96,8 +96,24 @@ public class LinkController {
     @ApiOperation("移动链接")
     @ApiParam(name = "linkId", value = "链接ID")
     @RequestMapping(path = "/{linkId}/to/{folderId}", method = RequestMethod.PUT)
-    public ReturnModel moveLink(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "folderId") Long folderId){
+    public ReturnModel moveLinkToFolder(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "folderId") Long folderId){
         linkService.move(linkId, folderId);
+        return ReturnModel.OK();
+    }
+
+    @ApiOperation("链接添加Tag")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/{linkId}/addTag/{tagId}", method = RequestMethod.PUT)
+    public ReturnModel linkAddTag(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "tagId") Long tagId){
+        linkService.addLinkToTag(linkId, tagId);
+        return ReturnModel.OK();
+    }
+
+    @ApiOperation("链接添加至常用")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/{linkId}/addToOften", method = RequestMethod.PUT)
+    public ReturnModel linkAddToOften(@PathVariable(name = "linkId") Long linkId){
+        linkService.addLinkToTag(linkId, -1L);
         return ReturnModel.OK();
     }
 

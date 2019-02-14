@@ -38,5 +38,4 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements TagSe
     public void delete(Long tagId) {
         baseMapper.deleteById(tagId);
     }
-
 }

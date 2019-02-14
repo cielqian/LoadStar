@@ -210,4 +210,12 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     public AnalysisLinkOutput analysis(AnalysisLinkInput input) {
         return new DefaultLinkParser().analysis(input.getUrl());
     }
+
+    @Override
+    public void addLinkToTag(Long linkId, Long tagId) {
+        LinkTag linkTag = new LinkTag();
+        linkTag.setTagId(tagId);
+        linkTag.setLinkId(linkId);
+        linkTagMapper.insert(linkTag);
+    }
 }

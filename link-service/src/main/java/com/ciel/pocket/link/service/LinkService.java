@@ -40,4 +40,6 @@ public interface LinkService extends IService<Link> {
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 
+    void addLinkToTag(Long linkId, Long tagId);
+
 }
