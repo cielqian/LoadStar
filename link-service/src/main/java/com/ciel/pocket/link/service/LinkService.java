@@ -42,4 +42,6 @@ public interface LinkService extends IService<Link> {
 
     void addLinkToTag(Long linkId, Long tagId);
 
+    void removeLinkFromTag(Long linkId, Long tagId);
+
 }

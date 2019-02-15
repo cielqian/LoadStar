@@ -50,6 +50,10 @@ public class LinkController {
 
         Long linkId = linkService.create(link, input.getTags());
 
+        if (input.isOften()){
+            linkService.addLinkToTag(linkId, -1L);
+        }
+
         return ReturnModel.OK("", linkId);
     }
 
@@ -114,6 +118,14 @@ public class LinkController {
     @RequestMapping(path = "/{linkId}/addToOften", method = RequestMethod.PUT)
     public ReturnModel linkAddToOften(@PathVariable(name = "linkId") Long linkId){
         linkService.addLinkToTag(linkId, -1L);
+        return ReturnModel.OK();
+    }
+
+    @ApiOperation("链接从常用移除")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/{linkId}/removeFromOften", method = RequestMethod.PUT)
+    public ReturnModel linkRemoveFromOften(@PathVariable(name = "linkId") Long linkId){
+        linkService.removeLinkFromTag(linkId, -1L);
         return ReturnModel.OK();
     }
 

@@ -2,6 +2,7 @@ package com.ciel.pocket.link.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
@@ -24,7 +25,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements LinkService {
@@ -217,5 +220,15 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         linkTag.setTagId(tagId);
         linkTag.setLinkId(linkId);
         linkTagMapper.insert(linkTag);
+    }
+
+    @Override
+    public void removeLinkFromTag(Long linkId, Long tagId) {
+
+        QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
+        qw.eq("link_id", linkId);
+        qw.eq("tag_id", tagId);
+
+        linkTagMapper.delete(qw);
     }
 }

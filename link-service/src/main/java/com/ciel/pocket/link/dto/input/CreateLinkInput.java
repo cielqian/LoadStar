@@ -26,4 +26,6 @@ public class CreateLinkInput {
 
     @ApiModelProperty(value = "标签")
     private ArrayList<Long> tags;
+
+    private boolean isOften;
 }
