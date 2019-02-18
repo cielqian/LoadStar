@@ -17,7 +17,7 @@
   </resultMap>
   
   <select id="queryAll" resultType="com.ciel.pocket.link.dto.output.QueryTagListOutput">
-    select id, name, (select count(*) from link_tag as lt where lt.tag_id =  t.id) as linkCount
+    select id, name, (select count(*) from link_tag as lt left join link as l on lt.link_id = l.id where lt.tag_id =  t.id and l.is_delete = 0) as linkCount
     from tag as t
     where user_id = #{userId}
     and is_delete = false
