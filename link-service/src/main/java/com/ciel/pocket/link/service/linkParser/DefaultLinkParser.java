@@ -71,7 +71,7 @@ public class DefaultLinkParser {
                 int endIdx = StringUtils.lastIndexOf(titleContent, "<");
                 String title = StringUtils.substring(titleContent, startIdx+1, endIdx).trim();
                 result.setTitle(title);
-                result.setName(title.length() > 24 ? title.substring(0,24) + "...": title);
+                result.setName(title.length() > 24 ? (title.substring(0,24) + "..."): title);
             }
         }
 
@@ -109,6 +109,7 @@ public class DefaultLinkParser {
                 //result.setIcon(tmp[0]);
                 if (StringUtils.isEmpty(result.getName())){
                     result.setName(tmp[1]);
+                    result.setTitle(tmp[1]);
                 }
             }
         });

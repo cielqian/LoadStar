@@ -5,6 +5,7 @@ import com.ciel.pocket.infrastructure.security.AuthContext;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateLinkInput;
 import com.ciel.pocket.link.dto.input.QueryLinkListInput;
+import com.ciel.pocket.link.dto.input.UpdateLinkInput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.dto.output.ReturnModel;
 import com.ciel.pocket.link.model.Link;
@@ -13,6 +14,7 @@ import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
@@ -49,6 +51,28 @@ public class LinkController {
         link.setFolderId(input.getFolderId());
 
         Long linkId = linkService.create(link, input.getTags());
+
+        if (input.isOften()){
+            linkService.addLinkToTag(linkId, -1L);
+        }
+
+        return ReturnModel.OK("", linkId);
+    }
+
+    @RequestMapping(path = "", method = RequestMethod.PUT)
+    @ApiOperation("更新链接")
+    public ReturnModel<Long> updateLink(@RequestBody @ApiParam(name = "更新链接参数") UpdateLinkInput input){
+
+        Link link = linkService.query(input.getId());
+        Assert.notNull(link, "链接不存在");
+
+        link.setTitle(input.getTitle());
+        link.setName(input.getName());
+        link.setFolderId(input.getFolderId());
+        link.setName(input.getName());
+        link.setIcon(input.getIcon());
+
+        Long linkId = linkService.update(link, input.getTags());
 
         if (input.isOften()){
             linkService.addLinkToTag(linkId, -1L);

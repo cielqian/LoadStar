@@ -12,6 +12,8 @@ import java.util.List;
 public interface LinkService extends IService<Link> {
     Long create(Link link, List<Long> tags);
 
+    Long update(Link link, List<Long> tags);
+
     void delete(Long linkId);
 
     void trash(Long linkId, Long accountId);

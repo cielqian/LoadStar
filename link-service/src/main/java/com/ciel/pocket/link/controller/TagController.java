@@ -49,7 +49,7 @@ public class TagController {
         return ReturnUtils.ok("", tagId);
     }
 
-    @ApiOperation("查询文件夹下的书签")
+    @ApiOperation("查询标签下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@PathVariable(name = "id") Long tagId, Principal principal){
         UserDetail userDetail = AuthContext.getUserDetail(principal);

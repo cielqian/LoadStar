@@ -75,6 +75,27 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     }
 
     @Override
+    public Long update(Link link, List<Long> tags) {
+        baseMapper.updateById(link);
+
+        QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
+        qw.eq("link_id", link.getId());
+
+        linkTagMapper.delete(qw);
+
+        if (tags != null){
+            tags.forEach(tagId -> {
+                LinkTag linkTag = new LinkTag();
+                linkTag.setLinkId(link.getId());
+                linkTag.setTagId(tagId);
+                linkTagMapper.insert(linkTag);
+            });
+        }
+
+        return link.getId();
+    }
+
+    @Override
     public void delete(Long linkId) {
         Link link = query(linkId);
         Assert.notNull(link, "链接不存在");
