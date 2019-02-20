@@ -80,7 +80,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
         QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
         qw.eq("link_id", link.getId());
-
+        qw.notIn("tag_id", "-1");
         linkTagMapper.delete(qw);
 
         if (tags != null){

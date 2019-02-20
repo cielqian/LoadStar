@@ -52,7 +52,7 @@ public class DefaultLinkParser {
         result.setUri(uri);
         result.setHost(url.getHost());
 
-        result.setIcon(url.getProtocol() + "://" + url.getHost() + "/favicon.ico");
+        result.setIcon(url.getProtocol() + "://" + url.getHost() + (url.getPort() == -1?"":(":" + url.getPort())) + "/favicon.ico");
         String content = null;
         try {
             content = HttpUtil.get(uri, null, null);
