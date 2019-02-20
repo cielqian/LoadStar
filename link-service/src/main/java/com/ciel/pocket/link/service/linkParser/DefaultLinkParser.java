@@ -61,6 +61,7 @@ public class DefaultLinkParser {
         }
 
         Pattern pt = Pattern.compile(titlePattern);
+        content = null;
         Matcher matcher = pt.matcher(content.replaceAll("\r\n", ""));
 
         if (matcher.find()) {
