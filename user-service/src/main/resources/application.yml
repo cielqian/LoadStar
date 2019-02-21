@@ -34,7 +34,7 @@ eureka:
   instance:
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
-
+    hostname: user-service
 feign:
   hystrix:
     enabled: true
