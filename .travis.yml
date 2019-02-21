@@ -62,3 +62,9 @@ after_success:
   - docker build -t $LINK_SERVICE:$COMMIT ./link-service
   - docker tag $LINK_SERVICE:$COMMIT $LINK_SERVICE:$TAG
   - docker push $LINK_SERVICE
+
+notifications:
+  email:
+    - qianhong91@outlook.com
+  on_success: change
+  on_failure: always
