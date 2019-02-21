@@ -5,9 +5,9 @@ server:
   port: 9001
 eureka:
   instance:
-    prefer-ip-address: true
+#    prefer-ip-address: true
     hostname: localhost
-    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
+#    instance-id: ${spring.cloud.client.ipAddress}:${spring.application.name}:${server.port}
   client:
     fetch-registry: false
     register-with-eureka: false
