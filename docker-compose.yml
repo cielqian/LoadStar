@@ -6,6 +6,8 @@ services:
     command: redis-server --requirepass 123456!
     ports:
       - 6379:6379
+    volumes:
+      - /root/redis/data:/data
 #  rabbitmq:
 #    image: rabbitmq:3-management
 #    restart: always
