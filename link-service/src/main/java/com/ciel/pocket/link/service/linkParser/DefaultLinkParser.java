@@ -75,6 +75,8 @@ public class DefaultLinkParser {
                 result.setName(title.length() > 24 ? (title.substring(0,24) + "..."): title);
             }
         }
+        Pattern iconPt = Pattern.compile(icon1Pattern);
+        Matcher icoLinkMatcher = iconPt.matcher(content.replaceAll("\r\n", ""));
 
 //        Pattern icoLinkPt = Pattern.compile(icon1Pattern);
 //        Matcher icoLinkMatcher = icoLinkPt.matcher(content);

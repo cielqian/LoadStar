@@ -19,6 +19,7 @@ import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.model.VisitRecord;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
+import com.ciel.pocket.link.service.linkParser.JsoupLinkParser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -232,7 +233,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Override
     public AnalysisLinkOutput analysis(AnalysisLinkInput input) {
-        return new DefaultLinkParser().analysis(input.getUrl());
+        return new JsoupLinkParser().analysis(input.getUrl());
     }
 
     @Override

@@ -203,5 +203,6 @@
     <orderEntry type="library" name="Maven: com.alibaba:druid-spring-boot-starter:1.1.10" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:druid:1.1.10" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.25" level="project" />
+    <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.3" level="project" />
   </component>
 </module>

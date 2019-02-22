@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.dto.output;
 
+import com.alibaba.fastjson.JSON;
 import lombok.Data;
 
 /**
@@ -19,4 +20,7 @@ public class AnalysisLinkOutput {
 
     private String host;
 
+    public String toString(){
+        return JSON.toJSONString(this);
+    }
 }
