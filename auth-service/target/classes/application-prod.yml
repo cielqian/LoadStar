@@ -6,7 +6,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
 global:
   auth:
-    prefix: LoadStarAuth
+    prefix: LoadStarAuth_
 apollo:
   meta: http://10.0.75.2:7094
 logging:
