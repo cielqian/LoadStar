@@ -12,8 +12,10 @@ import com.ciel.pocket.user.repository.UserRepository;
 import com.ciel.pocket.user.repository.ThemeRepository;
 import com.ciel.pocket.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Date;
 
@@ -38,6 +40,9 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
     @Autowired
     ThemeServiceImpl themeService;
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
 
     @Override
     public User queryById(Long id) {
@@ -65,8 +70,12 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         themeService.create(account);
 
-        remoteResult = folderServiceClient.createDefault(remoteResult.getData());
-        ReturnUtils.checkSuccess(remoteResult);
+        ListenableFuture future = kafkaTemplate.send("Loadstar_Folder_Creater_Dev", remoteResult.getData().toString());
+        future.addCallback(o -> System.out.println("send success:" + remoteResult.getData())
+                , throwable -> System.out.println("send fail:" + remoteResult.getData()));
+
+//        remoteResult = folderServiceClient.createDefault(remoteResult.getData());
+//        ReturnUtils.checkSuccess(remoteResult);
 
         return account;
     }

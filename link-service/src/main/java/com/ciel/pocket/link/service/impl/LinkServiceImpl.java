@@ -187,7 +187,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         qw.eq("is_delete", "0");
         qw.eq("user_id", accountId);
         if (StringUtils.isNotBlank(queryInput.getKeyword())){
-            qw.and(l -> l.like("name", queryInput.getKeyword()));
+            qw.and(l -> l.like("name", queryInput.getKeyword())
+                    .or().like("title", queryInput.getKeyword()));
         }
 
         IPage links = baseMapper.selectPage(page, qw);

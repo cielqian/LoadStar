@@ -1,9 +1,0 @@
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/controller/ErrorHandlerController.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/filter/ErrorFilter.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/filter/DefaultFilterProcessor.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/GatewayApplication.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/config/SwaggerConfig.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/filter/CorsFilter.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/filter/ErrorExtFilter.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/filter/ThrowExceptionFilter.java
-/Users/ciel/Documents/project/github/LoadStar/gateway/src/main/java/com/ciel/pocket/gateway/config/DocumentationConfig.java
