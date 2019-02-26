@@ -5,3 +5,8 @@ spring:
     password: 123456!
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+
+loadstar:
+  kafka:
+    topic:
+      createFolder: LoadStar_Create_Folder_Dev

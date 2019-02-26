@@ -4,9 +4,15 @@ spring:
   application:
     name: link-service
   jpa:
-      hibernate:
-        ddl-auto: update
-      show-sql: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    consumer:
+      bootstrap-servers: loadstar.top:9093
+      group-id: link-service
+      auto-offset-reset: latest
+      enable-auto-commit: true
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411

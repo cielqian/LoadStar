@@ -126,6 +126,11 @@
             <version>1.11.3</version>
         </dependency>
 
+        <!--Kafka-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
 
     </dependencies>
     <!-- Package as an executable jar -->
