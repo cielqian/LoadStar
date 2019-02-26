@@ -7,17 +7,16 @@ import com.ciel.pocket.link.service.LinkService;
 import gui.ava.html.Html2Image;
 import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.fit.cssbox.demo.ImageRenderer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -43,14 +42,55 @@ public class LinkThumbnailConsumer {
 
         Link link = linkService.query(linkId);
         if (link!= null){
-            Html2Image img = Html2Image.fromURL(new URL(link.getUrl()));
-            BufferedImage bufferedImage = img.getImageRenderer().setImageType("png").setWriteCompressionQuality(0.5F).getBufferedImage();
 
-            String mediaId = ZimgUtil.uploadImage(zimgHost, bufferedImage);
-            if (StringUtils.isNotEmpty(mediaId)){
-                link.setThumbnail(mediaId);
-                linkService.updateById(link);
-            }
+            BufferedImage bufImage = new BufferedImage(250, 250, BufferedImage.TYPE_INT_RGB);
+
+            ImageRenderer render = new ImageRenderer();
+            String url = link.getUrl();
+//            ByteArrayOutputStream os = new ByteArrayOutputStream();
+            FileOutputStream out = new FileOutputStream("/Users/ciel/Documents/project/" + linkId + ".png");
+            ImageIO.write(bufImage, "png", out);
+
+            OutputStream os = new ByteArrayOutputStream();
+
+            render.setWindowSize(new Dimension(600, 250), false);
+            render.renderURL(url, out, ImageRenderer.Type.PNG);
+            out.close();
+
+//            Html2Image img = Html2Image.fromURL(new URL(link.getUrl()));
+//            BufferedImage bufferedImage = img.getImageRenderer()
+//                    .setWidth(1000)
+//                    .setHeight(500)
+//                    .setImageType("png")
+//                    .setWriteCompressionQuality(0.5F)
+//                    .getBufferedImage();
+//
+//            int height = bufferedImage.getHeight() >= 500?500:bufferedImage.getHeight();
+//            int wight = bufferedImage.getWidth() >= 1000?1000:bufferedImage.getWidth();
+//
+//            BufferedImage subImg = bufferedImage.getSubimage(0,0,wight,height);
+//            Image scaledImage = subImg.getScaledInstance(500,500, Image.SCALE_DEFAULT);
+//
+//            BufferedImage bufImage = new BufferedImage(500, 500, BufferedImage.TYPE_INT_RGB);
+//
+//
+//            Graphics2D bGr = bufImage.createGraphics();
+//            bGr.drawImage(scaledImage, 0, 0, null);
+//            bGr.dispose();
+//            ImageIO.write(bufImage, "png", new File("/Users/ciel/Documents/project/" + linkId + ".png"));
+
+
+//            img.getImageRenderer()
+//                    .setHeight(250)
+//                    .setWidth(250)
+//                    .setImageType("png")
+//                    .setWriteCompressionQuality(0.2F)
+//                    .saveImage("/Users/ciel/Documents/project/" + linkId + ".png");
+//            String mediaId = ZimgUtil.uploadImage(zimgHost, bufferedImage);
+//            if (StringUtils.isNotEmpty(mediaId)){
+//                link.setThumbnail(mediaId);
+//                linkService.updateById(link);
+//            }
         }
     }
 }
