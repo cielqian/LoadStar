@@ -26,6 +26,6 @@ eureka:
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
 
-apollo:
-  bootstrap:
-    enabled: true
+#apollo:
+#  bootstrap:
+#    enabled: true

@@ -1,6 +1,7 @@
 package com.ciel.pocket.link.service.linkParser;
 
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
+import gui.ava.html.Html2Image;
 import lombok.extern.java.Log;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Connection;
@@ -28,8 +29,11 @@ public class JsoupLinkParser {
             Connection con = Jsoup.connect(uri);
             Document document = con.get();
 
+            String icon = "";
             Element element = document.head().select("link[href~=.*\\.(ico|png)]").first();
-            String icon = element.attr("href");
+            if (element != null){
+                icon = element.attr("href");
+            }
             String title = document.title();
 
             result.setTitle(title);

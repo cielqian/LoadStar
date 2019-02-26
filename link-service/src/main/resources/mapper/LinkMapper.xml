@@ -19,6 +19,7 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="visited_count" property="visitedCount" jdbcType="INTEGER" />
+    <result column="thumbnail" property="thumbnail" jdbcType="VARCHAR" />
   </resultMap>
 
     <!--<insert id="insert" parameterType="Link" useGeneratedKeys="true" keyColumn="id" keyProperty="id">-->

@@ -2,7 +2,6 @@ package com.ciel.pocket.link.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
@@ -18,17 +17,17 @@ import com.ciel.pocket.link.model.Link;
 import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.model.VisitRecord;
 import com.ciel.pocket.link.service.LinkService;
-import com.ciel.pocket.link.service.linkParser.DefaultLinkParser;
 import com.ciel.pocket.link.service.linkParser.JsoupLinkParser;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
+import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements LinkService {
@@ -41,6 +40,12 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Autowired
     VisitRecordMapper visitRecordMapper;
+
+    @Autowired
+    private KafkaTemplate kafkaTemplate;
+
+    @Value("${loadstar.kafka.topic.linkThumbnail}")
+    private String linkThumbnailTopic;
 
     @Override
     public Long create(Link link, List<Long> tags) {
@@ -71,6 +76,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
                 linkTagMapper.insert(linkTag);
             });
         }
+
+        ListenableFuture future = kafkaTemplate.send(linkThumbnailTopic, link.getId().toString());
+        future.addCallback(o -> System.out.println("send to linkThumbnailTopic success:" + link.getId())
+                , throwable -> System.out.println("send to linkThumbnailTopic fail:" + link.getId()));
 
         return link.getId();
     }
