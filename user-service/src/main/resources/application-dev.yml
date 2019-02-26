@@ -5,9 +5,11 @@ spring:
       username: root
       password: 123456!
 
+loadstar:
   kafka:
-    producer:
-      bootstrap-servers: 101.200.55.76:9093
+    topic:
+      createFolder: LoadStar_Create_Folder_Dev
+
 #  rabbitmq:
 #    addresses: 101.200.55.76
 #    port: 5672

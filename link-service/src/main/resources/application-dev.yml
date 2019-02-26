@@ -6,9 +6,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
 
+loadstar:
   kafka:
-    consumer:
-      bootstrap-servers: loadstar.top:9093
-      group-id: link-service
-      auto-offset-reset: latest
-      enable-auto-commit: true
+    topic:
+      createFolder: LoadStar_Create_Folder_Dev

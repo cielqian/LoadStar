@@ -7,6 +7,9 @@ spring:
     show-sql: true
   application:
     name: user-service
+  kafka:
+    producer:
+      bootstrap-servers: 101.200.55.76:9093
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411
@@ -69,3 +72,4 @@ mybatis-plus:
 logging:
   level:
     root: info
+

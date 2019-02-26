@@ -2,9 +2,9 @@ package com.ciel.pocket.link.consumer;
 
 import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.service.FolderService;
-import com.netflix.discovery.converters.Auto;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,10 @@ public class FolderCreateConsumer {
     @Autowired
     FolderService folderService;
 
-    @KafkaListener(topics = "Loadstar_Folder_Creater_Dev")
+    @Value("${loadstar.kafka.topic.createFolder}")
+    private String createFolderTopic;
+
+    @KafkaListener(topics = "${loadstar.kafka.topic.createFolder}")
     public void listen (ConsumerRecord<String, String> record) throws Exception {
         Long userId = Long.valueOf(record.value());
         Folder defaultFolder = new Folder();

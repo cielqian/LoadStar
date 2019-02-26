@@ -12,6 +12,7 @@ import com.ciel.pocket.user.repository.UserRepository;
 import com.ciel.pocket.user.repository.ThemeRepository;
 import com.ciel.pocket.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -44,6 +45,9 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
+    @Value("${loadstar.kafka.topic.createFolder}")
+    private String createFolderTopic;
+
     @Override
     public User queryById(Long id) {
         User user = accountRepository.selectById(id);
@@ -70,9 +74,9 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         themeService.create(account);
 
-        ListenableFuture future = kafkaTemplate.send("Loadstar_Folder_Creater_Dev", remoteResult.getData().toString());
-        future.addCallback(o -> System.out.println("send success:" + remoteResult.getData())
-                , throwable -> System.out.println("send fail:" + remoteResult.getData()));
+        ListenableFuture future = kafkaTemplate.send(createFolderTopic, remoteResult.getData().toString());
+        future.addCallback(o -> System.out.println("send to createFolderTopic success:" + remoteResult.getData())
+                , throwable -> System.out.println("send to createFolderTopic fail:" + remoteResult.getData()));
 
 //        remoteResult = folderServiceClient.createDefault(remoteResult.getData());
 //        ReturnUtils.checkSuccess(remoteResult);
