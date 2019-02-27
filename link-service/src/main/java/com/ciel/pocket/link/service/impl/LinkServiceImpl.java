@@ -18,6 +18,7 @@ import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.model.VisitRecord;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.JsoupLinkParser;
+import com.netflix.discovery.converters.Auto;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,6 +41,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Autowired
     VisitRecordMapper visitRecordMapper;
+
+    @Autowired
+    JsoupLinkParser linkParser;
 
     @Autowired
     private KafkaTemplate kafkaTemplate;
@@ -243,7 +247,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Override
     public AnalysisLinkOutput analysis(AnalysisLinkInput input) {
-        return new JsoupLinkParser().analysis(input.getUrl());
+        return linkParser.analysis(input.getUrl());
     }
 
     @Override
