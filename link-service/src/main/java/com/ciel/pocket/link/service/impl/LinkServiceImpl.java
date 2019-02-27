@@ -81,9 +81,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
             });
         }
 
-        ListenableFuture future = kafkaTemplate.send(linkThumbnailTopic, link.getId().toString());
-        future.addCallback(o -> System.out.println("send to linkThumbnailTopic success:" + link.getId())
-                , throwable -> System.out.println("send to linkThumbnailTopic fail:" + link.getId()));
+        //生成网站缩略图
+//        ListenableFuture future = kafkaTemplate.send(linkThumbnailTopic, link.getId().toString());
+//        future.addCallback(o -> System.out.println("send to linkThumbnailTopic success:" + link.getId())
+//                , throwable -> System.out.println("send to linkThumbnailTopic fail:" + link.getId()));
 
         return link.getId();
     }

@@ -25,7 +25,7 @@ import java.net.URL;
  * @email qianhong91@outlook.com
  * @date 2019/2/26 15:23
  */
-@Component
+//@Component
 public class LinkThumbnailConsumer {
     @Autowired
     LinkService linkService;
@@ -36,7 +36,7 @@ public class LinkThumbnailConsumer {
     @Value("${loadstar.zimg}")
     private String zimgHost;
 
-    @KafkaListener(topics = "${loadstar.kafka.topic.linkThumbnail}")
+//    @KafkaListener(topics = "${loadstar.kafka.topic.linkThumbnail}")
     public void listen (ConsumerRecord<String, String> record) throws Exception {
         Long linkId = Long.valueOf(record.value());
         System.out.println("paser linkThumbnail linkId: " + linkId);
