@@ -33,25 +33,28 @@ public class JsoupLinkParser {
 
     private String mainHost = "";
 
+    private URL sourceUrl;
+
+    private URL redirectUrl;
 
     public AnalysisLinkOutput analysis(String uri){
         AnalysisLinkOutput result = new AnalysisLinkOutput();
         try {
-            URL url = new URL(uri);
-            mainHost = url.getProtocol() + "://" + url.getHost() + (url.getPort() == -1?"":(":" + url.getPort()));
+            sourceUrl = new URL(uri);
+            mainHost = sourceUrl.getProtocol() + "://" + sourceUrl.getHost() + (sourceUrl.getPort() == -1?"":(":" + sourceUrl.getPort()));
 
             result.setUri(uri);
-            result.setHost(url.getHost());
+            result.setHost(sourceUrl.getHost());
 
             Connection con = Jsoup.connect(uri);
             Document document = con.get();
-
+            redirectUrl = new URL(document.location());
             result.setTitle(document.title());
 
             //load icon from db
             //TODO: optimize. load icon from mem cache
             QueryWrapper<LinkIcon> qw = new QueryWrapper<LinkIcon>();
-            qw.eq("hostname", url.getHost());
+            qw.eq("hostname", redirectUrl.getHost());
             LinkIcon linkIcon = iconService.getOne(qw);
 
             if (linkIcon != null){
@@ -86,9 +89,9 @@ public class JsoupLinkParser {
                         result.setIcon(mainHost + result.getIcon());
                     }
                 }
-
+                result.setIcon(StringUtils.replace(result.getIcon(), "https", "http"));
                 linkIcon = new LinkIcon();
-                linkIcon.setHostname(url.getHost());
+                linkIcon.setHostname(sourceUrl.getHost());
                 linkIcon.setIcon(result.getIcon());
                 iconService.save(linkIcon);
             }
