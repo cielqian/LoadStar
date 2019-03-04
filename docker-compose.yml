@@ -28,6 +28,7 @@ services:
       MYSQL_ROOT_PASSWORD: 123456!
     volumes: 
       - /root/db/mysql/data:/var/lib/mysql
+      - /root/db/mysql/conf:/etc/mysql/conf.d
 #  zipkin:
 #    image: openzipkin/zipkin
 #    restart: always
