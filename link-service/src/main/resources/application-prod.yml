@@ -8,5 +8,6 @@ loadstar:
   kafka:
     topic:
       createFolder: LoadStar_Create_Folder
+      linkThumbnail: LoadStar_Link_Thumbnail
 logging:
   config: classpath:log-config.xml
