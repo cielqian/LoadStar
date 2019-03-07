@@ -10,3 +10,4 @@ loadstar:
   kafka:
     topic:
       createFolder: LoadStar_Create_Folder_Dev
+      linkThumbnail: LoadStar_Link_Thumbnail_Dev

@@ -6,10 +6,8 @@ eureka:
     service-url:
       defaultZone: http://registry:9001/eureka/
     registry-fetch-interval-seconds: 10
-
 server:
   port: 9080
-
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000

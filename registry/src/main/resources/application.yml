@@ -1,8 +1,6 @@
 spring:
   application:
     name: registry
-server:
-  port: 9001
 eureka:
   instance:
 #    prefer-ip-address: true
@@ -15,3 +13,5 @@ eureka:
       defaultZone: http://registry:9001/eureka/
   server:
     eviction-interval-timer-in-ms: 5000
+server:
+  port: 9001

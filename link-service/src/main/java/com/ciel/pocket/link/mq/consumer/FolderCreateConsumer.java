@@ -1,4 +1,4 @@
-package com.ciel.pocket.link.consumer;
+package com.ciel.pocket.link.mq.consumer;
 
 import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.service.FolderService;

@@ -24,7 +24,7 @@ public class ThemeServiceImpl extends ServiceImpl<ThemeRepository, Theme> implem
     @Override
     public Theme create(User account) {
         Theme theme = new Theme();
-        theme.setListTypeEnum(ListTypeEnum.Card);
+        theme.setListTypeEnum(ListTypeEnum.List1);
         theme.setLanguage(Language.en);
         theme.setUserId(account.getAccountId());
 

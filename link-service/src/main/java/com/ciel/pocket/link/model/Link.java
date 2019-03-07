@@ -38,6 +38,8 @@ public class Link {
 
     private Integer visitedCount;
 
+    private String thumbnail;
+
     /**
      * @return id
      */
@@ -232,5 +234,13 @@ public class Link {
      */
     public void setVisitedCount(Integer visitedCount) {
         this.visitedCount = visitedCount;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }
