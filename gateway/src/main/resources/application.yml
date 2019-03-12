@@ -14,7 +14,6 @@ ribbon:
   eager-load:
     enabled: true
 
-
 zuul:
 #  SendErrorFilter:
 #    error:
