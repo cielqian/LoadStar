@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.09 (64 bit)
 MySQL - 8.0.15 : Database - LoadStar_Link_Dev
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -33,7 +34,7 @@ CREATE TABLE `folder` (
   `sort_index` int(11) DEFAULT (0),
   `deep` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 /*Table structure for table `link` */
 
@@ -56,7 +57,7 @@ CREATE TABLE `link` (
   `visited_count` int(11) DEFAULT NULL,
   `thumbnail` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 /*Table structure for table `link_icon` */
 
@@ -67,7 +68,7 @@ CREATE TABLE `link_icon` (
   `hostname` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `icon` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 /*Table structure for table `link_tag` */
 
@@ -76,7 +77,7 @@ DROP TABLE IF EXISTS `link_tag`;
 CREATE TABLE `link_tag` (
   `link_id` bigint(20) DEFAULT NULL,
   `tag_id` bigint(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 /*Table structure for table `tag` */
 
@@ -93,7 +94,7 @@ CREATE TABLE `tag` (
   `sort_index` int(11) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 /*Table structure for table `visit_record` */
 
@@ -107,7 +108,7 @@ CREATE TABLE `visit_record` (
   `user_id` bigint(20) DEFAULT NULL,
   `link_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
