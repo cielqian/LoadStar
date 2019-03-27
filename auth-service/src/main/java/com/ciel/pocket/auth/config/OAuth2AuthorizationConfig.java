@@ -1,6 +1,6 @@
 package com.ciel.pocket.auth.config;
 
-import com.ciel.pocket.auth.service.security.MongoUserDetailService;
+import com.ciel.pocket.auth.service.security.DefaultUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,9 +14,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
-import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
-import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStoreSerializationStrategy;
 
 /**
  * @Author Ciel Qian
@@ -35,7 +33,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     AuthenticationManager authenticationManager;
 
     @Autowired
-    MongoUserDetailService mongoUserDetailService;
+    DefaultUserDetailService defaultUserDetailService;
 
     @Autowired
     RedisConnectionFactory redisConnectionFactory;
@@ -74,7 +72,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
                 .tokenServices(tokenServices(tokenStore))
                 .tokenStore(tokenStore)
                 .authenticationManager(authenticationManager)
-                .userDetailsService(mongoUserDetailService);
+                .userDetailsService(defaultUserDetailService);
     }
 
     public DefaultTokenServices tokenServices(RedisTokenStore tokenStore) {

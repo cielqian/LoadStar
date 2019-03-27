@@ -13,8 +13,8 @@ spring:
 #      percentage: 1.0
 #      probability: 1.0
   redis:
-    host: 101.200.55.76
-    port: 6379
+    host: redis-11758.c15.us-east-1-2.ec2.cloud.redislabs.com
+    port: 11758
     password: 123456!
 server:
   port: 9081
