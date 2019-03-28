@@ -1,6 +1,6 @@
-package com.ciel.pocket.link.config;
+package com.ciel.pocket.user.config;
 
-import com.ciel.pocket.link.service.security.CustomUserInfoTokenServices;
+import com.ciel.pocket.user.service.security.CustomUserInfoTokenServices;
 import feign.RequestInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
@@ -23,11 +24,11 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
  */
 @Configuration
 @EnableResourceServer
-public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
+public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private final ResourceServerProperties sso;
 
     @Autowired
-    public ResourceServerConfig(ResourceServerProperties sso) {
+    public OAuth2ResourceServerConfig(ResourceServerProperties sso) {
         this.sso = sso;
     }
 
@@ -56,13 +57,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http
         .authorizeRequests()
-        .antMatchers("/open/**").permitAll()
-        .antMatchers("/api/**").authenticated()
-//                .authorizeRequests().anyRequest().authenticated()
-//                .and()
-//                .antMatchers("/api/users").permitAll()
-//                .and()
-//                .antMatcher("/swagger-ui.html").anonymous()
+        .antMatchers( HttpMethod.GET,"/v2/api-docs").anonymous()
+        .antMatchers( HttpMethod.POST,"/api/account").anonymous()
+        .antMatchers("/hystrix","/hystrix**","/hystrix/**", "/proxy**").anonymous()
+        .antMatchers("/actuator/**").anonymous()
+        .antMatchers("/webjars/**").anonymous()
+        .anyRequest().authenticated()
         .and()
         .csrf().disable();
     }

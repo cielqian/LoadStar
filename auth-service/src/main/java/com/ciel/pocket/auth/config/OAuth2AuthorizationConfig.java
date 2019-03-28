@@ -50,7 +50,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
                 .withClient("browser")
-                .authorizedGrantTypes("refresh_token", "password")
+                .authorizedGrantTypes("password", "refresh_token")
                 .scopes("ui")
                 .and()
                 .withClient("user-service")
