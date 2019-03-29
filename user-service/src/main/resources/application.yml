@@ -17,17 +17,19 @@ spring:
 #    sampler:
 #      percentage: 1.0
 #      probability: 1.0
-security:
-  oauth2:
-    client:
-      scope: server
-      client-id: user-service
-      grant-type: client_credentials
-      accessTokenUri: http://gateway:9080/auth-service/oauth/token
-      client-secret: POCKET-USER-SERVICE
-    resource:
-      user-info-uri: http://gateway:9080/auth-service/api/users/current
-      prefer-token-info: false
+#security:
+#  oauth2:
+#    client:
+#      scope: server
+#      client-id: user-service
+#      grant-type: client_credentials
+#      accessTokenUri: http://gateway:9080/auth-service/oauth/token
+#      client-secret: POCKET-USER-SERVICE
+#    resource:
+#      user-info-uri: http://gateway:9080/auth-service/api/users/current
+#      prefer-token-info: false
+#      jwt:
+#        key-value: loadstar
 server:
   port: 9082
 eureka:

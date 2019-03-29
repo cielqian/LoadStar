@@ -28,11 +28,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void deleteUser(String username) {
-        User existing = queryUser(username);
-        if (existing != null){
-            userRepository.deleteById(existing.getId());
-        }
+    public void deleteUser(String userId) {
+        userRepository.deleteById(userId);
     }
 
     @Override

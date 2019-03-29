@@ -24,7 +24,10 @@ zuul:
       path: /auth-service/**
       sensitiveHeaders:
       serviceId: auth-service
-
+    oauth:
+      path: /oauth/**
+      sensitiveHeaders:
+      serviceId: auth-service
     user:
       path: /user-service/**
       sensitiveHeaders:
@@ -34,3 +37,8 @@ zuul:
       path: /link-service/**
       sensitiveHeaders:
       serviceId: link-service
+security:
+  oauth2:
+    resource:
+      jwt:
+        key-value: loadstar

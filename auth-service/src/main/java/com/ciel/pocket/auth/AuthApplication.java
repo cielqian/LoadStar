@@ -8,8 +8,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 @SpringBootApplication
-@EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableDiscoveryClient
 @Import({com.ciel.pocket.infrastructure.config.CorsFilter.class})
 public class AuthApplication {

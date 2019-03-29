@@ -1,6 +1,5 @@
 package com.ciel.pocket.link.controller;
 
-import com.ciel.pocket.infrastructure.security.AuthContext;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateFolderInput;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
