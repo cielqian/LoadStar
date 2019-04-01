@@ -22,7 +22,7 @@ zuul:
   routes:
     auth:
       path: /auth-service/**
-      sensitiveHeaders:
+      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: auth-service
     oauth:
       path: /oauth/**
@@ -30,12 +30,12 @@ zuul:
       serviceId: auth-service
     user:
       path: /user-service/**
-      sensitiveHeaders:
+      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: user-service
 
     link:
       path: /link-service/**
-      sensitiveHeaders:
+      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: link-service
 security:
   oauth2:

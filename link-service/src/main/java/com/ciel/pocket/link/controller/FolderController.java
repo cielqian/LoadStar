@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.controller;
 
+import com.ciel.pocket.infrastructure.constants.Constants;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateFolderInput;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
@@ -35,25 +36,22 @@ public class FolderController {
 
     @ApiOperation("查询文件夹")
     @RequestMapping(path = "/current", method = RequestMethod.GET)
-    public ReturnModel<List<FolderTreeOutput>> query(Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<FolderTreeOutput> links = folderService.queryFolderTree(userDetail.getAccountId());
+    public ReturnModel<List<FolderTreeOutput>> query(@RequestHeader(Constants.Header_AccountId) Long accountId){
+        List<FolderTreeOutput> links = folderService.queryFolderTree(accountId);
         return ReturnModel.OK(links);
     }
 
     @ApiOperation("查询文件夹")
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ReturnModel<List<FolderTreeOutput>> queryById(@PathVariable(name = "id") Long folderId, Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, userDetail.getAccountId());
+    public ReturnModel<List<FolderTreeOutput>> queryById(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
+        List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, accountId);
         return ReturnModel.OK(links);
     }
 
     @ApiOperation("查询文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") Long folderId, Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryLinksUnderFolder(userDetail.getAccountId(), folderId);
+    public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
+        List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
         return ReturnModel.OK(links);
     }
 
@@ -66,13 +64,11 @@ public class FolderController {
 
     @ApiOperation("创建文件夹")
     @RequestMapping(path = "/{userId}", method = RequestMethod.POST)
-    public ReturnModel createFolderForUser(Principal principal,@RequestBody CreateFolderInput createFolderInput){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-
+    public ReturnModel createFolderForUser(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody CreateFolderInput createFolderInput){
         Folder folder = new Folder();
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
-        folder.setUserId(userDetail.getAccountId());
+        folder.setUserId(accountId);
         folder.setIsSystem(false);
         folder.setCode(UUID.randomUUID().toString());
         folderService.create(folder);
@@ -82,13 +78,11 @@ public class FolderController {
 
     @ApiOperation("创建文件夹")
     @RequestMapping(path = "/current", method = RequestMethod.POST)
-    public ReturnModel createFolderForCurrent(Principal principal,@RequestBody CreateFolderInput createFolderInput){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-
+    public ReturnModel createFolderForCurrent(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody CreateFolderInput createFolderInput){
         Folder folder = new Folder();
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
-        folder.setUserId(userDetail.getAccountId());
+        folder.setUserId(accountId);
         folder.setIsSystem(false);
 
         folderService.create(folder);

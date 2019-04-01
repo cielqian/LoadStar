@@ -1,5 +1,6 @@
 package com.ciel.pocket.user.controller;
 
+import com.ciel.pocket.infrastructure.constants.Constants;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.exceptions.FriendlyException;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
@@ -50,9 +51,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/current",method = RequestMethod.GET)
-    public ReturnModel<UserInfo> current(Principal principal){
-        User user = accountService.findByName(principal.getName());
-
+    public ReturnModel<UserInfo> current(@RequestHeader(Constants.Header_AccountId) String accountId){
+        User user = accountService.findByAccountId(accountId);
+        //accountService.findByName(principal.getName());
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(user.getId());
         userInfo.setUsername(user.getUsername());

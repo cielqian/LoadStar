@@ -1,5 +1,6 @@
 package com.ciel.pocket.user.controller;
 
+import com.ciel.pocket.infrastructure.constants.Constants;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.domain.Theme;
@@ -23,31 +24,29 @@ public class ThemeController {
 
     @ApiOperation("查询当前用户主题")
     @RequestMapping(value = "/current",method = RequestMethod.GET)
-    public ReturnModel<Theme> current(Principal principal, Long userId){
-        Theme theme = themeService.queryByAccountId(userId);
+    public ReturnModel<Theme> current(@RequestHeader(Constants.Header_AccountId) Long accountId){
+        Theme theme = themeService.queryByAccountId(accountId);
         return ReturnUtils.ok("查询成功",theme);
     }
 
     @ApiOperation("更新显示方式")
     @RequestMapping(value = "/listType",method = RequestMethod.POST)
-    public ReturnModel listTypeEnum(Principal principal, Long userId, @RequestBody UpdateListType updateListType){
-        themeService.updateListType(userId,
-                updateListType.getListType());
+    public ReturnModel listTypeEnum(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody UpdateListType updateListType){
+        themeService.updateListType(accountId, updateListType.getListType());
         return ReturnUtils.ok("更新成功");
     }
 
     @ApiOperation("更新语言")
     @RequestMapping(value = "/language",method = RequestMethod.POST)
-    public ReturnModel changeLanguage(Principal principal, Long userId, @RequestBody UpdateLanguage language){
-        themeService.changeLanguage(userId,
-                language.getLanguage());
+    public ReturnModel changeLanguage(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody UpdateLanguage language){
+        themeService.changeLanguage(accountId, language.getLanguage());
         return ReturnUtils.ok("更新成功");
     }
 
     @ApiOperation("更新模块显示")
     @RequestMapping(value = "/modules/{moduleName}",method = RequestMethod.POST)
-    public ReturnModel triggerShowModules(Principal principal, Long userId, @PathVariable(name = "moduleName") ThemeModuleEnum moduleName){
-        themeService.triggerModule(userId, moduleName);
+    public ReturnModel triggerShowModules(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "moduleName") ThemeModuleEnum moduleName){
+        themeService.triggerModule(accountId, moduleName);
         return ReturnUtils.ok("更新成功");
     }
 }

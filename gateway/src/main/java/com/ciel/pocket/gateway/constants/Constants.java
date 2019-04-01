@@ -7,5 +7,5 @@ package com.ciel.pocket.gateway.constants;
  */
 
 public class Constants {
-    public static final String Header_UserId = "X-LS-USERId";
+    public static final String Header_AccountId = "X-LS-ACCOUNT-ID";
 }

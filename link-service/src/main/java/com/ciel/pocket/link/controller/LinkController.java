@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.controller;
 
+import com.ciel.pocket.infrastructure.constants.Constants;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.link.dto.input.CreateLinkInput;
 import com.ciel.pocket.link.dto.input.QueryLinkListInput;
@@ -31,10 +32,9 @@ public class LinkController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建链接")
-    public ReturnModel<Long> createLink(@RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
+    public ReturnModel<Long> createLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
         Link link = new Link();
-        link.setUserId(userDetail.getAccountId());
+        link.setUserId(accountId);
         link.setUrl(input.getUrl());
 
         if (StringUtils.isBlank(input.getTitle())){
@@ -88,25 +88,22 @@ public class LinkController {
 
     @ApiOperation("分页查询链接")
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public ReturnModel<PageableListModel<Link>> queryList(Principal principal, QueryLinkListInput queryInput){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        PageableListModel<Link> links = linkService.queryPageList(userDetail.getAccountId(), queryInput);
+    public ReturnModel<PageableListModel<Link>> queryList(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
+        PageableListModel<Link> links = linkService.queryPageList(accountId, queryInput);
         return ReturnModel.OK(links);
     }
 
     @ApiOperation("查询最近访问链接")
     @RequestMapping(path = "/recent", method = RequestMethod.GET)
-    public ReturnModel<List<Link>> queryRecentList(Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryRecent5List(userDetail.getAccountId());
+    public ReturnModel<List<Link>> queryRecentList(@RequestHeader(Constants.Header_AccountId) Long accountId){
+        List<Link> links = linkService.queryRecent5List(accountId);
         return ReturnModel.OK(links);
     }
 
     @ApiOperation("查询最常访问链接")
     @RequestMapping(path = "/top", method = RequestMethod.GET)
-    public ReturnModel<List<Link>> queryTopList(Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Link> links = linkService.queryTop5List(userDetail.getAccountId());
+    public ReturnModel<List<Link>> queryTopList(@RequestHeader(Constants.Header_AccountId) Long accountId){
+        List<Link> links = linkService.queryTop5List(accountId);
         return ReturnModel.OK(links);
     }
 
@@ -153,9 +150,8 @@ public class LinkController {
     @ApiOperation("链接移到回收站")
     @ApiParam(name = "linkId", value = "链接ID")
     @RequestMapping(path = "/trash/{linkId}", method = RequestMethod.PUT)
-    public ReturnModel trashLink(@PathVariable(name = "linkId") Long linkId, Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        linkService.trash(linkId, userDetail.getAccountId());
+    public ReturnModel trashLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "linkId") Long linkId){
+        linkService.trash(linkId, accountId);
         return ReturnModel.OK();
     }
 

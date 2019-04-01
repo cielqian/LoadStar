@@ -10,4 +10,8 @@ public interface UserRepository extends BaseMapper<User> {
     @Select("SELECT * FROM user WHERE username = #{username}")
     User findByUsername(@Param("username") String username);
 
+    @Select("SELECT * FROM user WHERE account_id = #{accountId}")
+    User findByAccountId(@Param("accountId") String accountId);
+
+
 }

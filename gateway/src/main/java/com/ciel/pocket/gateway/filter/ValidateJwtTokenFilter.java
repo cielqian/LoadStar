@@ -36,6 +36,10 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
     public boolean shouldFilter() {
         RequestContext requestContext = RequestContext.getCurrentContext();
 
+        if (!requestContext.sendZuulResponse()){
+            return false;
+        }
+
         HttpServletRequest request = requestContext.getRequest();
         String url = request.getRequestURI();
         String requestMethod = requestContext.getRequest().getMethod();
@@ -61,7 +65,7 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
 
         Object userIdObj = additionalInformation.get("id");
         RequestContext requestContext = RequestContext.getCurrentContext();
-        requestContext.addZuulRequestHeader(Constants.Header_UserId, userIdObj.toString());
+        requestContext.addZuulRequestHeader(Constants.Header_AccountId, userIdObj.toString());
         return null;
     }
 }
