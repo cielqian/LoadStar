@@ -52,10 +52,6 @@ public class CorsPostFilter extends ZuulFilter {
         response.setHeader("Access-Control-Expose-Headers","X-forwared-port, X-forwarded-host");
         response.setHeader("Vary","Origin,Access-Control-Request-Method,Access-Control-Request-Headers");
 
-        //允许继续路由
-        ctx.setSendZuulResponse(true);
-        ctx.setResponseStatusCode(200);
-
         return null;
     }
 }
