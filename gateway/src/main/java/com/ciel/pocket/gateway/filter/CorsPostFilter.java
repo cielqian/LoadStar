@@ -43,6 +43,11 @@ public class CorsPostFilter extends ZuulFilter {
     public Object run() throws ZuulException {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletResponse response = ctx.getResponse();
+
+        if(!response.containsHeader("Access-Control-Allow-Origin")){
+            response.setHeader("Access-Control-Allow-Origin","*");
+        }
+
         response.setHeader("Access-Control-Allow-Credentials","true");
         response.setHeader("Access-Control-Expose-Headers","X-forwared-port, X-forwarded-host");
         response.setHeader("Vary","Origin,Access-Control-Request-Method,Access-Control-Request-Headers");
