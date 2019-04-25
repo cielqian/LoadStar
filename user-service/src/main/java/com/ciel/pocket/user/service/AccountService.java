@@ -12,4 +12,6 @@ public interface AccountService extends IService<User> {
     void delete(Long userId);
 
     User findByName(String accountName);
+
+    User findByAccountId(String accountId);
 }

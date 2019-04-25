@@ -1,46 +1,50 @@
 package com.ciel.pocket.auth.config;
 
-import com.ciel.pocket.auth.service.security.MongoUserDetailService;
+import com.ciel.pocket.auth.service.security.DefaultUserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
-@Order(99)
+/**
+ * @author cielqian
+ * @email qianhong91@outlook.com
+ * @date 2019/4/1 9:27
+ */
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
-    MongoUserDetailService userDetailService;
+    DefaultUserDetailService defaultUserDetailService;
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http.httpBasic().and()
+                .csrf().disable();
+
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailService)
-        .passwordEncoder(new BCryptPasswordEncoder());
+        auth.userDetailsService(defaultUserDetailService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
-//    @Override
+    @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers( HttpMethod.POST,"/api/users")
-                .permitAll()
-                .anyRequest().authenticated()
-                .and().headers().frameOptions().disable()
-                .and().csrf().disable();
+    public static void main(String[] args) {
+        String encode = new BCryptPasswordEncoder().encode("123");
+        System.out.println(encode);
     }
 }

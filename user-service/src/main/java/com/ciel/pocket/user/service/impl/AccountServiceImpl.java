@@ -98,4 +98,9 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         return accountRepository.findByUsername(username);
     }
 
+    @Override
+    public User findByAccountId(String accountId) {
+        return accountRepository.findByAccountId(accountId);
+    }
+
 }

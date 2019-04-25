@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserService {
     User createUser(User user);
 
-    void deleteUser(String username);
+    void deleteUser(String userId);
 
     User queryUser(String username);
 }

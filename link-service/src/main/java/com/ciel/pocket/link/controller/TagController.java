@@ -1,8 +1,8 @@
 package com.ciel.pocket.link.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.ciel.pocket.infrastructure.constants.Constants;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
-import com.ciel.pocket.infrastructure.security.AuthContext;
 import com.ciel.pocket.infrastructure.security.UserDetail;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.link.dto.input.CreateTagInput;
@@ -37,12 +37,11 @@ public class TagController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建标签")
-    public ReturnModel<Long> createTag(@RequestBody @ApiParam(name = "创建链接参数") CreateTagInput input, Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
+    public ReturnModel<Long> createTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") CreateTagInput input){
         Tag tag = new Tag();
         tag.setName(input.getName());
         tag.setSortIndex(0);
-        tag.setUserId(userDetail.getAccountId());
+        tag.setUserId(accountId);
         tag.setIsSystem(true);
         Long tagId = tagService.create(tag);
 
@@ -51,17 +50,15 @@ public class TagController {
 
     @ApiOperation("查询标签下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@PathVariable(name = "id") Long tagId, Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<com.ciel.pocket.link.model.Link> links = linkService.queryLinksUnderTag(userDetail.getAccountId(), tagId);
+    public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long tagId){
+        List<com.ciel.pocket.link.model.Link> links = linkService.queryLinksUnderTag(accountId, tagId);
         return com.ciel.pocket.link.dto.output.ReturnModel.OK(links);
     }
 
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     @ApiOperation("查询标签")
-    public ReturnModel<List<QueryTagListOutput>> queryTag(Principal principal){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<QueryTagListOutput> tags = tagService.queryAllTag(userDetail.getAccountId());
+    public ReturnModel<List<QueryTagListOutput>> queryTag(@RequestHeader(Constants.Header_AccountId) Long accountId){
+        List<QueryTagListOutput> tags = tagService.queryAllTag(accountId);
 
         String json = JSON.toJSONString(tags);
 
@@ -70,9 +67,8 @@ public class TagController {
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     @ApiOperation("查询标签")
-    public ReturnModel<List<Tag>> queryTag(Principal principal, @RequestParam("keyword") String keyword ){
-        UserDetail userDetail = AuthContext.getUserDetail(principal);
-        List<Tag> tags = tagService.queryAllTag(userDetail.getAccountId(), "%" + keyword + "%");
+    public ReturnModel<List<Tag>> queryTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestParam("keyword") String keyword ){
+        List<Tag> tags = tagService.queryAllTag(accountId, "%" + keyword + "%");
         return ReturnUtils.ok("", tags);
     }
 

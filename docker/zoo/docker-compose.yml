@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    restart: unless-stopped
+    hostname: zoo1
+    ports:
+      - "2181:2181"
+    container_name: zookeeper
+    networks: 
+      - default 
+      - loadstar 
+      
+networks:
+  loadstar:
+    external: true 

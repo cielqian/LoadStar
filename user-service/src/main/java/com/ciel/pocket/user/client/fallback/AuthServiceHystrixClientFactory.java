@@ -20,6 +20,7 @@ public class AuthServiceHystrixClientFactory implements FallbackFactory<AuthServ
     public AuthServiceClient create(Throwable throwable) {
 //        throw new FriendlyException("请稍后重试");
 
+        System.out.println(throwable);
         return new AuthServiceClientWithFactory() {
             @Override
             public ReturnModel<Long> createUser(CreateUser user) {
