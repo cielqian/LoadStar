@@ -6,6 +6,8 @@ eureka:
     service-url:
       defaultZone: http://registry:9001/eureka/
     registry-fetch-interval-seconds: 10
+  instance:
+    hostname: gateway
 server:
   port: 9080
 ribbon:
