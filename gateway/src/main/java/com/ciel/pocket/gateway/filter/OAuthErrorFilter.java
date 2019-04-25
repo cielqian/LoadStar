@@ -36,7 +36,6 @@ public class OAuthErrorFilter extends ZuulFilter {
 //        ctx.setSendZuulResponse(false);
 //        ctx.setResponseStatusCode(401);
 
-        System.out.println("error");
         return null;
     }
 }

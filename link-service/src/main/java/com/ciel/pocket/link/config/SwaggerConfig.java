@@ -29,9 +29,9 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-
-    @Value("${security.oauth2.client.accessTokenUri}")
-    String authorizationUri;
+//
+//    @Value("${security.oauth2.client.accessTokenUri}")
+//    String authorizationUri;
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()

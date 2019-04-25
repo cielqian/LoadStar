@@ -13,8 +13,11 @@ spring:
       group-id: link-service
       auto-offset-reset: latest
       enable-auto-commit: true
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       bootstrap-servers: loadstar.top:9093
+
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411
@@ -22,17 +25,17 @@ spring:
 #    sampler:
 #      percentage: 1.0
 #      probability: 1.0
-security:
-  oauth2:
-    client:
-      scope: server
-      client-id: user-service
-      grant-type: client_credentials
-      accessTokenUri: http://gateway:9080/auth-service/oauth/token
-      client-secret: POCKET-USER-SERVICE
-    resource:
-      user-info-uri: http://gateway:9080/auth-service/api/users/current
-      prefer-token-info: false
+#security:
+#  oauth2:
+#    client:
+#      scope: server
+#      client-id: user-service
+#      grant-type: client_credentials
+#      accessTokenUri: http://gateway:9080/auth-service/oauth/token
+#      client-secret: POCKET-USER-SERVICE
+#    resource:
+#      user-info-uri: http://gateway:9080/auth-service/api/users/current
+#      prefer-token-info: false
 server:
   port: 9083
 eureka:

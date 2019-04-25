@@ -10,6 +10,8 @@ spring:
   kafka:
     producer:
       bootstrap-servers: 101.200.55.76:9093
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411

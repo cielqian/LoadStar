@@ -44,11 +44,10 @@ public class CorsPostFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletResponse response = ctx.getResponse();
 
-        if(!response.containsHeader("Access-Control-Allow-Origin")){
-            response.setHeader("Access-Control-Allow-Origin","*");
-        }
-
+        response.setHeader("Access-Control-Allow-Origin","*");
         response.setHeader("Access-Control-Allow-Credentials","true");
+        response.setHeader("Access-Control-Allow-Headers","authorization, content-type");
+        response.setHeader("Access-Control-Allow-Methods","POST,GET,DELETE,PUT");
         response.setHeader("Access-Control-Expose-Headers","X-forwared-port, X-forwarded-host");
         response.setHeader("Vary","Origin,Access-Control-Request-Method,Access-Control-Request-Headers");
 

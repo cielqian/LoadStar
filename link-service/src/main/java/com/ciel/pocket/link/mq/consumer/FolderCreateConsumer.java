@@ -23,6 +23,7 @@ public class FolderCreateConsumer {
 
     @KafkaListener(topics = "${loadstar.kafka.topic.createFolder}")
     public void listen (ConsumerRecord<String, String> record) throws Exception {
+//        String userId = record.value().toString();
         Long userId = Long.valueOf(record.value());
         Folder defaultFolder = new Folder();
         defaultFolder.setParentId(0L);
