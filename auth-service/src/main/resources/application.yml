@@ -25,7 +25,7 @@ eureka:
   instance:
     lease-expiration-duration-in-seconds: 10
     lease-renewal-interval-in-seconds: 5
-
+    hostname: auth-service
 #apollo:
 #  bootstrap:
 #    enabled: true
