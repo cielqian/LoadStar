@@ -7,7 +7,7 @@ spring:
 loadstar:
   kafka:
     topic:
-      createFolder: LoadStar_Create_Folder
+      UserAccountEvent: tfjmqdc9-UserAccountEvent
 #  rabbitmq:
 #    addresses: 101.200.55.76
 #    port: 5672

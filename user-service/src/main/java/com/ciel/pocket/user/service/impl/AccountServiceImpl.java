@@ -2,14 +2,16 @@ package com.ciel.pocket.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.events.UserAccountEvent;
 import com.ciel.pocket.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.client.AuthServiceClient;
 import com.ciel.pocket.user.client.FolderServiceClient;
 import com.ciel.pocket.user.domain.User;
 import com.ciel.pocket.user.dto.input.CreateUser;
-import com.ciel.pocket.user.repository.UserRepository;
+import com.ciel.pocket.user.infrastructure.ApplicationContextUtils;
 import com.ciel.pocket.user.repository.ThemeRepository;
+import com.ciel.pocket.user.repository.UserRepository;
 import com.ciel.pocket.user.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,7 +47,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    @Value("${loadstar.kafka.topic.createFolder}")
+    @Value("${loadstar.kafka.topic.UserAccountEvent}")
     private String createFolderTopic;
 
     @Override
@@ -74,7 +76,13 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         themeService.create(account);
 
-        ListenableFuture future = kafkaTemplate.send(createFolderTopic, remoteResult.getData().toString());
+        UserAccountEvent event = new UserAccountEvent();
+        event.setEvent("NEW");
+        event.setId(remoteResult.getData().toString());
+        event.setTs(new Date());
+        event.setProfile(ApplicationContextUtils.getActiveProfile());
+
+        ListenableFuture future = kafkaTemplate.send(createFolderTopic, event.toJson());
         future.addCallback(o -> System.out.println("send to createFolderTopic success:" + remoteResult.getData())
                 , throwable -> System.out.println("send to createFolderTopic fail:" + remoteResult.getData()));
 

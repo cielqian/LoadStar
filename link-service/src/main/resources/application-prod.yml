@@ -7,7 +7,7 @@ spring:
 loadstar:
   kafka:
     topic:
-      createFolder: LoadStar_Create_Folder
+      UserAccountEvent: tfjmqdc9-UserAccountEvent
       linkThumbnail: LoadStar_Link_Thumbnail
 logging:
   config: classpath:log-config.xml

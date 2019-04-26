@@ -9,5 +9,5 @@ spring:
 loadstar:
   kafka:
     topic:
-      createFolder: LoadStar_Create_Folder_Dev
+      UserAccountEvent: tfjmqdc9-UserAccountEvent
       linkThumbnail: LoadStar_Link_Thumbnail_Dev

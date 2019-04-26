@@ -170,4 +170,12 @@ public class LinkController {
         linkService.down(linkId);
         return ReturnModel.OK();
     }
+
+    @ApiOperation("生成短链接")
+    @ApiParam(name = "linkId", value = "链接ID")
+    @RequestMapping(path = "/{linkId}/down", method = RequestMethod.GET)
+    public ReturnModel shortLink(@PathVariable(name = "linkId") Long linkId){
+        linkService.down(linkId);
+        return ReturnModel.OK();
+    }
 }
