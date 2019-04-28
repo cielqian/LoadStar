@@ -10,7 +10,7 @@ spring:
   kafka:
     bootstrap-servers: velomobile-01.srvs.cloudkafka.com:9094,velomobile-02.srvs.cloudkafka.com:9094,velomobile-03.srvs.cloudkafka.com:9094
     consumer:
-      group-id: link-service
+      group-id: link-service-${spring.profiles.active}
       auto-offset-reset: latest
       enable-auto-commit: true
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
