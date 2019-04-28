@@ -62,7 +62,6 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
         Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
 
-
         Object userIdObj = additionalInformation.get("id");
         RequestContext requestContext = RequestContext.getCurrentContext();
         requestContext.addZuulRequestHeader(Constants.Header_AccountId, userIdObj.toString());

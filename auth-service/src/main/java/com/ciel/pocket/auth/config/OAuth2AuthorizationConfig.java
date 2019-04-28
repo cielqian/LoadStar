@@ -35,6 +35,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
     @Autowired
     DefaultUserDetailService defaultUserDetailService;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
