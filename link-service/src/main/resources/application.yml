@@ -8,15 +8,20 @@ spring:
       ddl-auto: update
     show-sql: true
   kafka:
+    bootstrap-servers: velomobile-01.srvs.cloudkafka.com:9094,velomobile-02.srvs.cloudkafka.com:9094,velomobile-03.srvs.cloudkafka.com:9094
     consumer:
-      bootstrap-servers: loadstar.top:9093
       group-id: link-service
       auto-offset-reset: latest
       enable-auto-commit: true
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      bootstrap-servers: loadstar.top:9093
+    properties:
+      security:
+        protocol: SASL_SSL
+      sasl:
+        mechanism: SCRAM-SHA-256
+        jaas:
+          config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tfjmqdc9" password="mAR70SmzqRQGffklsv7cZ7ne4Yl83mEC";
 
 #  zipkin:
 #    enabled: true

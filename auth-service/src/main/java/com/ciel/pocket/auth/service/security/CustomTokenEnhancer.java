@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,8 +25,14 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 
         additionalInfo.put(
                 "id", principal.getId());
-        ((DefaultOAuth2AccessToken) oAuth2AccessToken).setAdditionalInformation(
-                additionalInfo);
+
+        DefaultOAuth2AccessToken defaultOAuth2AccessToken = (DefaultOAuth2AccessToken) oAuth2AccessToken;
+
+        defaultOAuth2AccessToken.setAdditionalInformation(additionalInfo);
+
+        Long oneDay = 1000 * 60 * 60 *  24L;
+
+        defaultOAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis() + oneDay * 7));
         return oAuth2AccessToken;
     }
 }
