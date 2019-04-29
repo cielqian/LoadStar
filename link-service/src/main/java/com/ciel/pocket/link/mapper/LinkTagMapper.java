@@ -8,6 +8,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 
 public interface LinkTagMapper extends BaseMapper<LinkTag> {
-    @Delete("DELETE * FROM LinkTag WHERE ${ew.customSqlSegment}")
-    int delete(@Param(Constants.WRAPPER) Wrapper wrapper);
+//    @Delete("DELETE * FROM LinkTag WHERE ${ew.customSqlSegment}")
+//    int delete(@Param(Constants.WRAPPER) Wrapper wrapper);
 }

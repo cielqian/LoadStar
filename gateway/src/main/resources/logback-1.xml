@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="profile" source="spring.profiles.active"/>
+    <!--<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">-->
+        <!--<encoder>-->
+            <!--<pattern>%h %l %u %user %date "%r" %s %b</pattern>-->
+        <!--</encoder>-->
+    <!--</appender>-->
+    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <destination>loadstar.top:9180</destination>
+        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashAccessEncoder">
+        </encoder>
+    </appender>
+
+    <!--<appender-ref ref="STDOUT"></appender-ref>-->
+    <appender-ref ref="LOGSTASH"></appender-ref>
+</configuration>

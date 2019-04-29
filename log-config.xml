@@ -1,0 +1,214 @@
+2019-04-29 10:36:05.118  INFO 20424 --- [main] com.ciel.pocket.link.LinkApplication     : The following profiles are active: dev
+2019-04-29 10:36:05.133  INFO 20424 --- [main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6c0d9d86: startup date [Mon Apr 29 10:36:05 CST 2019]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@b2c9a9c
+2019-04-29 10:36:05.889  INFO 20424 --- [main] o.s.i.config.IntegrationRegistrar        : No bean named 'integrationHeaderChannelRegistry' has been explicitly defined. Therefore, a default DefaultHeaderChannelRegistry will be created.
+2019-04-29 10:36:06.186  INFO 20424 --- [main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=a6783362-52d9-370e-8a37-e63b33a0e71d
+2019-04-29 10:36:06.203  INFO 20424 --- [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'errorChannel' has been explicitly defined. Therefore, a default PublishSubscribeChannel will be created.
+2019-04-29 10:36:06.210  INFO 20424 --- [main] faultConfiguringBeanFactoryPostProcessor : No bean named 'taskScheduler' has been explicitly defined. Therefore, a default ThreadPoolTaskScheduler will be created.
+2019-04-29 10:36:06.219  INFO 20424 --- [main] f.a.AutowiredAnnotationBeanPostProcessor : JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+2019-04-29 10:36:06.298  INFO 20424 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.kafka.annotation.KafkaBootstrapConfiguration' of type [org.springframework.kafka.annotation.KafkaBootstrapConfiguration$$EnhancerBySpringCGLIB$$98cbb433] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-29 10:36:06.348  INFO 20424 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$c519a2b0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-29 10:36:06.386  INFO 20424 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.integration.config.IntegrationManagementConfiguration' of type [org.springframework.integration.config.IntegrationManagementConfiguration$$EnhancerBySpringCGLIB$$300b5ddf] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-29 10:36:06.412  INFO 20424 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration' of type [org.springframework.cloud.autoconfigure.ConfigurationPropertiesRebinderAutoConfiguration$$EnhancerBySpringCGLIB$$e133a5ad] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-04-29 10:36:06.804  INFO 20424 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 9083 (http)
+2019-04-29 10:36:06.827  INFO 20424 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-04-29 10:36:06.827  INFO 20424 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.32
+2019-04-29 10:36:06.831  INFO 20424 --- [localhost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files\Java\jdk1.8.0_172\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\WINDOWS\system32\config\systemprofile\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Git\cmd;D:\Program Files (x86)\VisualSVN\bin;C:\Program Files\Microsoft SQL Server\110\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files\Microsoft SQL Server\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\;C:\Program Files (x86)\Microsoft SQL Server\110\DTS\Binn\;D:\Program Files\Java\jdk1.8.0_172\bin;D:\Program Files\Java\jdk1.8.0_172\jre\bin;D:\_software\apache-maven-3.5.3\bin;D:\Program Files\TortoiseSVN\bin;D:\Program Files\nodejs\;D:\Program Files\Microsoft VS Code\bin;C:\ProgramData\chocolatey\bin;C:\Users\qianh\AppData\Local\Microsoft\WindowsApps;D:\Program Files\Microsoft VS Code\bin;C:\Users\qianh\AppData\Local\GitHubDesktop\bin;C:\Users\qianh\AppData\Roaming\npm;C:\Users\qianh\AppData\Local\Programs\Fiddler;C:\Users\qianh\AppData\Local\Programs\Microsoft VS Code\bin;.]
+2019-04-29 10:36:07.036  INFO 20424 --- [localhost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-04-29 10:36:07.036  INFO 20424 --- [localhost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1903 ms
+2019-04-29 10:36:07.139  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2019-04-29 10:36:07.140  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet statViewServlet mapped to [/druid/*]
+2019-04-29 10:36:07.143  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2019-04-29 10:36:07.144  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2019-04-29 10:36:07.144  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2019-04-29 10:36:07.144  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2019-04-29 10:36:07.144  INFO 20424 --- [localhost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'webStatFilter' to urls: [/*]
+2019-04-29 10:36:07.184  INFO 20424 --- [main] c.a.d.s.b.a.DruidDataSourceAutoConfigure : Init DruidDataSource
+2019-04-29 10:36:07.345  INFO 20424 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2019-04-29 10:36:08.051  WARN 20424 --- [main] c.b.m.core.toolkit.TableInfoHelper       : Warn: Could not find @TableId in Class: com.ciel.pocket.link.model.LinkTag.
+2019-04-29 10:36:08.088 ERROR 20424 --- [main] c.b.m.core.MybatisConfiguration          : mapper[com.ciel.pocket.link.mapper.LinkTagMapper.delete] is ignored, because it exists, maybe from xml file
+2019-04-29 10:36:08.726  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/current],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.util.List<com.ciel.pocket.link.dto.output.FolderTreeOutput>> com.ciel.pocket.link.controller.FolderController.query(java.lang.Long)
+2019-04-29 10:36:08.727  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/{userId}],methods=[POST]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.FolderController.createFolderForUser(java.lang.Long,com.ciel.pocket.link.dto.input.CreateFolderInput)
+2019-04-29 10:36:08.728  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/current],methods=[POST]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.FolderController.createFolderForCurrent(java.lang.Long,com.ciel.pocket.link.dto.input.CreateFolderInput)
+2019-04-29 10:36:08.728  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/{id}],methods=[DELETE]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.FolderController.deleteFolderForCurrent(java.lang.Long)
+2019-04-29 10:36:08.728  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/{id}/link],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.util.List<com.ciel.pocket.link.model.Link>> com.ciel.pocket.link.controller.FolderController.queryLinkUnderFolder(java.lang.Long,java.lang.Long)
+2019-04-29 10:36:08.728  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/{id}/link],methods=[DELETE]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.FolderController.deleteLinkUnderFolder(java.lang.Long)
+2019-04-29 10:36:08.729  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/default/{userId}],methods=[POST]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.FolderController.createDefault(java.lang.Long)
+2019-04-29 10:36:08.729  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/folder/{id}],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.util.List<com.ciel.pocket.link.dto.output.FolderTreeOutput>> com.ciel.pocket.link.controller.FolderController.queryById(java.lang.Long,java.lang.Long)
+2019-04-29 10:36:08.733  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link],methods=[POST]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.lang.Long> com.ciel.pocket.link.controller.LinkController.createLink(java.lang.Long,com.ciel.pocket.link.dto.input.CreateLinkInput,java.security.Principal)
+2019-04-29 10:36:08.734  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/removeFromOften],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.linkRemoveFromOften(java.lang.Long)
+2019-04-29 10:36:08.734  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/addToOften],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.linkAddToOften(java.lang.Long)
+2019-04-29 10:36:08.734  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/top],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.util.List<com.ciel.pocket.link.model.Link>> com.ciel.pocket.link.controller.LinkController.queryTopList(java.lang.Long)
+2019-04-29 10:36:08.735  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<com.ciel.pocket.link.dto.output.PageableListModel<com.ciel.pocket.link.model.Link>> com.ciel.pocket.link.controller.LinkController.queryList(java.lang.Long,com.ciel.pocket.link.dto.input.QueryLinkListInput)
+2019-04-29 10:36:08.735  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/to/{folderId}],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.moveLinkToFolder(java.lang.Long,java.lang.Long)
+2019-04-29 10:36:08.735  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.lang.Long> com.ciel.pocket.link.controller.LinkController.updateLink(com.ciel.pocket.link.dto.input.UpdateLinkInput)
+2019-04-29 10:36:08.735  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/down],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.shortLink(java.lang.Long)
+2019-04-29 10:36:08.736  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/trash/{linkId}],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.trashLink(java.lang.Long,java.lang.Long)
+2019-04-29 10:36:08.736  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/down],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.downLink(java.lang.Long)
+2019-04-29 10:36:08.736  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/up],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.upLink(java.lang.Long)
+2019-04-29 10:36:08.739  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/addTag/{tagId}],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.linkAddTag(java.lang.Long,java.lang.Long)
+2019-04-29 10:36:08.739  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}/visit],methods=[PUT]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.visitLink(java.lang.Long)
+2019-04-29 10:36:08.739  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/recent],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.util.List<com.ciel.pocket.link.model.Link>> com.ciel.pocket.link.controller.LinkController.queryRecentList(java.lang.Long)
+2019-04-29 10:36:08.740  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/link/{linkId}],methods=[DELETE]}" onto public com.ciel.pocket.link.dto.output.ReturnModel com.ciel.pocket.link.controller.LinkController.deleteLink(java.lang.Long)
+2019-04-29 10:36:08.740  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/open/link/analysis],methods=[POST]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<com.ciel.pocket.link.dto.output.AnalysisLinkOutput> com.ciel.pocket.link.controller.open.OpenLinkController.analysisLink(com.ciel.pocket.link.dto.input.AnalysisLinkInput)
+2019-04-29 10:36:08.741  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/tag/{id}/link],methods=[GET]}" onto public com.ciel.pocket.link.dto.output.ReturnModel<java.util.List<com.ciel.pocket.link.model.Link>> com.ciel.pocket.link.controller.TagController.queryLinkUnderTag(java.lang.Long,java.lang.Long)
+2019-04-29 10:36:08.741  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/tag/{id}],methods=[DELETE]}" onto public com.ciel.pocket.infrastructure.dto.web.ReturnModel com.ciel.pocket.link.controller.TagController.deleteTag(java.lang.Long)
+2019-04-29 10:36:08.741  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/tag],methods=[GET]}" onto public com.ciel.pocket.infrastructure.dto.web.ReturnModel<java.util.List<com.ciel.pocket.link.model.Tag>> com.ciel.pocket.link.controller.TagController.queryTag(java.lang.Long,java.lang.String)
+2019-04-29 10:36:08.742  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/tag/current],methods=[GET]}" onto public com.ciel.pocket.infrastructure.dto.web.ReturnModel<java.util.List<com.ciel.pocket.link.dto.output.QueryTagListOutput>> com.ciel.pocket.link.controller.TagController.queryTag(java.lang.Long)
+2019-04-29 10:36:08.742  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/api/tag],methods=[POST]}" onto public com.ciel.pocket.infrastructure.dto.web.ReturnModel<java.lang.Long> com.ciel.pocket.link.controller.TagController.createTag(java.lang.Long,com.ciel.pocket.link.dto.input.CreateTagInput)
+2019-04-29 10:36:08.744  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/swagger-resources]}" onto public org.springframework.http.ResponseEntity<java.util.List<springfox.documentation.swagger.web.SwaggerResource>> springfox.documentation.swagger.web.ApiResourceController.swaggerResources()
+2019-04-29 10:36:08.745  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/swagger-resources/configuration/ui]}" onto public org.springframework.http.ResponseEntity<springfox.documentation.swagger.web.UiConfiguration> springfox.documentation.swagger.web.ApiResourceController.uiConfiguration()
+2019-04-29 10:36:08.745  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/swagger-resources/configuration/security]}" onto public org.springframework.http.ResponseEntity<springfox.documentation.swagger.web.SecurityConfiguration> springfox.documentation.swagger.web.ApiResourceController.securityConfiguration()
+2019-04-29 10:36:08.747  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2019-04-29 10:36:08.748  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2019-04-29 10:36:08.912  INFO 20424 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [public org.springframework.http.ResponseEntity<springfox.documentation.spring.web.json.Json> springfox.documentation.swagger2.web.Swagger2Controller.getDocumentation(java.lang.String,javax.servlet.http.HttpServletRequest)]
+2019-04-29 10:36:09.012  WARN 20424 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-04-29 10:36:09.012  INFO 20424 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-04-29 10:36:09.016  WARN 20424 --- [main] c.n.c.sources.URLConfigurationSource     : No URLs will be polled as dynamic configuration sources.
+2019-04-29 10:36:09.017  INFO 20424 --- [main] c.n.c.sources.URLConfigurationSource     : To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2019-04-29 10:36:09.099  INFO 20424 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-04-29 10:36:09.142  INFO 20424 --- [main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6c0d9d86: startup date [Mon Apr 29 10:36:05 CST 2019]; parent: org.springframework.context.annotation.AnnotationConfigApplicationContext@b2c9a9c
+2019-04-29 10:36:09.194  INFO 20424 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-04-29 10:36:09.195  INFO 20424 --- [main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2019-04-29 10:36:09.212  INFO 20424 --- [main] .m.m.a.ExceptionHandlerExceptionResolver : Detected @ExceptionHandler methods in exceptionControllerAdvice
+2019-04-29 10:36:09.585  INFO 20424 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService  'taskScheduler'
+2019-04-29 10:36:10.806  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2019-04-29 10:36:10.808  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'statFilter' has been autodetected for JMX exposure
+2019-04-29 10:36:10.808  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'dataSource' has been autodetected for JMX exposure
+2019-04-29 10:36:10.818  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'integrationMbeanExporter' has been autodetected for JMX exposure
+2019-04-29 10:36:10.819  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'refreshScope' has been autodetected for JMX exposure
+2019-04-29 10:36:10.820  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'configurationPropertiesRebinder' has been autodetected for JMX exposure
+2019-04-29 10:36:10.820  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Bean with name 'environmentManager' has been autodetected for JMX exposure
+2019-04-29 10:36:10.823  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located managed bean 'environmentManager': registering with JMX server as MBean [org.springframework.cloud.context.environment:name=environmentManager,type=EnvironmentManager]
+2019-04-29 10:36:10.835  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located managed bean 'refreshScope': registering with JMX server as MBean [org.springframework.cloud.context.scope.refresh:name=refreshScope,type=RefreshScope]
+2019-04-29 10:36:10.845  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located managed bean 'integrationMbeanExporter': registering with JMX server as MBean [org.springframework.integration.monitor:name=integrationMbeanExporter,type=IntegrationMBeanExporter]
+2019-04-29 10:36:10.867  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located managed bean 'configurationPropertiesRebinder': registering with JMX server as MBean [org.springframework.cloud.context.properties:name=configurationPropertiesRebinder,context=6c0d9d86,type=ConfigurationPropertiesRebinder]
+2019-04-29 10:36:10.872  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located MBean 'dataSource': registering with JMX server as MBean [com.alibaba.druid.spring.boot.autoconfigure:name=dataSource,type=DruidDataSourceWrapper]
+2019-04-29 10:36:10.874  INFO 20424 --- [main] o.s.j.e.a.AnnotationMBeanExporter        : Located MBean 'statFilter': registering with JMX server as MBean [com.alibaba.druid.filter.stat:name=statFilter,type=StatFilter]
+2019-04-29 10:36:10.882  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Registering beans for JMX exposure on startup
+2019-04-29 10:36:10.883  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Registering MessageChannel nullChannel
+2019-04-29 10:36:10.885  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Located managed bean 'org.springframework.integration:type=MessageChannel,name=nullChannel': registering with JMX server as MBean [org.springframework.integration:type=MessageChannel,name=nullChannel]
+2019-04-29 10:36:10.892  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Registering MessageChannel errorChannel
+2019-04-29 10:36:10.893  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Located managed bean 'org.springframework.integration:type=MessageChannel,name=errorChannel': registering with JMX server as MBean [org.springframework.integration:type=MessageChannel,name=errorChannel]
+2019-04-29 10:36:10.927  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Registering MessageHandler errorLogger
+2019-04-29 10:36:10.928  INFO 20424 --- [main] o.s.i.monitor.IntegrationMBeanExporter   : Located managed bean 'org.springframework.integration:type=MessageHandler,name=errorLogger,bean=internal': registering with JMX server as MBean [org.springframework.integration:type=MessageHandler,name=errorLogger,bean=internal]
+2019-04-29 10:36:10.963  INFO 20424 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 0
+2019-04-29 10:36:10.971  INFO 20424 --- [main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2019-04-29 10:36:11.000  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2019-04-29 10:36:11.380  INFO 20424 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON encoding codec LegacyJacksonJson
+2019-04-29 10:36:11.381  INFO 20424 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using JSON decoding codec LegacyJacksonJson
+2019-04-29 10:36:11.487  INFO 20424 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML encoding codec XStreamXml
+2019-04-29 10:36:11.487  INFO 20424 --- [main] c.n.d.provider.DiscoveryJerseyProvider   : Using XML decoding codec XStreamXml
+2019-04-29 10:36:11.638  INFO 20424 --- [main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2019-04-29 10:36:11.846  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2019-04-29 10:36:12.033  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2019-04-29 10:36:12.037  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 5
+2019-04-29 10:36:12.039  INFO 20424 --- [main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2019-04-29 10:36:12.043  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1556505372042 with initial instances count: 3
+2019-04-29 10:36:12.050  INFO 20424 --- [main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application link-service with eureka with status UP
+2019-04-29 10:36:12.050  INFO 20424 --- [main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1556505372050, current=UP, previous=STARTING]
+2019-04-29 10:36:12.076  INFO 20424 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_LINK-SERVICE/DESKTOP-PIA94AC.mshome.net:link-service:9083: registering service...
+2019-04-29 10:36:12.082  INFO 20424 --- [main] o.s.i.endpoint.EventDrivenConsumer       : Adding {logging-channel-adapter:_org.springframework.integration.errorLogger} as a subscriber to the 'errorChannel' channel
+2019-04-29 10:36:12.082  INFO 20424 --- [main] o.s.i.channel.PublishSubscribeChannel    : Channel 'application-1.errorChannel' has 1 subscriber(s).
+2019-04-29 10:36:12.082  INFO 20424 --- [main] o.s.i.endpoint.EventDrivenConsumer       : started _org.springframework.integration.errorLogger
+2019-04-29 10:36:12.082  INFO 20424 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483547
+2019-04-29 10:36:12.118  INFO 20424 --- [main] o.a.k.clients.consumer.ConsumerConfig    : ConsumerConfig values: 
+	auto.commit.interval.ms = 5000
+	auto.offset.reset = latest
+	bootstrap.servers = [velomobile-01.srvs.cloudkafka.com:9094, velomobile-02.srvs.cloudkafka.com:9094, velomobile-03.srvs.cloudkafka.com:9094]
+	check.crcs = true
+	client.id = 
+	connections.max.idle.ms = 540000
+	enable.auto.commit = true
+	exclude.internal.topics = true
+	fetch.max.bytes = 52428800
+	fetch.max.wait.ms = 500
+	fetch.min.bytes = 1
+	group.id = link-service-dev
+	heartbeat.interval.ms = 3000
+	interceptor.classes = null
+	internal.leave.group.on.close = true
+	isolation.level = read_uncommitted
+	key.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+	max.partition.fetch.bytes = 1048576
+	max.poll.interval.ms = 300000
+	max.poll.records = 500
+	metadata.max.age.ms = 300000
+	metric.reporters = []
+	metrics.num.samples = 2
+	metrics.recording.level = INFO
+	metrics.sample.window.ms = 30000
+	partition.assignment.strategy = [class org.apache.kafka.clients.consumer.RangeAssignor]
+	receive.buffer.bytes = 65536
+	reconnect.backoff.max.ms = 1000
+	reconnect.backoff.ms = 50
+	request.timeout.ms = 305000
+	retry.backoff.ms = 100
+	sasl.jaas.config = [hidden]
+	sasl.kerberos.kinit.cmd = /usr/bin/kinit
+	sasl.kerberos.min.time.before.relogin = 60000
+	sasl.kerberos.service.name = null
+	sasl.kerberos.ticket.renew.jitter = 0.05
+	sasl.kerberos.ticket.renew.window.factor = 0.8
+	sasl.mechanism = SCRAM-SHA-256
+	security.protocol = SASL_SSL
+	send.buffer.bytes = 131072
+	session.timeout.ms = 10000
+	ssl.cipher.suites = null
+	ssl.enabled.protocols = [TLSv1.2, TLSv1.1, TLSv1]
+	ssl.endpoint.identification.algorithm = null
+	ssl.key.password = null
+	ssl.keymanager.algorithm = SunX509
+	ssl.keystore.location = null
+	ssl.keystore.password = null
+	ssl.keystore.type = JKS
+	ssl.protocol = TLS
+	ssl.provider = null
+	ssl.secure.random.implementation = null
+	ssl.trustmanager.algorithm = PKIX
+	ssl.truststore.location = null
+	ssl.truststore.password = null
+	ssl.truststore.type = JKS
+	value.deserializer = class org.apache.kafka.common.serialization.StringDeserializer
+
+2019-04-29 10:36:12.472  INFO 20424 --- [DiscoveryClient-InstanceInfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_LINK-SERVICE/DESKTOP-PIA94AC.mshome.net:link-service:9083 - registration status: 204
+2019-04-29 10:36:13.096  INFO 20424 --- [main] o.a.k.c.s.authenticator.AbstractLogin    : Successfully logged in.
+2019-04-29 10:36:13.140  INFO 20424 --- [main] o.a.kafka.common.utils.AppInfoParser     : Kafka version : 1.0.2
+2019-04-29 10:36:13.140  INFO 20424 --- [main] o.a.kafka.common.utils.AppInfoParser     : Kafka commitId : 2a121f7b1d402825
+2019-04-29 10:36:13.143  INFO 20424 --- [main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 
+2019-04-29 10:36:13.146  INFO 20424 --- [main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483647
+2019-04-29 10:36:13.146  INFO 20424 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2019-04-29 10:36:13.162  INFO 20424 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2019-04-29 10:36:13.206  INFO 20424 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2019-04-29 10:36:13.413  INFO 20424 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: queryTagUsingGET_1
+2019-04-29 10:36:13.465  INFO 20424 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 9083 (http) with context path ''
+2019-04-29 10:36:13.466  INFO 20424 --- [main] .s.c.n.e.s.EurekaAutoServiceRegistration : Updating port to 9083
+2019-04-29 10:36:13.468  INFO 20424 --- [main] com.ciel.pocket.link.LinkApplication     : Started LinkApplication in 10.232 seconds (JVM running for 11.396)
+2019-04-29 10:36:26.044  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Discovered group coordinator velomobile-01.srvs.cloudkafka.com:9094 (id: 2147483647 rack: null)
+2019-04-29 10:36:26.049  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Revoking previously assigned partitions []
+2019-04-29 10:36:26.049  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : partitions revoked: []
+2019-04-29 10:36:26.049  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] (Re-)joining group
+2019-04-29 10:36:41.528  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Successfully joined group with generation 77
+2019-04-29 10:36:41.530  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Setting newly assigned partitions [tfjmqdc9-UserAccountEvent-1, tfjmqdc9-UserAccountEvent-2, tfjmqdc9-UserAccountEvent-3, tfjmqdc9-UserAccountEvent-4, tfjmqdc9-UserAccountEvent-0]
+2019-04-29 10:36:41.860  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned: [tfjmqdc9-UserAccountEvent-1, tfjmqdc9-UserAccountEvent-2, tfjmqdc9-UserAccountEvent-3, tfjmqdc9-UserAccountEvent-4, tfjmqdc9-UserAccountEvent-0]
+2019-04-29 10:36:51.530  INFO 20424 --- [kafka-coordinator-heartbeat-thread | link-service-dev] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Group coordinator velomobile-01.srvs.cloudkafka.com:9094 (id: 2147483647 rack: null) is unavailable or invalid, will attempt rediscovery
+2019-04-29 10:36:51.535  WARN 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Asynchronous auto-commit of offsets {tfjmqdc9-UserAccountEvent-1=OffsetAndMetadata{offset=11, metadata=''}, tfjmqdc9-UserAccountEvent-2=OffsetAndMetadata{offset=9, metadata=''}, tfjmqdc9-UserAccountEvent-3=OffsetAndMetadata{offset=8, metadata=''}, tfjmqdc9-UserAccountEvent-4=OffsetAndMetadata{offset=7, metadata=''}, tfjmqdc9-UserAccountEvent-0=OffsetAndMetadata{offset=9, metadata=''}} failed: Offset commit failed with a retriable exception. You should retry committing the latest consumed offsets.
+2019-04-29 10:36:54.248  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Discovered group coordinator velomobile-01.srvs.cloudkafka.com:9094 (id: 2147483647 rack: null)
+2019-04-29 10:37:03.594 ERROR 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Offset commit failed on partition tfjmqdc9-UserAccountEvent-1 at offset 11: The coordinator is not aware of this member.
+2019-04-29 10:37:03.598  WARN 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Asynchronous auto-commit of offsets {tfjmqdc9-UserAccountEvent-1=OffsetAndMetadata{offset=11, metadata=''}, tfjmqdc9-UserAccountEvent-2=OffsetAndMetadata{offset=9, metadata=''}, tfjmqdc9-UserAccountEvent-3=OffsetAndMetadata{offset=8, metadata=''}, tfjmqdc9-UserAccountEvent-4=OffsetAndMetadata{offset=7, metadata=''}, tfjmqdc9-UserAccountEvent-0=OffsetAndMetadata{offset=9, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records.
+2019-04-29 10:37:03.601  WARN 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Synchronous auto-commit of offsets {tfjmqdc9-UserAccountEvent-1=OffsetAndMetadata{offset=11, metadata=''}, tfjmqdc9-UserAccountEvent-2=OffsetAndMetadata{offset=9, metadata=''}, tfjmqdc9-UserAccountEvent-3=OffsetAndMetadata{offset=8, metadata=''}, tfjmqdc9-UserAccountEvent-4=OffsetAndMetadata{offset=7, metadata=''}, tfjmqdc9-UserAccountEvent-0=OffsetAndMetadata{offset=9, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records.
+2019-04-29 10:37:03.602  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Revoking previously assigned partitions [tfjmqdc9-UserAccountEvent-1, tfjmqdc9-UserAccountEvent-2, tfjmqdc9-UserAccountEvent-3, tfjmqdc9-UserAccountEvent-4, tfjmqdc9-UserAccountEvent-0]
+2019-04-29 10:37:03.602  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : partitions revoked: [tfjmqdc9-UserAccountEvent-1, tfjmqdc9-UserAccountEvent-2, tfjmqdc9-UserAccountEvent-3, tfjmqdc9-UserAccountEvent-4, tfjmqdc9-UserAccountEvent-0]
+2019-04-29 10:37:03.602  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] (Re-)joining group
+2019-04-29 10:37:03.604 ERROR 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Offset commit failed on partition tfjmqdc9-UserAccountEvent-1 at offset 11: The coordinator is not aware of this member.
+2019-04-29 10:37:06.970  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] (Re-)joining group
+2019-04-29 10:37:17.803  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.AbstractCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Successfully joined group with generation 80
+2019-04-29 10:37:17.804  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Setting newly assigned partitions [tfjmqdc9-UserAccountEvent-1, tfjmqdc9-UserAccountEvent-2, tfjmqdc9-UserAccountEvent-3, tfjmqdc9-UserAccountEvent-4, tfjmqdc9-UserAccountEvent-0]
+2019-04-29 10:37:18.057  INFO 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.s.k.l.KafkaMessageListenerContainer    : partitions assigned: [tfjmqdc9-UserAccountEvent-1, tfjmqdc9-UserAccountEvent-2, tfjmqdc9-UserAccountEvent-3, tfjmqdc9-UserAccountEvent-4, tfjmqdc9-UserAccountEvent-0]
+2019-04-29 10:37:18.058  WARN 20424 --- [org.springframework.kafka.KafkaListenerEndpointContainer#0-0-C-1] o.a.k.c.c.internals.ConsumerCoordinator  : [Consumer clientId=consumer-1, groupId=link-service-dev] Asynchronous auto-commit of offsets {tfjmqdc9-UserAccountEvent-1=OffsetAndMetadata{offset=11, metadata=''}, tfjmqdc9-UserAccountEvent-2=OffsetAndMetadata{offset=9, metadata=''}, tfjmqdc9-UserAccountEvent-3=OffsetAndMetadata{offset=8, metadata=''}, tfjmqdc9-UserAccountEvent-4=OffsetAndMetadata{offset=7, metadata=''}, tfjmqdc9-UserAccountEvent-0=OffsetAndMetadata{offset=9, metadata=''}} failed: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records.
+2019-04-29 10:41:11.848  INFO 20424 --- [AsyncResolver-bootstrap-executor-0] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration

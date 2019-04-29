@@ -11,3 +11,7 @@ loadstar:
       linkThumbnail: LoadStar_Link_Thumbnail
 logging:
   config: classpath:log-config.xml
+  level:
+    root: WARN
+    com:
+      ciel: INFO

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.0.0
+    ports:
+      - "9180:9180"
+    container_name: logstash
+    environment:
+      XPACK_MONITORING_ENABLED: false
+    volumes:
+      - /root/logstash/pipeline/:/usr/share/logstash/pipeline/
+      - /root/logstash/config/jvm.options:/usr/share/logstash/config/jvm.options
+    networks:
+      - default
+      - loadstar
+
+networks:
+  loadstar:
+    external: true
+
+
