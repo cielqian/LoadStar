@@ -1,9 +1,5 @@
 package com.ciel.pocket.link.model;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import org.apache.ibatis.type.Alias;
-
 public class LinkTag {
 
     private Long linkId;

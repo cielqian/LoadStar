@@ -20,9 +20,6 @@ public class LinkApplication {
         SpringApplication.run(LinkApplication.class, args);
     }
 
-
-    @Resource
-    DataSource dataSource;
 //
 //    @Bean
 //    public SqlSessionFactory mybatisSqlSessionFactoryBean() throws Exception {

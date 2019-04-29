@@ -7,7 +7,9 @@ spring:
 global:
   auth:
     prefix: LoadStarAuth_
-apollo:
-  meta: http://10.0.75.2:7094
 logging:
   config: classpath:log-config.xml
+  level:
+    root: WARN
+    com:
+      ciel: INFO

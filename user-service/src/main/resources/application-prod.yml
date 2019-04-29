@@ -14,3 +14,7 @@ loadstar:
 #    virtual-host: LoadStar
 logging:
   config: classpath:log-config.xml
+  level:
+    root: WARN
+    com:
+      ciel: INFO
