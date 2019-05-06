@@ -38,12 +38,6 @@ services:
   registry:
     image: cielqian/pocket-registry
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
     ports:
       - 9001:9001
     networks: 
@@ -53,12 +47,6 @@ services:
   gateway:
     image: cielqian/pocket-gateway
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
     ports:
       - 9080:9080
     depends_on: 
@@ -70,12 +58,6 @@ services:
   auth-service:
     image: cielqian/pocket-auth-service
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
     ports:
       - 9081:9081
     depends_on: 
@@ -89,12 +71,6 @@ services:
   user-service:
     image: cielqian/pocket-user-service
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
     ports:
       - 9082:9082
     depends_on: 
@@ -108,12 +84,6 @@ services:
   link-service:
     image: cielqian/pocket-link-service
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
     ports:
       - 9083:9083
     depends_on: 
@@ -127,12 +97,6 @@ services:
   web-container:
     image: cielqian/pocket-web
     restart: always
-    deploy:
-      resources:
-        limits:
-          memory: 256M
-        reservations:
-          memory: 128M
     ports:
       - 81:80
     networks: 
