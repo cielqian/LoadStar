@@ -22,6 +22,11 @@ spring:
         mechanism: SCRAM-SHA-256
         jaas:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tfjmqdc9" password="mAR70SmzqRQGffklsv7cZ7ne4Yl83mEC";
+  data:
+    elasticsearch:
+      cluster-nodes: https://n28jzhfwgu:8b3uzn857r@loadstar-6473901552.us-west-2.bonsaisearch.net
+  elasticsearch:
+    
 
 #  zipkin:
 #    enabled: true
@@ -54,7 +59,6 @@ eureka:
 ribbon:
   eager-load:
     enabled: true
-
 loadstar:
   zimg: http://loadstar.top:4869
 
