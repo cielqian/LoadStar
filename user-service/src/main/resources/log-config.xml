@@ -32,10 +32,8 @@
         </encoder>
     </appender>
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>
-            <onMismatch>DENY</onMismatch>
         </filter>
         <destination>loadstar.top:9180</destination>
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
