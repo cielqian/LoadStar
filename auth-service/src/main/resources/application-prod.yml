@@ -10,6 +10,4 @@ global:
 logging:
   config: classpath:log-config.xml
   level:
-    root: WARN
-    com:
-      ciel: INFO
+    root: INFO

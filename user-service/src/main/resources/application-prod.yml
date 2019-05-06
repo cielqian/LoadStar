@@ -4,6 +4,7 @@ spring:
       url: jdbc:mysql://rm-bp1uc95ps57o9b7t79o.mysql.rds.aliyuncs.com:3306/LoadStar_User?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: loadstar
       password: loadstar123!
+
 loadstar:
   kafka:
     topic:
@@ -15,6 +16,4 @@ loadstar:
 logging:
   config: classpath:log-config.xml
   level:
-    root: WARN
-    com:
-      ciel: INFO
+    root: INFO
