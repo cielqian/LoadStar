@@ -2,20 +2,14 @@
 <configuration>
     <springProperty scope="context" name="profile" source="spring.profiles.active"/>
     <springProperty scope="context" name="serviceName" source="spring.application.name"/>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] - %m%n</pattern>
-        </encoder>
-    </appender>
-
     <appender name="INFO_FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
-            <onMatch>DENY</onMatch>
-            <onMismatch>ACCEPT</onMismatch>
+        <filter class="ch.qos.logback.classic.filter.Level Filter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./logs/info/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>/root/logs/link-service/info/%d{yyyy-MM-dd}.log</FileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -30,7 +24,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>./logs/error/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>/root/logs/link-service/error/%d{yyyy-MM-dd}.log</FileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -39,6 +33,11 @@
     </appender>
 
     <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
         <destination>loadstar.top:9180</destination>
         <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
             <customFields>{"profile":"${profile:-}", "serviceName":"${serviceName:-}"}</customFields>
@@ -65,6 +64,7 @@
 
     <root level="INFO">
         <appender-ref ref="LOGSTASH" />
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="INFO_FILE_OUT" />
+        <appender-ref ref="ERROR_FILE_OUT" />
     </root>
 </configuration>

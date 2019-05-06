@@ -55,8 +55,8 @@ public class MyBatisPlusConfig {
         sqlSessionFactory.setConfiguration(configuration);
         sqlSessionFactory.setPlugins(new Interceptor[]{
                 new PaginationInterceptor(),
-                new PerformanceInterceptor(),
-                new OptimisticLockerInterceptor()
+//                new PerformanceInterceptor(),
+//                new OptimisticLockerInterceptor()
         });
         sqlSessionFactory.setGlobalConfig(globalConfiguration);
         return sqlSessionFactory.getObject();
