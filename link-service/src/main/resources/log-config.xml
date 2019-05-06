@@ -3,7 +3,7 @@
     <springProperty scope="context" name="profile" source="spring.profiles.active"/>
     <springProperty scope="context" name="serviceName" source="spring.application.name"/>
     <appender name="INFO_FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <filter class="ch.qos.logback.classic.filter.Level Filter">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
             <onMatch>ACCEPT</onMatch>
             <onMismatch>DENY</onMismatch>
