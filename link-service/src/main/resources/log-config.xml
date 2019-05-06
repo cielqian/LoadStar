@@ -9,7 +9,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/root/logs/link-service/info/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>./logs/%d{yyyy-MM-dd}.log</FileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -24,7 +24,7 @@
             <onMismatch>DENY</onMismatch>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>/root/logs/link-service/error/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <FileNamePattern>./logs/%d{yyyy-MM-dd}.log</FileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
