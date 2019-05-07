@@ -1,5 +1,6 @@
 package com.ciel.pocket.link.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,6 +9,9 @@ import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.input.QueryLinkListInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
+import com.ciel.pocket.link.es.ESRestClient;
+import com.ciel.pocket.link.es.model.ESLink;
+import com.ciel.pocket.link.es.repository.LinkESRepository;
 import com.ciel.pocket.link.mapper.FolderMapper;
 import com.ciel.pocket.link.mapper.LinkMapper;
 import com.ciel.pocket.link.mapper.LinkTagMapper;
@@ -20,6 +24,20 @@ import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.JsoupLinkParser;
 import com.netflix.discovery.converters.Auto;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.impl.client.BasicCredentialsProvider;
+import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -27,6 +45,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.concurrent.ListenableFuture;
 
+import javax.net.ssl.SSLContext;
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -48,8 +69,14 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
+//    @Autowired
+//    private LinkESRepository linkESRepository;
+
     @Value("${loadstar.kafka.topic.linkThumbnail}")
     private String linkThumbnailTopic;
+
+    @Autowired
+    ESRestClient esRestClient;
 
     @Override
     public Long create(Link link, List<Long> tags) {
@@ -71,6 +98,44 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         }
 
         baseMapper.insert(link);
+
+
+
+        RestHighLevelClient client = esRestClient.getClient();
+
+//        RestHighLevelClient client = new RestHighLevelClient(
+//                RestClient.builder(
+//                        new HttpHost("loadstar-6473901552.us-west-2.bonsaisearch.net", 80, "http"))
+//                .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
+//                    @Override
+//                    public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder ) {
+//                        return httpClientBuilder
+//                                .setDefaultCredentialsProvider(credentialsProvider);
+//                    }
+//                })
+//                .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
+//                    @Override
+//                    public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder builder) {
+//                        return builder.setConnectTimeout(5000).setSocketTimeout(60000);
+//                    }
+//                })
+//                .setMaxRetryTimeoutMillis(60000)
+//        );
+
+        ESLink esLink = new ESLink();
+        esLink.setName(link.getName());
+        esLink.setTitle(link.getTitle());
+        esLink.setTableId(link.getId());
+        esLink.setUserId(link.getUserId());
+
+        IndexRequest request = new IndexRequest("loadstar", "links");
+        request.source(JSONObject.toJSONString(esLink), XContentType.JSON);
+
+        try {
+            IndexResponse response = client.index(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         if (tags != null){
             tags.forEach(tagId -> {
