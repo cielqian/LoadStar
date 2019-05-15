@@ -24,6 +24,7 @@
         <module>infrastructure</module>
         <module>turbine</module>
         <module>turbine-dashboard</module>
+<!--        <module>schedule</module>-->
     </modules>
 
     <properties>

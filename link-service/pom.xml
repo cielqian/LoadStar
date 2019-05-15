@@ -205,8 +205,8 @@
         </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>6.5.4</version>
+            <artifactId>elasticsearch</artifactId>
+            <version>6.5.4</version>
         </dependency>
 
     </dependencies>

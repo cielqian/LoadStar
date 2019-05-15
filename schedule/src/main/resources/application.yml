@@ -1,10 +1,19 @@
 server:
   port: 9084
 loadstar:
+  es:
+    clustername: Loadstar
+    index: loadstar
+    hosts:
+      - ip: loadstar-6473901552.us-west-2.bonsaisearch.net
+        port: 80
+        schema: http
+        username: BGA7j8ovyi
+        password: 3Ay9gmKnCMsLFiWxRGqb6h4
   elasticJob:
     zoo: loadstar.top:2181
     namespace: loadstar_dev
     jobs:
       deleteESIndex:
-        cron: * * * * * ? *
+        cron: '0 0 0 * * ? *'
         shardingTotalCount: 1
