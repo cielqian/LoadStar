@@ -3,10 +3,6 @@ spring:
     active: dev
   application:
     name: link-service
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
   kafka:
     bootstrap-servers: velomobile-01.srvs.cloudkafka.com:9094,velomobile-02.srvs.cloudkafka.com:9094,velomobile-03.srvs.cloudkafka.com:9094
     consumer:
@@ -15,6 +11,9 @@ spring:
       enable-auto-commit: true
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
     properties:
       security:
         protocol: SASL_SSL
@@ -22,7 +21,8 @@ spring:
         mechanism: SCRAM-SHA-256
         jaas:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tfjmqdc9" password="mAR70SmzqRQGffklsv7cZ7ne4Yl83mEC";
-
+#          username: BGA7j8ovyi
+#          password: 3Ay9gmKnCMsLFiWxRGqb6h4
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411
@@ -54,8 +54,21 @@ eureka:
 ribbon:
   eager-load:
     enabled: true
-
 loadstar:
+  es:
+    clustername: Loadstar
+    index: loadstar
+    hosts:
+      -
+        ip: loadstar-6473901552.us-west-2.bonsaisearch.net
+        port: 80
+        schema: http
+        username: BGA7j8ovyi
+        password: 3Ay9gmKnCMsLFiWxRGqb6h4
+  kafka:
+    topic:
+      UserAccountEvent: tfjmqdc9-UserAccountEvent
+      LinkEvent: tfjmqdc9-LinkEvent
   zimg: http://loadstar.top:4869
 
 

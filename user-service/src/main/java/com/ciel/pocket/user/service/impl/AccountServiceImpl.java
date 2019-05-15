@@ -79,10 +79,9 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         UserAccountEvent event = new UserAccountEvent();
         event.setEvent("NEW");
         event.setId(remoteResult.getData().toString());
-        event.setTs(new Date());
         event.setProfile(ApplicationContextUtils.getActiveProfile());
-
-        ListenableFuture future = kafkaTemplate.send(createFolderTopic, event.toJson());
+        String jsonString = event.toJson();
+        ListenableFuture future = kafkaTemplate.send(createFolderTopic, jsonString);
         future.addCallback(o -> System.out.println("send to createFolderTopic success:" + remoteResult.getData())
                 , throwable -> System.out.println("send to createFolderTopic fail:" + remoteResult.getData()));
 

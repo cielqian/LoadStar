@@ -5,14 +5,6 @@ spring:
       username: loadstar
       password: loadstar123!
 
-loadstar:
-  kafka:
-    topic:
-      UserAccountEvent: tfjmqdc9-UserAccountEvent
-#  rabbitmq:
-#    addresses: 101.200.55.76
-#    port: 5672
-#    virtual-host: LoadStar
 logging:
   config: classpath:log-config.xml
   level:

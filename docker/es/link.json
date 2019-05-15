@@ -1,0 +1,26 @@
+{
+  "mappings":{
+    "links":{
+      "properties": {
+        "tableId": {
+          "type": "long"
+        },
+        "profile": {
+          "type": "text"
+        },
+        "userId": {
+          "type": "long"
+        },
+        "name": {
+          "type": "text"
+        },
+        "title": {
+          "type": "text"
+        },
+        "createtime": {
+          "type": "date"
+        }
+      }
+    }
+  }
+}

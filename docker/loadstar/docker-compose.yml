@@ -92,7 +92,20 @@ services:
       - /root/logs/link-service:/logs
     networks: 
       - default 
-      - loadstar 
+      - loadstar
+
+  schedule-service:
+    image: cielqian/pocket-schedule-service
+    restart: always
+    ports:
+      - 9084:9084
+    depends_on:
+      - registry
+    volumes:
+      - /root/logs/schedule-service:/logs
+    networks:
+      - default
+      - loadstar
 
   web-container:
     image: cielqian/pocket-web

@@ -2,18 +2,16 @@ package com.ciel.pocket.infrastructure.events;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import java.util.Date;
 
 /**
  * @author cielqian
  * @email qianhong91@outlook.com
- * @date 2019/4/26 15:40
+ * @date 2019/5/15 14:34
  */
-
 @Data
-public class UserAccountEvent {
+public class LinkEvent {
     String profile;
 
     String event;
@@ -24,7 +22,7 @@ public class UserAccountEvent {
 
     Long ts;
 
-    public UserAccountEvent() {
+    public LinkEvent() {
         ts = new Date().getTime();
     }
 
