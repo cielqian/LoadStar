@@ -5,9 +5,3 @@ spring:
     password: loadstar123!
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-
-loadstar:
-  kafka:
-    topic:
-      UserAccountEvent: tfjmqdc9-UserAccountEvent
-      linkThumbnail: LoadStar_Link_Thumbnail_Dev

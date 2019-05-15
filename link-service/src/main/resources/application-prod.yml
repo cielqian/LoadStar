@@ -4,11 +4,6 @@ spring:
     username: loadstar
     password: loadstar123!
     type: com.alibaba.druid.pool.DruidDataSource
-loadstar:
-  kafka:
-    topic:
-      UserAccountEvent: tfjmqdc9-UserAccountEvent
-      linkThumbnail: LoadStar_Link_Thumbnail
 logging:
   config: classpath:log-config.xml
   level:

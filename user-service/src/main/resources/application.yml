@@ -78,7 +78,11 @@ mybatis-plus:
   type-enums-package: com.ciel.pocket.user.infrastructure.enums
   configuration:
     map-underscore-to-camel-case: true
-
+loadstar:
+  kafka:
+    topic:
+      UserAccountEvent: tfjmqdc9-UserAccountEvent
+      LinkEvent: tfjmqdc9-LinkEvent
 logging:
   level:
     root: info

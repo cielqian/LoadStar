@@ -2,6 +2,8 @@ package com.ciel.pocket.link.es.model;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author cielqian
  * @email qianhong91@outlook.com
@@ -10,6 +12,10 @@ import lombok.Data;
 //@Document(indexName = "link", type = "link", shards = 1, replicas = 0, refreshInterval = "-1")
 @Data
 public class ESLink {
+
+    String profile;
+
+    Date createtime;
 
     Long tableId;
 

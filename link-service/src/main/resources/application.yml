@@ -11,6 +11,9 @@ spring:
       enable-auto-commit: true
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
     properties:
       security:
         protocol: SASL_SSL
@@ -62,7 +65,10 @@ loadstar:
         schema: http
         username: BGA7j8ovyi
         password: 3Ay9gmKnCMsLFiWxRGqb6h4
-
+  kafka:
+    topic:
+      UserAccountEvent: tfjmqdc9-UserAccountEvent
+      LinkEvent: tfjmqdc9-LinkEvent
   zimg: http://loadstar.top:4869
 
 

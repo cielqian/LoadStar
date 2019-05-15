@@ -1,0 +1,10 @@
+server:
+  port: 9084
+loadstar:
+  elasticJob:
+    zoo: loadstar.top:2181
+    namespace: loadstar_dev
+    jobs:
+      deleteESIndex:
+        cron: * * * * * ? *
+        shardingTotalCount: 1

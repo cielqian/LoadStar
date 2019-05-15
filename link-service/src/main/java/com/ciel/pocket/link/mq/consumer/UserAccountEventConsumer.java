@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ciel.pocket.link.infrastructure.ApplicationContextUtils;
 import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.service.FolderService;
+import lombok.extern.java.Log;
 import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/2/25 19:16
  */
 @Component
+@Log
 public class UserAccountEventConsumer {
     @Autowired
     FolderService folderService;
@@ -56,7 +58,9 @@ public class UserAccountEventConsumer {
             folderService.create(defaultFolder);
             folderService.create(trashFolder);
             folderService.create(loadStarFolder);
+
+            log.info("create default folder for user, id : " + userId);
+
         }
-//        System.out.printf("Loadstar_Folder_Creater_Dev Consumer : key = %s, value = %s \n", record.key(), record.value());
     }
 }
