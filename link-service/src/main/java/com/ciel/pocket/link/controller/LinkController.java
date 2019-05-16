@@ -93,6 +93,13 @@ public class LinkController {
         return ReturnModel.OK(links);
     }
 
+    @ApiOperation("全文搜索")
+    @RequestMapping(path = "/search", method = RequestMethod.GET)
+    public ReturnModel<PageableListModel<Link>> search(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
+        PageableListModel<Link> links = linkService.fullTextSearch(accountId, queryInput);
+        return ReturnModel.OK(links);
+    }
+
     @ApiOperation("查询最近访问链接")
     @RequestMapping(path = "/recent", method = RequestMethod.GET)
     public ReturnModel<List<Link>> queryRecentList(@RequestHeader(Constants.Header_AccountId) Long accountId){

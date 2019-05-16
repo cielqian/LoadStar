@@ -25,4 +25,5 @@ public class ESLink {
 
     String title;
 
+    String url;
 }

@@ -27,8 +27,18 @@ import lombok.extern.java.Log;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.rest.RestStatus;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -37,8 +47,10 @@ import org.springframework.util.Assert;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Log
@@ -61,6 +73,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Value("${loadstar.kafka.topic.LinkEvent}")
     private String linkTopic;
+
+    @Autowired
+    private ESRestClient esRestClient;
 
     @Override
     public Long create(Link link, List<Long> tags) {
@@ -252,6 +267,51 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         linkPageableListModel.setTotal(links.getTotal());
 
         return linkPageableListModel;
+    }
+
+    @Override
+    public PageableListModel<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput) {
+        PageableListModel<Link> result = new PageableListModel<>();
+        result.setItems(new ArrayList<>());
+
+        RestHighLevelClient client = esRestClient.getClient();
+
+        SearchRequest searchRequest = new SearchRequest("loadstar");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        searchSourceBuilder.query(QueryBuilders.matchQuery("title", queryInput.getKeyword()));
+
+        HighlightBuilder highlightBuilder = new HighlightBuilder();
+        HighlightBuilder.Field highlightTitle = new HighlightBuilder.Field("title");
+        highlightTitle.preTags("<em>");
+        highlightTitle.postTags("</em>");
+        highlightBuilder.field(highlightTitle);
+        searchSourceBuilder.highlighter(highlightBuilder);
+
+        searchRequest.types("links");
+        searchRequest.source(searchSourceBuilder);
+
+        try {
+            SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+            if (searchResponse.status() == RestStatus.OK){
+                SearchHits hits = searchResponse.getHits();
+                SearchHit[] searchHits = hits.getHits();
+                for (SearchHit hit : searchHits) {
+                    Link link = new Link();
+                    Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+                    link.setId(Long.parseLong(sourceAsMap.get("tableId").toString()));
+                    link.setUrl((String) sourceAsMap.get("url"));
+                    Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+                    HighlightField highlight = highlightFields.get("title");
+                    link.setTitle(highlight.fragments()[0].string());
+
+                    result.getItems().add(link);
+                }
+                result.setTotal(hits.totalHits);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
 
