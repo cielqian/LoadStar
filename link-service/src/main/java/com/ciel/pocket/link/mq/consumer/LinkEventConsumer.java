@@ -51,6 +51,7 @@ public class LinkEventConsumer {
             esLink.setUserId(link.getUserId());
             esLink.setProfile(ApplicationContextUtils.getActiveProfile());
             esLink.setCreatetime(link.getCreateTime());
+            esLink.setUrl(link.getUrl());
 
             IndexRequest request = new IndexRequest("loadstar", "links");
             request.source(JSONObject.toJSONString(esLink), XContentType.JSON);
