@@ -26,6 +26,10 @@ public class Theme {
 
     String modules;
 
+    String settings;
+
+    String tips;
+
     @TableField(fill = FieldFill.INSERT)
     Date createTime;
 
