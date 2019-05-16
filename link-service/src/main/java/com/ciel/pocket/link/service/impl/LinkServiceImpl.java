@@ -32,7 +32,11 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -278,7 +282,18 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
         SearchRequest searchRequest = new SearchRequest("loadstar");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.query(QueryBuilders.matchQuery("title", queryInput.getKeyword()));
+
+        BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
+
+        MatchQueryBuilder titleMatchQueryBuilder = QueryBuilders.matchQuery("title", queryInput.getKeyword());
+        TermQueryBuilder accountIdTermQueryBuilder = QueryBuilders.termQuery("userId", accountId);
+        TermQueryBuilder profileTermQueryBuilder = QueryBuilders.termQuery("profile", ApplicationContextUtils.getActiveProfile());
+
+        boolQueryBuilder.must(titleMatchQueryBuilder)
+                .must(accountIdTermQueryBuilder)
+                .must(profileTermQueryBuilder);
+
+        searchSourceBuilder.query(boolQueryBuilder);
 
         HighlightBuilder highlightBuilder = new HighlightBuilder();
         HighlightBuilder.Field highlightTitle = new HighlightBuilder.Field("title");
