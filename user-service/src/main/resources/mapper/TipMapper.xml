@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ciel.pocket.user.repository.TipRepository" >
+    <resultMap id="BaseResultMap" type="com.ciel.pocket.user.domain.Tip" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="is_delete" property="is_delete" jdbcType="BIT" />
+        <result column="user_id" property="userId" jdbcType="BIGINT" />
+        <result column="tip" property="tip" jdbcType="VARCHAR" />
+        <result column="hasRead" property="hasRead" jdbcType="BIT" />
+        <result column="readTime" property="readTime" jdbcType="DATE" />
+    </resultMap>
+</mapper>
