@@ -11,5 +11,6 @@ import com.ciel.pocket.user.domain.Tip;
  */
 
 public interface TipService extends IService<Tip> {
+
     void readTip(Long userId, String tip);
 }

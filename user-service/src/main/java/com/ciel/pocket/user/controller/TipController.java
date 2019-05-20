@@ -6,6 +6,7 @@ import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.user.domain.Theme;
 import com.ciel.pocket.user.domain.Tip;
+import com.ciel.pocket.user.dto.input.ReadTip;
 import com.ciel.pocket.user.service.TipService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,9 +42,9 @@ public class TipController {
 
     @ApiOperation("更新当前用户Tip")
     @RequestMapping(value = "/read",method = RequestMethod.POST)
-    public ReturnModel update(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody String tip){
+    public ReturnModel update(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody ReadTip readTipInput){
 
-        tipService.readTip(accountId, tip);
+        tipService.readTip(accountId, readTipInput.getTip());
 
         return ReturnUtils.ok("更新成功");
     }

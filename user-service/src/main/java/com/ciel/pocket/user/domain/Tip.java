@@ -14,7 +14,7 @@ import java.util.Date;
  * @date 2019/5/16 19:34
  */
 @Data
-@TableName("theme")
+@TableName("tip")
 public class Tip {
     @TableId(type = IdType.ID_WORKER)
     Long id;
@@ -26,7 +26,7 @@ public class Tip {
 
     String tip;
 
-    boolean read;
+    boolean hasRead;
 
     Date readTime;
 }
