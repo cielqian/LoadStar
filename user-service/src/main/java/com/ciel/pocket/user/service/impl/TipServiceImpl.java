@@ -37,10 +37,10 @@ public class TipServiceImpl extends ServiceImpl<TipRepository, Tip> implements T
             newTip.setHasRead(false);
             newTip.setTip(tip);
             newTip.setUserId(userId);
-            save(newTip);
         }else{
             exist.setHasRead(true);
             exist.setReadTime(new Date());
         }
+        saveOrUpdate(exist);
     }
 }

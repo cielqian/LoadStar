@@ -17,6 +17,6 @@ import java.util.List;
 @Repository
 public interface TipRepository extends BaseMapper<Tip> {
 
-    @Select("SELECT * FROM tip WHERE user_id = ${ew.sqlSegment}")
+    @Select("SELECT * FROM tip WHERE ${ew.sqlSegment}")
     List<Tip> selectAllTip(@Param("ew") Wrapper<Tip> queryWrapper);
 }
