@@ -30,17 +30,18 @@ public class TipServiceImpl extends ServiceImpl<TipRepository, Tip> implements T
         QueryWrapper<Tip> qw = new QueryWrapper<Tip>();
         qw.eq("user_id", userId);
         qw.eq("tip", tip);
-        String s = qw.getSqlSegment();
         Tip exist = getOne(qw);
         if (exist == null){
             Tip newTip = new Tip();
-            newTip.setHasRead(false);
+            newTip.setHasRead(true);
             newTip.setTip(tip);
             newTip.setUserId(userId);
+            newTip.setReadTime(new Date());
+            save(newTip);
         }else{
             exist.setHasRead(true);
             exist.setReadTime(new Date());
+            updateById(exist);
         }
-        saveOrUpdate(exist);
     }
 }

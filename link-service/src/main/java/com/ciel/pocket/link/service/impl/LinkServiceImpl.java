@@ -1,6 +1,7 @@
 package com.ciel.pocket.link.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -32,10 +33,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -370,10 +368,17 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Override
     public void addLinkToTag(Long linkId, Long tagId) {
-        LinkTag linkTag = new LinkTag();
-        linkTag.setTagId(tagId);
-        linkTag.setLinkId(linkId);
-        linkTagMapper.insert(linkTag);
+        QueryWrapper<LinkTag> wrapper = new QueryWrapper<>();
+        wrapper.eq("link_id", linkId);
+        wrapper.eq("tag_id", tagId);
+
+        Integer count = linkTagMapper.selectCount(wrapper);
+        if (count <= 1){
+            LinkTag linkTag = new LinkTag();
+            linkTag.setTagId(tagId);
+            linkTag.setLinkId(linkId);
+            linkTagMapper.insert(linkTag);
+        }
     }
 
     @Override
