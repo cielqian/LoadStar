@@ -1,7 +1,5 @@
 package com.ciel.pocket.link.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -12,7 +10,6 @@ import com.ciel.pocket.link.dto.input.QueryLinkListInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
 import com.ciel.pocket.link.dto.output.PageableListModel;
 import com.ciel.pocket.link.es.ESRestClient;
-import com.ciel.pocket.link.es.model.ESLink;
 import com.ciel.pocket.link.infrastructure.ApplicationContextUtils;
 import com.ciel.pocket.link.mapper.FolderMapper;
 import com.ciel.pocket.link.mapper.LinkMapper;
@@ -25,16 +22,16 @@ import com.ciel.pocket.link.model.VisitRecord;
 import com.ciel.pocket.link.service.LinkService;
 import com.ciel.pocket.link.service.linkParser.JsoupLinkParser;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.*;
-import org.elasticsearch.index.search.MatchQuery;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -55,7 +52,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@Log
+@Slf4j
 public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements LinkService {
 
     @Autowired

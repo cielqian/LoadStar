@@ -5,3 +5,7 @@ spring:
     password: loadstar123!
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+logging:
+  config: classpath:log-config.xml
+  level:
+    root: INFO

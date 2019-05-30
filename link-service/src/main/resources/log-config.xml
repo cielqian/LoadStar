@@ -2,6 +2,7 @@
 <configuration>
     <springProperty scope="context" name="profile" source="spring.profiles.active"/>
     <springProperty scope="context" name="serviceName" source="spring.application.name"/>
+
     <appender name="INFO_FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
@@ -60,9 +61,16 @@
         </encoder>
     </appender>
 
+    <appender name="CONSOLE_OUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%date{ISO8601}] [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}] [%level] - [%thread] %m%n</pattern>
+        </encoder>
+    </appender>
+
     <root level="INFO">
-        <appender-ref ref="LOGSTASH" />
-        <appender-ref ref="INFO_FILE_OUT" />
-        <appender-ref ref="ERROR_FILE_OUT" />
+<!--        <appender-ref ref="LOGSTASH" />-->
+<!--        <appender-ref ref="INFO_FILE_OUT" />-->
+<!--        <appender-ref ref="ERROR_FILE_OUT" />-->
+        <appender-ref ref="CONSOLE_OUT" />
     </root>
 </configuration>
