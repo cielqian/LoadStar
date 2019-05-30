@@ -23,4 +23,8 @@ public class Passbook {
     String username;
 
     String password;
+
+    Long userId;
+
+    String link;
 }
