@@ -14,7 +14,7 @@
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] - %m%n</pattern>
+            <pattern>[%date{ISO8601}] [%X{X-B3-TraceId:-},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}] [%X{AccountId:-}] [%level] [%thread] - %m%n</pattern>
         </encoder>
     </appender>
 
@@ -29,7 +29,7 @@
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%level] - %m%n</pattern>
+            <pattern>[%date{ISO8601}] [%X{X-B3-TraceId:-},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}] [%X{AccountId:-}] [%level] [%thread] - %m%n</pattern>
         </encoder>
     </appender>
 
@@ -63,14 +63,14 @@
 
     <appender name="CONSOLE_OUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>[%date{ISO8601}] [%X{X-B3-TraceId},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}] [%level] - [%thread] %m%n</pattern>
+            <pattern>[%date{ISO8601}] [%X{X-B3-TraceId:-},%X{X-B3-SpanId},%X{X-B3-ParentSpanId},%X{X-Span-Export}] [%X{AccountId:-}] [%level] [%thread] - %m%n</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
 <!--        <appender-ref ref="LOGSTASH" />-->
-<!--        <appender-ref ref="INFO_FILE_OUT" />-->
-<!--        <appender-ref ref="ERROR_FILE_OUT" />-->
+        <appender-ref ref="INFO_FILE_OUT" />
+        <appender-ref ref="ERROR_FILE_OUT" />
         <appender-ref ref="CONSOLE_OUT" />
     </root>
 </configuration>
