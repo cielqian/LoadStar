@@ -5,6 +5,9 @@ spring:
     active: dev
   application:
     name: auth-service
+  zipkin:
+    enabled: true
+    base-url: http://loadstar.top:9411
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411

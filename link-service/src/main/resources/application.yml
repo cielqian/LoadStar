@@ -3,6 +3,9 @@ spring:
     active: dev
   application:
     name: link-service
+  zipkin:
+    enabled: true
+    base-url: http://loadstar.top:9411
   kafka:
     bootstrap-servers: velomobile-01.srvs.cloudkafka.com:9094,velomobile-02.srvs.cloudkafka.com:9094,velomobile-03.srvs.cloudkafka.com:9094
     consumer:
@@ -23,9 +26,7 @@ spring:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tfjmqdc9" password="mAR70SmzqRQGffklsv7cZ7ne4Yl83mEC";
 #          username: BGA7j8ovyi
 #          password: 3Ay9gmKnCMsLFiWxRGqb6h4
-#  zipkin:
-#    enabled: true
-#    base-url: http://101.200.55.76:9411
+
 #  sleuth:
 #    sampler:
 #      percentage: 1.0
