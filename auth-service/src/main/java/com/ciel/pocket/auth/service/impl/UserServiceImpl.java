@@ -4,6 +4,7 @@ import com.ciel.pocket.auth.domain.User;
 import com.ciel.pocket.auth.repository.UserRepository;
 import com.ciel.pocket.auth.service.UserService;
 import com.ciel.pocket.infrastructure.exceptions.ObjectExistingException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  * @Comment
  */
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
     @Autowired
     UserRepository userRepository;
@@ -24,6 +26,7 @@ public class UserServiceImpl implements UserService{
             throw new ObjectExistingException("账号已存在");
         user.encodePassword();
         userRepository.insert(user);
+        log.info("create user id " + user.getId());
         return user;
     }
 

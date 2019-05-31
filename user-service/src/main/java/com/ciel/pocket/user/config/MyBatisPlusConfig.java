@@ -54,8 +54,8 @@ public class MyBatisPlusConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         sqlSessionFactory.setConfiguration(configuration);
         sqlSessionFactory.setPlugins(new Interceptor[]{
-                new PaginationInterceptor(),
-                new PerformanceInterceptor(),
+                new PaginationInterceptor()
+//                new PerformanceInterceptor(),
 //                new OptimisticLockerInterceptor()
         });
         sqlSessionFactory.setGlobalConfig(globalConfiguration);

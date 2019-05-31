@@ -13,6 +13,7 @@ import com.ciel.pocket.user.infrastructure.ApplicationContextUtils;
 import com.ciel.pocket.user.repository.ThemeRepository;
 import com.ciel.pocket.user.repository.UserRepository;
 import com.ciel.pocket.user.service.AccountService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -28,6 +29,7 @@ import java.util.Date;
  * @Comment
  */
 @Service
+@Slf4j
 public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implements AccountService {
     @Autowired
     UserRepository accountRepository;
@@ -82,8 +84,8 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         event.setProfile(ApplicationContextUtils.getActiveProfile());
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(createFolderTopic, jsonString);
-        future.addCallback(o -> System.out.println("send to createFolderTopic success:" + remoteResult.getData())
-                , throwable -> System.out.println("send to createFolderTopic fail:" + remoteResult.getData()));
+        future.addCallback(o -> log.info("send to topic UserAccountEvent success:" + jsonString)
+                , throwable -> log.info("send to topic UserAccountEvent fail:" + jsonString));
 
 //        remoteResult = folderServiceClient.createDefault(remoteResult.getData());
 //        ReturnUtils.checkSuccess(remoteResult);

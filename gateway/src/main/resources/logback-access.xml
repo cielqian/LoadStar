@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProperty scope="context" name="profile" source="spring.profiles.active"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%h %l %u %date{ISO8601} "%r" %s %b</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>./logs/access/%d{yyyy-MM-dd}.log</FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%h %l %u %date{ISO8601} "%r" %s %b</pattern>
+        </encoder>
+    </appender>
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="FILE_OUT" />
+</configuration>

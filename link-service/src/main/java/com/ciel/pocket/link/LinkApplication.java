@@ -33,4 +33,5 @@ public class LinkApplication {
 //        sqlSessionFactoryBean.setTypeAliasesPackage("com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output");
 //        return sqlSessionFactoryBean.getObject();
 //    }
+
 }

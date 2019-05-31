@@ -3,6 +3,7 @@ package com.ciel.pocket.gateway.filter;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.netflix.zuul.exception.ZuulException;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -63,8 +64,10 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
         Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
 
         Object userIdObj = additionalInformation.get("id");
+        String userId = userIdObj.toString();
         RequestContext requestContext = RequestContext.getCurrentContext();
-        requestContext.addZuulRequestHeader(Constants.Header_AccountId, userIdObj.toString());
+        requestContext.addZuulRequestHeader(Constants.Header_AccountId, userId);
+        MDC.put("AccountId", userId);
         return null;
     }
 }

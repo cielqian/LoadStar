@@ -40,7 +40,7 @@ public class AccountController {
             throw new FriendlyException(bindingResult.getFieldError().getDefaultMessage());
         }
         User account = accountService.create(user);
-        log.info("create account");
+        log.info("create account success, id " + account.getId());
         return ReturnUtils.ok("创建成功",account);
     }
 
