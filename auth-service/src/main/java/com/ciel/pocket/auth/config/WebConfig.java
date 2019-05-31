@@ -1,4 +1,4 @@
-package com.ciel.pocket.link.config;
+package com.ciel.pocket.auth.config;
 
 import com.ciel.pocket.infrastructure.aop.MDCInterceptor;
 import org.springframework.context.annotation.Configuration;

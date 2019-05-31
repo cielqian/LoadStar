@@ -8,3 +8,7 @@ spring:
 #    addresses: 101.200.55.76
 #    port: 5672
 #    virtual-host: LoadStar_Dev
+logging:
+  config: classpath:log-config.xml
+  level:
+    root: INFO

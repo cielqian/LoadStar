@@ -9,3 +9,7 @@ global:
     prefix: LoadStarAuthDev_
 apollo:
   meta: http://10.0.75.2:7092
+logging:
+  config: classpath:log-config.xml
+  level:
+    root: INFO

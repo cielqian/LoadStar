@@ -104,8 +104,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         event.setObj(link);
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
-        future.addCallback(o -> log.info("send to linkevent success:" + link.getId())
-                , throwable -> log.info("send to linkevent fail:" + link.getId()));
+        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
+                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
 
 //        RestHighLevelClient client = new RestHighLevelClient(
 //                RestClient.builder(

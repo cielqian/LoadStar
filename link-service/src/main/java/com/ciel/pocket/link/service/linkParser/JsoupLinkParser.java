@@ -7,6 +7,7 @@ import com.ciel.pocket.link.model.LinkTag;
 import com.ciel.pocket.link.service.IconService;
 import gui.ava.html.Html2Image;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -23,7 +24,7 @@ import java.net.URL;
  * @email qianhong91@outlook.com
  * @date 2019/2/22 15:09
  */
-@Log
+@Slf4j
 @Component
 public class JsoupLinkParser {
     @Autowired
@@ -58,7 +59,6 @@ public class JsoupLinkParser {
             LinkIcon linkIcon = iconService.getOne(qw);
 
             if (linkIcon != null){
-                System.out.println("load icon from db cache");
                 result.setIcon(linkIcon.getIcon());
             }
             else{
@@ -100,7 +100,7 @@ public class JsoupLinkParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        log.info("parse :"+ result.toString());
+        log.info("parse success:"+ result.toString());
         return result;
     }
 }
