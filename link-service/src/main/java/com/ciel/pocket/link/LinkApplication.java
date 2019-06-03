@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@Import({com.ciel.pocket.infrastructure.config.FastJsonConfig.class,})
+@Import({com.ciel.pocket.infrastructure.config.FastJsonExtConfig.class,})
 @ComponentScan(basePackages = {"com.ciel.pocket.link"})
 public class LinkApplication {
     public static void main(String[] args) {

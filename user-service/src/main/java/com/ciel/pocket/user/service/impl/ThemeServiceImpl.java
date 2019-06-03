@@ -10,12 +10,14 @@ import com.ciel.pocket.user.infrastructure.enums.ListTypeEnum;
 import com.ciel.pocket.user.infrastructure.enums.ThemeModuleEnum;
 import com.ciel.pocket.user.repository.ThemeRepository;
 import com.ciel.pocket.user.service.ThemeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ThemeServiceImpl extends ServiceImpl<ThemeRepository, Theme> implements ThemeService {
     @Autowired
@@ -55,6 +57,7 @@ public class ThemeServiceImpl extends ServiceImpl<ThemeRepository, Theme> implem
         Theme theme = queryByAccountId(accountId);
         theme.setLanguage(language);
         themeRepository.updateById(theme);
+        log.info("change language to : {}", language.name());
     }
 
     @Override

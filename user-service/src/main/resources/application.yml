@@ -6,6 +6,9 @@ spring:
       ddl-auto: update
   application:
     name: user-service
+  zipkin:
+    enabled: true
+    base-url: http://loadstar.top:9411
   kafka:
     bootstrap-servers: velomobile-01.srvs.cloudkafka.com:9094,velomobile-02.srvs.cloudkafka.com:9094,velomobile-03.srvs.cloudkafka.com:9094
     producer:
