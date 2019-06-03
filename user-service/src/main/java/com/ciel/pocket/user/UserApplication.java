@@ -17,7 +17,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableHystrix
-@Import({com.ciel.pocket.infrastructure.config.FastJsonConfig.class,})
 @EnableKafka
 public class UserApplication {
     public static void main(String[] args) {
