@@ -24,6 +24,11 @@ spring:
         mechanism: SCRAM-SHA-256
         jaas:
           config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tfjmqdc9" password="mAR70SmzqRQGffklsv7cZ7ne4Yl83mEC";
+  redis:
+    host: redis-16514.c73.us-east-1-2.ec2.cloud.redislabs.com
+    port: 16514
+    password: KlUltGrKHAOlXGLxc1jjfjqpXtgAxrZj
+
 #          username: BGA7j8ovyi
 #          password: 3Ay9gmKnCMsLFiWxRGqb6h4
 

@@ -1,13 +1,13 @@
 package com.ciel.pocket.link.controller.open;
 
+import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.link.dto.input.AnalysisLinkInput;
 import com.ciel.pocket.link.dto.output.AnalysisLinkOutput;
-import com.ciel.pocket.link.dto.output.ReturnModel;
 import com.ciel.pocket.link.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.statement.select.ExceptOp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +27,6 @@ public class OpenLinkController {
     public ReturnModel<AnalysisLinkOutput> analysisLink(@RequestBody AnalysisLinkInput uri){
         log.info("analysis url : " + uri.getUrl());
         AnalysisLinkOutput links = linkService.analysis(uri);
-        return ReturnModel.OK(links);
+        return ReturnUtils.ok("解析成功", links);
     }
 }

@@ -1,10 +1,10 @@
 package com.ciel.pocket.link.controller;
 
 import com.ciel.pocket.infrastructure.constants.Constants;
-import com.ciel.pocket.infrastructure.security.UserDetail;
+import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.pocket.infrastructure.utils.ReturnUtils;
 import com.ciel.pocket.link.dto.input.CreateFolderInput;
 import com.ciel.pocket.link.dto.output.FolderTreeOutput;
-import com.ciel.pocket.link.dto.output.ReturnModel;
 import com.ciel.pocket.link.model.Folder;
 import com.ciel.pocket.link.model.Link;
 import com.ciel.pocket.link.service.FolderService;
@@ -12,9 +12,9 @@ import com.ciel.pocket.link.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,28 +38,29 @@ public class FolderController {
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> query(@RequestHeader(Constants.Header_AccountId) Long accountId){
         List<FolderTreeOutput> links = folderService.queryFolderTree(accountId);
-        return ReturnModel.OK(links);
+        return ReturnUtils.ok("查询成功",links);
     }
 
     @ApiOperation("查询文件夹")
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> queryById(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, accountId);
-        return ReturnModel.OK(links);
+        return ReturnUtils.ok("查询成功",links);
     }
 
     @ApiOperation("查询文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
+    @Cacheable(value = "links", key = "targetClass + methodName +#p0")
     public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
-        return ReturnModel.OK(links);
+        return ReturnUtils.ok("查询成功",links);
     }
 
     @ApiOperation("清空文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.DELETE)
     public ReturnModel deleteLinkUnderFolder(@PathVariable(name = "id") Long folderId){
         linkService.deleteLinksUnderFolder(folderId);
-        return ReturnModel.OK();
+        return ReturnUtils.ok("删除成功");
     }
 
     @ApiOperation("创建文件夹")
@@ -73,7 +74,7 @@ public class FolderController {
         folder.setCode(UUID.randomUUID().toString());
         folderService.create(folder);
 
-        return ReturnModel.OK();
+        return ReturnUtils.ok("创建成功", folder.getId());
     }
 
     @ApiOperation("创建文件夹")
@@ -87,14 +88,14 @@ public class FolderController {
 
         folderService.create(folder);
 
-        return ReturnModel.OK();
+        return ReturnUtils.ok("创建成功", folder.getId());
     }
 
     @ApiOperation("删除文件夹")
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public ReturnModel deleteFolderForCurrent(@PathVariable(name = "id") Long folderId){
         folderService.removeById(folderId);
-        return ReturnModel.OK();
+        return ReturnUtils.ok("删除成功");
     }
 
     @ApiOperation("创建默认文件夹")
@@ -125,6 +126,6 @@ public class FolderController {
         folderService.create(trashFolder);
         folderService.create(loadStarFolder);
 
-        return ReturnModel.OK();
+        return ReturnUtils.ok("创建成功");
     }
 }

@@ -5,9 +5,10 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Link {
+public class Link implements Serializable {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
 

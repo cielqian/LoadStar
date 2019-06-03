@@ -1,7 +1,7 @@
 package com.ciel.pocket.link.infrastructure.utils;
 
+import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.infrastructure.exceptions.FriendlyException;
-import com.ciel.pocket.link.dto.output.ReturnModel;
 
 public class RemoteReturnCheck {
     public static void doValidate(ReturnModel returnModel){

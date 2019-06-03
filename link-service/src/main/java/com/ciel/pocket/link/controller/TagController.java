@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -50,9 +51,10 @@ public class TagController {
 
     @ApiOperation("查询标签下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    public com.ciel.pocket.link.dto.output.ReturnModel<List<Link>> queryLinkUnderTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long tagId){
-        List<com.ciel.pocket.link.model.Link> links = linkService.queryLinksUnderTag(accountId, tagId);
-        return com.ciel.pocket.link.dto.output.ReturnModel.OK(links);
+    @Cacheable(value = "links", key = "#p0 + '_' + #p1")
+    public ReturnModel<List<Link>> queryLinkUnderTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long tagId){
+        List<Link> links = linkService.queryLinksUnderTag(accountId, tagId);
+        return ReturnUtils.ok("查询成功", links);
     }
 
     @RequestMapping(path = "/current", method = RequestMethod.GET)
