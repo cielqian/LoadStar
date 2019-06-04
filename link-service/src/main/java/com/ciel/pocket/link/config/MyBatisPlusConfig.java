@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import com.ciel.pocket.link.infrastructure.AuditMetaObjectHandler;
+import com.ciel.pocket.link.model.Folder;
+import com.ciel.pocket.link.model.Link;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.type.JdbcType;
@@ -26,7 +29,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @MapperScan("com.ciel.pocket.link.mapper")
-//@Log
+@Slf4j
 public class MyBatisPlusConfig {
     /**
      * 分页插件
@@ -38,6 +41,7 @@ public class MyBatisPlusConfig {
 
     @Bean("sqlSessionFactoryBean")
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource, ResourceLoader resourceLoader, GlobalConfig globalConfiguration) throws Exception {
+        log.info("init mybatisplus");
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(dataSource);
         sqlSessionFactory.setTypeAliasesPackage("com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output");
@@ -46,7 +50,7 @@ public class MyBatisPlusConfig {
         MybatisConfiguration configuration = new MybatisConfiguration();
         configuration.setDefaultScriptingLanguage(MybatisXMLLanguageDriver.class);
         configuration.setJdbcTypeForNull(JdbcType.NULL);
-
+        configuration.setMapUnderscoreToCamelCase(true);
         sqlSessionFactory.setConfiguration(configuration);
         sqlSessionFactory.setPlugins(new Interceptor[]{
                 new PaginationInterceptor(),
