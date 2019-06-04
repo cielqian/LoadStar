@@ -8,7 +8,6 @@ import org.apache.ibatis.type.Alias;
 import java.io.Serializable;
 import java.util.Date;
 
-@Alias("Link")
 public class Link {
     @TableId(type = IdType.ID_WORKER)
     private Long id;

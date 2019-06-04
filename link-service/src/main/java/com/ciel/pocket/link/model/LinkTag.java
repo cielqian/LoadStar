@@ -2,7 +2,6 @@ package com.ciel.pocket.link.model;
 
 import org.apache.ibatis.type.Alias;
 
-@Alias("LinkTag")
 public class LinkTag {
 
     private Long linkId;
