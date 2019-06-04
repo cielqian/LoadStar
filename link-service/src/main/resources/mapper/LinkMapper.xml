@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ciel.pocket.link.mapper.LinkMapper" >
-  <resultMap id="BaseResultMap" type="com.ciel.pocket.link.model.Link" >
+  <resultMap id="Link" type="com.ciel.pocket.link.model.Link" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -29,7 +29,7 @@
       <!--,#{url}, #{userId},#{visitedCount})-->
     <!--</insert>-->
 
-  <select id="queryAllUnderTag" resultType="Link">
+  <select id="queryAllUnderTag" resultType="com.ciel.pocket.link.model.Link">
       SELECT l.*
       FROM link_tag AS lt
       LEFT JOIN link AS l
@@ -39,7 +39,7 @@
       AND lt.tag_id = #{tagId}
   </select>
     
-    <select id="queryAllUnderFolder" resultType="Link">
+    <select id="queryAllUnderFolder" resultType="com.ciel.pocket.link.model.Link">
       SELECT *
       from link
       where is_delete = 0

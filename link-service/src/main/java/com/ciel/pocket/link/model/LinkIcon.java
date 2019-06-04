@@ -10,7 +10,6 @@ import org.apache.ibatis.type.Alias;
  * @email qianhong91@outlook.com
  * @date 2019/2/27 15:18
  */
-@Alias("LinkIcon")
 @Data
 public class LinkIcon {
     @TableId(type = IdType.ID_WORKER)

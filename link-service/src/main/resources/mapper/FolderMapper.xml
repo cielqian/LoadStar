@@ -18,20 +18,20 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
   
-  <select id="queryAll" resultType="Folder">
+  <select id="queryAll" resultType="com.ciel.pocket.link.model.Folder">
       select *
       from folder
       where user_id = #{userId}
   </select>
 
-  <select id="queryAllUnderFolder" resultType="Folder">
+  <select id="queryAllUnderFolder" resultType="com.ciel.pocket.link.model.Folder">
       select *
       from folder
       where user_id = #{userId}
       and parent_id =  #{folderId}
   </select>
 
-    <select id="queryFolderByCode" resultType="Folder">
+    <select id="queryFolderByCode" resultType="com.ciel.pocket.link.model.Folder">
       select *
       from folder
       where user_id = #{userId}

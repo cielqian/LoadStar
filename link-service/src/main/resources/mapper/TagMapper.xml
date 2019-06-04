@@ -23,7 +23,7 @@
     and is_delete = false
   </select>
 
-  <select id="queryAllLike" resultType="Tag">
+  <select id="queryAllLike" resultType="com.ciel.pocket.link.model.Tag">
     select *
     from tag
     where user_id = #{userId}
