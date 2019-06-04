@@ -37,7 +37,7 @@ public class LinkController {
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建链接")
     @Caching(evict={
-            @CacheEvict(value = "links", key = "'t:-1:u:' + #accountId +'")
+            @CacheEvict(value = "links", key = "'t:-1:u:' + #accountId")
             ,@CacheEvict(value = "links", key = "'f:' + #input.folderId + ':u:' + #accountId")})
     public ReturnModel<Long> createLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
         Link link = new Link();
