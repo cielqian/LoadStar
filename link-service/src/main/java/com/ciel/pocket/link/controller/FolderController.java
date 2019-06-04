@@ -50,7 +50,7 @@ public class FolderController {
 
     @ApiOperation("查询文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    @Cacheable(value = "links", key = "targetClass + methodName +#p0")
+    @Cacheable(value = "links", key = "'f:' + #folderId + ':u:' + #accountId", sync = true)
     public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
         return ReturnUtils.ok("查询成功",links);

@@ -13,7 +13,10 @@ import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +36,9 @@ public class LinkController {
 
     @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建链接")
-    @CachePut(value = "links", key = "#p0 + '_-1'")
+    @Caching(evict={
+            @CacheEvict(value = "links", key = "'t:-1:u:' + #accountId +'")
+            ,@CacheEvict(value = "links", key = "'f:' + #input.folderId + ':u:' + #accountId")})
     public ReturnModel<Long> createLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
         Link link = new Link();
         link.setUserId(accountId);

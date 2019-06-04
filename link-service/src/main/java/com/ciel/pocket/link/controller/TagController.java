@@ -51,7 +51,7 @@ public class TagController {
 
     @ApiOperation("查询标签下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    @Cacheable(value = "links", key = "#p0 + '_' + #p1")
+    @Cacheable(value = "links", key = "'t:' + #tagId + ':u:' + #accountId", sync = true)
     public ReturnModel<List<Link>> queryLinkUnderTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long tagId){
         List<Link> links = linkService.queryLinksUnderTag(accountId, tagId);
         return ReturnUtils.ok("查询成功", links);
