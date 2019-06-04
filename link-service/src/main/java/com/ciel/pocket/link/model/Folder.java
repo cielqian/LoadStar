@@ -7,6 +7,7 @@ import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
+@Alias("Folder")
 public class Folder {
     @TableId(type = IdType.ID_WORKER)
     private Long id;

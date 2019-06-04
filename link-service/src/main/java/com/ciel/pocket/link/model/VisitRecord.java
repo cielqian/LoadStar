@@ -7,6 +7,7 @@ import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
+@Alias("VisitRecord")
 public class VisitRecord {
     @TableId(type = IdType.AUTO)
     private Long id;
