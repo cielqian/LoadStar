@@ -33,7 +33,7 @@ public class JsoupLinkParser {
     @Autowired
     IconService iconService;
 
-    @Value("${linkParserConnectionTimeOut}")
+    @Value("${linkParserConnectionTimeOut:5000}")
     Integer connectionTimeout;
 
     private String iconCssQuery = "link[href~=.*\\.(ico|png)]";
