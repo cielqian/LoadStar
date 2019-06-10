@@ -6,6 +6,10 @@ spring:
       ddl-auto: update
   application:
     name: user-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: loadstar.top:8848
   zipkin:
     enabled: true
     base-url: http://loadstar.top:9411

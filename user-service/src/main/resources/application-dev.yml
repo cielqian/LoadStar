@@ -4,6 +4,10 @@ spring:
       url: jdbc:mysql://rm-bp1uc95ps57o9b7t79o.mysql.rds.aliyuncs.com:3306/LoadStar_User_Dev?useUnicode=true&characterEncoding=utf-8&useSSL=false
       username: loadstar
       password: loadstar123!
+  cloud:
+    nacos:
+      discovery:
+        namespace: b83e89de-e97c-4a54-a7b5-b313f42082f5
 #  rabbitmq:
 #    addresses: 101.200.55.76
 #    port: 5672

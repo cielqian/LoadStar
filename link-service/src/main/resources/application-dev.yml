@@ -5,6 +5,12 @@ spring:
     password: loadstar123!
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  cloud:
+    nacos:
+      discovery:
+        namespace: b83e89de-e97c-4a54-a7b5-b313f42082f5
+      config:
+        namespace: b83e89de-e97c-4a54-a7b5-b313f42082f5
 logging:
   config: classpath:log-config.xml
   level:

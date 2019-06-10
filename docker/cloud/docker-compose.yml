@@ -1,0 +1,36 @@
+version: "3"
+services:
+  zipkin:
+    image: openzipkin/zipkin
+    restart: always
+    ports:
+      - 9411:9411
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+  nacos:
+    image: nacos/nacos-server
+    ports:
+      - "8848:8848"
+    container_name: nacos
+    networks:
+      - default
+      - loadstar
+    environment:
+      MODE: standalone
+      SPRING_DATASOURCE_PLATFORM: mysql
+      MYSQL_MASTER_SERVICE_HOST: rm-bp1uc95ps57o9b7t79o.mysql.rds.aliyuncs.com
+      MYSQL_SLAVE_SERVICE_HOST: rm-bp1uc95ps57o9b7t79o.mysql.rds.aliyuncs.com
+      MYSQL_MASTER_SERVICE_DB_NAME: nacos
+      MYSQL_MASTER_SERVICE_USER: loadstar
+      MYSQL_MASTER_SERVICE_PASSWORD: loadstar123!
+    deploy:
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+networks:
+  loadstar:
+    external: true

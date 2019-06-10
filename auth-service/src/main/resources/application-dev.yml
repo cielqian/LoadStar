@@ -4,11 +4,13 @@ spring:
     username: loadstar
     password: loadstar123!
     type: com.alibaba.druid.pool.DruidDataSource
+  cloud:
+    nacos:
+      discovery:
+        namespace: b83e89de-e97c-4a54-a7b5-b313f42082f5
 global:
   auth:
     prefix: LoadStarAuthDev_
-apollo:
-  meta: http://10.0.75.2:7092
 logging:
   config: classpath:log-config.xml
   level:

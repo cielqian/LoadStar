@@ -28,7 +28,12 @@ spring:
     host: redis-17961.c81.us-east-1-2.ec2.cloud.redislabs.com
     port: 17961
     password: KlUltGrKHAOlXGLxc1jjfjqpXtgAxrZj
-
+  cloud:
+    nacos:
+      discovery:
+        server-addr: loadstar.top:8848
+      config:
+        server-addr: loadstar.top:8848
 #          username: BGA7j8ovyi
 #          password: 3Ay9gmKnCMsLFiWxRGqb6h4
 

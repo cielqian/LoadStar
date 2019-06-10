@@ -8,6 +8,10 @@ spring:
   zipkin:
     enabled: true
     base-url: http://loadstar.top:9411
+  cloud:
+    nacos:
+      discovery:
+        server-addr: loadstar.top:8848
 #  zipkin:
 #    enabled: true
 #    base-url: http://101.200.55.76:9411
@@ -21,14 +25,14 @@ spring:
     password: 123456!
 server:
   port: 9081
-eureka:
-  client:
-    service-url:
-      defaultZone: http://registry:9001/eureka/
-  instance:
-    lease-expiration-duration-in-seconds: 10
-    lease-renewal-interval-in-seconds: 5
-    hostname: auth-service
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://registry:9001/eureka/
+#  instance:
+#    lease-expiration-duration-in-seconds: 10
+#    lease-renewal-interval-in-seconds: 5
+#    hostname: auth-service
 #apollo:
 #  bootstrap:
 #    enabled: true
