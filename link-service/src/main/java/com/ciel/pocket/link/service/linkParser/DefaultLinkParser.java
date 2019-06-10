@@ -53,7 +53,7 @@ public class DefaultLinkParser {
         result.setHost(url.getHost());
 
         result.setIcon(url.getProtocol() + "://" + url.getHost() + (url.getPort() == -1?"":(":" + url.getPort())) + "/favicon.ico");
-        String content = null;
+        String content = "";
         try {
             content = HttpUtil.get(uri, null, null);
         } catch (Exception e) {
@@ -134,7 +134,7 @@ public class DefaultLinkParser {
         }
 
         /**请求发送成功，并得到响应**/
-        if (response.getStatusLine() != null && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+        if (response != null && response.getStatusLine() != null && response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
             try {
                 String strResult = EntityUtils.toString(response.getEntity(), "gb2312");
                 return strResult;
