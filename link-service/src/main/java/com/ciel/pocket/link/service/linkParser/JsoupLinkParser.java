@@ -48,6 +48,7 @@ public class JsoupLinkParser {
             result.setHost(sourceUrl.getHost());
 
             Connection con = Jsoup.connect(uri);
+            con.timeout(15000);
             Document document = con.get();
             redirectUrl = new URL(document.location());
             result.setTitle(document.title());
