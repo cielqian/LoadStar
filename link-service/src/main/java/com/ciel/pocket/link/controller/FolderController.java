@@ -58,8 +58,8 @@ public class FolderController {
 
     @ApiOperation("清空文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.DELETE)
-    public ReturnModel deleteLinkUnderFolder(@PathVariable(name = "id") Long folderId){
-        linkService.deleteLinksUnderFolder(folderId);
+    public ReturnModel deleteLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
+        linkService.deleteLinksUnderFolder(accountId, folderId);
         return ReturnUtils.ok("删除成功");
     }
 

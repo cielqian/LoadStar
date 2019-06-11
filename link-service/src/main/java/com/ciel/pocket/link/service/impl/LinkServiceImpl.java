@@ -40,6 +40,8 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -75,6 +77,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
 
     @Autowired
     private ESRestClient esRestClient;
+
+    @Autowired
+    CacheManager cacheManager;
 
     @Override
     public Long create(Link link, List<Long> tags) {
@@ -148,7 +153,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public Long update(Link link, List<Long> tags) {
         baseMapper.updateById(link);
-
+        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
         qw.eq("link_id", link.getId());
         qw.notIn("tag_id", "-1");
@@ -169,16 +174,20 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public void delete(Long linkId) {
         Link link = query(linkId);
-        Assert.notNull(link, "链接不存在");
+        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
+                Assert.notNull(link, "链接不存在");
         baseMapper.deleteById(linkId);
         //linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
     }
 
     @Override
     public void trash(Long linkId, Long accountId) {
+        Link link = baseMapper.selectById(linkId);
+        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
         if (folder != null){
             baseMapper.updateFolderById(linkId, folder.getId());
+            cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
         }
     }
 
@@ -349,12 +358,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     }
 
     @Override
-    public void deleteLinksUnderFolder(Long folderId) {
+    public void deleteLinksUnderFolder(Long accountId,Long folderId) {
         baseMapper.deleteByFolder(folderId);
+        cacheManager.getCache("links").evict("f:" + folderId+ ":u:" + accountId);
     }
 
     @Override
-    public List<com.ciel.pocket.link.model.Link> queryLinksUnderTag(Long accountId, Long tagId) {
+    public List<Link> queryLinksUnderTag(Long accountId, Long tagId) {
         return baseMapper.queryAllUnderTag(accountId, tagId);
     }
 

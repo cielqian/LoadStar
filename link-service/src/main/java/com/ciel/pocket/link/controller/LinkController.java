@@ -13,6 +13,7 @@ import com.ciel.pocket.link.service.TagService;
 import io.swagger.annotations.*;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -132,6 +133,7 @@ public class LinkController {
     @ApiOperation("移动链接")
     @ApiParam(name = "linkId", value = "链接ID")
     @RequestMapping(path = "/{linkId}/to/{folderId}", method = RequestMethod.PUT)
+    @CacheEvict(value = "links", key = "'t:-1:u:' + #accountId")
     public ReturnModel moveLinkToFolder(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "folderId") Long folderId){
         linkService.move(linkId, folderId);
         return ReturnUtils.ok("更新成功");

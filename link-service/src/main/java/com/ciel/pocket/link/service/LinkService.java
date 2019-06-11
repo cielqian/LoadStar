@@ -38,9 +38,9 @@ public interface LinkService extends IService<Link> {
 
     List<Link> queryLinksUnderFolder(Long accountId, Long folderId);
 
-    void deleteLinksUnderFolder(Long folderId);
+    void deleteLinksUnderFolder(Long accountId,Long folderId);
 
-    List<com.ciel.pocket.link.model.Link> queryLinksUnderTag(Long accountId, Long tagId);
+    List<Link> queryLinksUnderTag(Long accountId, Long tagId);
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 
