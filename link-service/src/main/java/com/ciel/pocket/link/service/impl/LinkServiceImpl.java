@@ -174,8 +174,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public void delete(Long linkId) {
         Link link = query(linkId);
+        Assert.notNull(link, "链接不存在");
+
         cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
-                Assert.notNull(link, "链接不存在");
         baseMapper.deleteById(linkId);
         //linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
     }
@@ -187,6 +188,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         if (folder != null){
             baseMapper.updateFolderById(linkId, folder.getId());
         }
+        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
+        cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
+
         LinkEvent event = new LinkEvent();
         event.setEvent("DELETE");
         event.setId(link.getId().toString());
@@ -367,6 +371,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public void deleteLinksUnderFolder(Long accountId,Long folderId) {
         baseMapper.deleteByFolder(folderId);
+
+        cacheManager.getCache("links").evict("f:" + folderId+ ":u:" + accountId);
 
         Link link = new Link();
         link.setId(-1L);
