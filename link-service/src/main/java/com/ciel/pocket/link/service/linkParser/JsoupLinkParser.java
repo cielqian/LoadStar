@@ -14,6 +14,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -26,9 +28,13 @@ import java.net.URL;
  */
 @Slf4j
 @Component
+@RefreshScope
 public class JsoupLinkParser {
     @Autowired
     IconService iconService;
+
+    @Value("${linkParserConnectionTimeOut:5000}")
+    Integer connectionTimeout;
 
     private String iconCssQuery = "link[href~=.*\\.(ico|png)]";
 

@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  nacos:
+    image: nacos/nacos-server
+    restart: unless-stopped
+    ports:
+      - "8848:8848"
+    container_name: nacos
+    networks:
+      - default
+      - loadstar
+    environment:
+      MODE: standalone
+
+networks:
+  loadstar:
+    external: true

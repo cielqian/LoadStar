@@ -1,70 +1,18 @@
 spring:
-  profiles:
-    active: dev
-  jpa:
-    hibernate:
-      ddl-auto: update
-  application:
-    name: user-service
   zipkin:
-    enabled: true
+    enabled: false
     base-url: http://loadstar.top:9411
-  kafka:
-    bootstrap-servers: velomobile-01.srvs.cloudkafka.com:9094,velomobile-02.srvs.cloudkafka.com:9094,velomobile-03.srvs.cloudkafka.com:9094
-    producer:
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-    properties:
-      security:
-        protocol: SASL_SSL
-      sasl:
-        mechanism: SCRAM-SHA-256
-        jaas:
-          config: org.apache.kafka.common.security.scram.ScramLoginModule required username="tfjmqdc9" password="mAR70SmzqRQGffklsv7cZ7ne4Yl83mEC";
-#  zipkin:
-#    enabled: true
-#    base-url: http://101.200.55.76:9411
-#  sleuth:
-#    sampler:
-#      percentage: 1.0
-#      probability: 1.0
-#security:
-#  oauth2:
-#    client:
-#      scope: server
-#      client-id: user-service
-#      grant-type: client_credentials
-#      accessTokenUri: http://gateway:9080/auth-service/oauth/token
-#      client-secret: POCKET-USER-SERVICE
-#    resource:
-#      user-info-uri: http://gateway:9080/auth-service/api/users/current
-#      prefer-token-info: false
-#      jwt:
-#        key-value: loadstar
-server:
-  port: 9082
-eureka:
-  client:
-    service-url:
-      defaultZone: http://registry:9001/eureka/
-  instance:
-    lease-expiration-duration-in-seconds: 10
-    lease-renewal-interval-in-seconds: 5
-    hostname: user-service
 feign:
   hystrix:
     enabled: true
-
 management:
   endpoints:
     web:
       exposure:
         include: "*"
-
 ribbon:
   eager-load:
     enabled: true
-
 hystrix:
   command:
     default:
@@ -81,12 +29,8 @@ mybatis-plus:
   type-enums-package: com.ciel.pocket.user.infrastructure.enums
   configuration:
     map-underscore-to-camel-case: true
-loadstar:
-  kafka:
-    topic:
-      UserAccountEvent: tfjmqdc9-UserAccountEvent
-      LinkEvent: tfjmqdc9-LinkEvent
 logging:
+  config: classpath:log-config.xml
   level:
-    root: info
+    root: INFO
 
