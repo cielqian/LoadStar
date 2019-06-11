@@ -73,6 +73,7 @@ after_success:
 
 notifications:
   email:
-    - qianhong91@outlook.com
+    recipients:
+      - qianhong91@outlook.com
   on_success: change
   on_failure: always
