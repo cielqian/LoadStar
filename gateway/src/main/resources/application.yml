@@ -1,7 +1,3 @@
-spring:
-  zipkin:
-    enabled: true
-    base-url: http://loadstar.top:9411
 ribbon:
   ReadTimeout: 60000
   ConnectTimeout: 60000
