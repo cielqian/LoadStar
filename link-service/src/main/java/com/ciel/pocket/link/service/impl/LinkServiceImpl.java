@@ -183,12 +183,19 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public void trash(Long linkId, Long accountId) {
         Link link = baseMapper.selectById(linkId);
-        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
         if (folder != null){
             baseMapper.updateFolderById(linkId, folder.getId());
-            cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
         }
+        LinkEvent event = new LinkEvent();
+        event.setEvent("DELETE");
+        event.setId(link.getId().toString());
+        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setObj(link);
+        String jsonString = event.toJson();
+        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
+        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
+                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
     }
 
     @Override
@@ -360,7 +367,20 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public void deleteLinksUnderFolder(Long accountId,Long folderId) {
         baseMapper.deleteByFolder(folderId);
-        cacheManager.getCache("links").evict("f:" + folderId+ ":u:" + accountId);
+
+        Link link = new Link();
+        link.setId(-1L);
+        link.setFolderId(folderId);
+        link.setUserId(accountId);
+        LinkEvent event = new LinkEvent();
+        event.setEvent("DELETE");
+        event.setId(link.getId().toString());
+        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setObj(link);
+        String jsonString = event.toJson();
+        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
+        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
+                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
     }
 
     @Override
