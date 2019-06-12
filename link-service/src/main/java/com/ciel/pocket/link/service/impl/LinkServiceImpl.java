@@ -153,7 +153,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
     @Override
     public Long update(Link link, List<Long> tags) {
         baseMapper.updateById(link);
-        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
         qw.eq("link_id", link.getId());
         qw.notIn("tag_id", "-1");
@@ -177,7 +176,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
         future.addCallback(o -> log.info("send to topic LinkEvent success link: [{}]", jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail link: [{}]", jsonString));
 
-        log.info("更新书签成功 id [{}]", link.getId());
+        String cacheKey = "f:" + link.getFolderId() + ":u:" + link.getUserId();
+        cacheManager.getCache("links").evict(cacheKey);
+        log.info("evict cache key[{}]", cacheKey);
+        log.info("update link success id [{}]", link.getId());
         return link.getId();
     }
 

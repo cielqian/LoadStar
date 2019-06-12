@@ -79,10 +79,6 @@ public class LinkController {
 
         Long linkId = linkService.update(link, input.getTags());
 
-//        if (input.isOften()){
-//            linkService.addLinkToTag(linkId, -1L);
-//        }
-
         return ReturnUtils.ok("更新成功",linkId);
     }
 
