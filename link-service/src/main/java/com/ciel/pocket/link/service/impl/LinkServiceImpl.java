@@ -167,7 +167,17 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link> implements Li
                 linkTagMapper.insert(linkTag);
             });
         }
+        LinkEvent event = new LinkEvent();
+        event.setEvent("UPDATE");
+        event.setId(link.getId().toString());
+        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setObj(link);
+        String jsonString = event.toJson();
+        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
+        future.addCallback(o -> log.info("send to topic LinkEvent success link: [{}]", jsonString)
+                , throwable -> log.info("send to topic LinkEvent fail link: [{}]", jsonString));
 
+        log.info("更新书签成功 id [{}]", link.getId());
         return link.getId();
     }
 
