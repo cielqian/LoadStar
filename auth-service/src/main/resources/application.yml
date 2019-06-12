@@ -9,4 +9,7 @@ spring:
 logging:
   config: classpath:log-config.xml
   level:
-    root: INFO
+    root: WARN
+    com:
+      ciel:
+        pocket: INFO

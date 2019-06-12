@@ -33,33 +33,31 @@
         </encoder>
     </appender>
 
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
-        </filter>
-        <destination>loadstar.top:9180</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">
-            <customFields>{"profile":"${profile:-}", "serviceName":"${serviceName:-}"}</customFields>
-            <providers>
-                <!--<pattern>-->
-                <!--<pattern>-->
-                <!--{-->
-                <!--"level": "%level",-->
-                <!--"service": "${serviceName:-}",-->
-                <!--"trace": "%X{X-B3-TraceId:-}",-->
-                <!--"span": "%X{X-B3-SpanId:-}",-->
-                <!--"thread": "%thread",-->
-                <!--"class": "%c",-->
-                <!--"exception": "%ex{short}",-->
-                <!--"method": "%M",-->
-                <!--"message": "%m",-->
-                <!--"time": "%d"-->
-                <!--}-->
-                <!--</pattern>-->
-                <!--</pattern>-->
-            </providers>
-        </encoder>
-    </appender>
+<!--    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">-->
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>ERROR</level>-->
+<!--        </filter>-->
+<!--        <destination>loadstar.top:9180</destination>-->
+<!--        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder">-->
+<!--            <customFields>{"profile":"${profile:-}", "serviceName":"${serviceName:-}"}</customFields>-->
+<!--            <providers>-->
+<!--                <pattern>-->
+<!--                {-->
+<!--                "level": "%level",-->
+<!--                "service": "${serviceName:-}",-->
+<!--                "trace": "%X{X-B3-TraceId:-}",-->
+<!--                "span": "%X{X-B3-SpanId:-}",-->
+<!--                "thread": "%thread",-->
+<!--                "class": "%c",-->
+<!--                "exception": "%ex{short}",-->
+<!--                "method": "%M",-->
+<!--                "message": "%m",-->
+<!--                "time": "%d"-->
+<!--                }-->
+<!--                </pattern>-->
+<!--            </providers>-->
+<!--        </encoder>-->
+<!--    </appender>-->
 
     <appender name="CONSOLE_OUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

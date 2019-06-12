@@ -46,6 +46,8 @@ services:
       - 9080:9080
     depends_on: 
       - registry
+    volumes:
+      - /usr/dock/loadstar/logs:/logs
     networks: 
       - default 
       - loadstar 
