@@ -1,6 +1,6 @@
 package com.ciel.pocket.user.client;
 
-import com.ciel.pocket.infrastructure.dto.web.ReturnModel;
+import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.pocket.user.client.fallback.AuthServiceHystrixClientFactory;
 import com.ciel.pocket.user.config.FeginConfig;
 import com.ciel.pocket.user.dto.input.CreateUser;
