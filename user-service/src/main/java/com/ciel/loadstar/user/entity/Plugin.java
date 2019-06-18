@@ -1,6 +1,5 @@
 package com.ciel.loadstar.user.entity;
 
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ciel.loadstar.infrastructure.entity.BaseEntity;
 import lombok.Data;
