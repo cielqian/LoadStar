@@ -11,10 +11,10 @@ import lombok.Data;
  */
 @Data
 public class LinkIcon {
-    @TableId(type = IdType.ID_WORKER)
+    @TableId
     private Long id;
 
-    private String  hostname;
+    private String hostname;
 
     private String icon;
 }

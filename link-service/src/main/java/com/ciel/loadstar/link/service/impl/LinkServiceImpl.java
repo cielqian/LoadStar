@@ -85,11 +85,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         Date now = new Date();
 
-        link.setIsDelete(false);
         link.setLastSeen(now);
-        link.setVisitedCount(0);
         link.setSortIndex(totalCount + 1);
-        link.setCreateTime(now);
 
         if (link.getFolderId() == null || link.getFolderId() == 0){
             Folder folder = folderMapper.queryFolderByCode(link.getUserId(), "default");
