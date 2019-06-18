@@ -1,7 +1,7 @@
 package com.ciel.loadstar.auth.service.impl;
 
 import com.ciel.loadstar.infrastructure.exceptions.ObjectExistingException;
-import com.ciel.loadstar.auth.domain.User;
+import com.ciel.loadstar.auth.entity.User;
 import com.ciel.loadstar.auth.repository.UserRepository;
 import com.ciel.loadstar.auth.service.UserService;
 import lombok.extern.slf4j.Slf4j;

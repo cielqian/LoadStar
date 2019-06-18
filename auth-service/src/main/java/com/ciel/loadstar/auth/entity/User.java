@@ -1,4 +1,4 @@
-package com.ciel.loadstar.auth.domain;
+package com.ciel.loadstar.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

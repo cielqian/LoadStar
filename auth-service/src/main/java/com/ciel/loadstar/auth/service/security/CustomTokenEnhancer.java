@@ -1,6 +1,6 @@
 package com.ciel.loadstar.auth.service.security;
 
-import com.ciel.loadstar.auth.domain.User;
+import com.ciel.loadstar.auth.entity.User;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;

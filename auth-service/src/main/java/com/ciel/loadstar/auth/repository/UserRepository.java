@@ -1,7 +1,7 @@
 package com.ciel.loadstar.auth.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ciel.loadstar.auth.domain.User;
+import com.ciel.loadstar.auth.entity.User;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 

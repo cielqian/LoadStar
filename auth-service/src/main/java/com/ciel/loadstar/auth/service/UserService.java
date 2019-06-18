@@ -1,6 +1,6 @@
 package com.ciel.loadstar.auth.service;
 
-import com.ciel.loadstar.auth.domain.User;
+import com.ciel.loadstar.auth.entity.User;
 
 /**
  * @Author Ciel Qian

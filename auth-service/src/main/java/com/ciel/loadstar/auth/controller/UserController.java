@@ -3,7 +3,7 @@ package com.ciel.loadstar.auth.controller;
 import com.ciel.loadstar.auth.dto.input.CreateUser;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
-import com.ciel.loadstar.auth.domain.User;
+import com.ciel.loadstar.auth.entity.User;
 import com.ciel.loadstar.auth.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
