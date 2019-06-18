@@ -31,6 +31,3 @@ security:
     resource:
       jwt:
         key-value: loadstar
-logback:
-  access:
-    config: classpath:logback-access.xml

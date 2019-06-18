@@ -6,10 +6,17 @@ spring:
   zipkin:
     enabled: true
     base-url: http://loadstar.top:9411
-logging:
-  config: classpath:log-config.xml
-  level:
-    root: WARN
-    com:
-      ciel:
-        pocket: INFO
+mybatis-plus:
+  mapper-locations: classpath*:/repository/*.xml
+  typeAliasesPackage: com.ciel.loadstar.auth.entity
+  global-config:
+    db-config:
+      id-type: id_worker
+      column-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'

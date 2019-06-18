@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ciel.pocket.user.repository.UserRepository" >
-    <resultMap id="BaseResultMap" type="com.ciel.pocket.user.domain.User" >
+<mapper namespace="com.ciel.loadstar.user.repository.UserRepository" >
+    <resultMap id="BaseResultMap" type="com.ciel.loadstar.user.entity.User" >
         <id column="id" property="id" jdbcType="BIGINT" />
         <result column="isDelete" property="isDelete" jdbcType="BIT" />
         <result column="username" property="username" jdbcType="VARCHAR" />

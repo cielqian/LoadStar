@@ -21,19 +21,17 @@ hystrix:
           thread:
             timeoutInMilliseconds: 20000
 mybatis-plus:
+  mapper-locations: classpath*:/repository/*.xml
+  typeAliasesPackage: com.ciel.loadstar.user.entity,com.ciel.loadstar.user.dto.output
+  typeEnumsPackage: com.ciel.loadstar.user.infrastructure.enums
   global-config:
     db-config:
-      id-type: auto
-      logic-not-delete-value: 0
+      id-type: id_worker
+      column-underline: true
       logic-delete-value: 1
-  type-enums-package: com.ciel.pocket.user.infrastructure.enums
+      logic-not-delete-value: 0
   configuration:
     map-underscore-to-camel-case: true
-logging:
-  config: classpath:log-config.xml
-  level:
-    root: WARN
-    com:
-      ciel:
-        pocket: INFO
-
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'

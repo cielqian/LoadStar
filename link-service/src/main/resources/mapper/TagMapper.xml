@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ciel.pocket.link.mapper.TagMapper" >
-  <resultMap id="BaseResultMap" type="com.ciel.pocket.link.model.Tag" >
+<mapper namespace="com.ciel.loadstar.link.repository.TagMapper" >
+  <resultMap id="BaseResultMap" type="com.ciel.loadstar.link.model.Tag" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -16,14 +16,14 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
   
-  <select id="queryAll" resultType="com.ciel.pocket.link.dto.output.QueryTagListOutput">
+  <select id="queryAll" resultType="com.ciel.loadstar.link.dto.output.QueryTagListOutput">
     select id, name, (select count(*) from link_tag as lt left join link as l on lt.link_id = l.id where lt.tag_id =  t.id and l.is_delete = 0) as linkCount
     from tag as t
     where user_id = #{userId}
     and is_delete = false
   </select>
 
-  <select id="queryAllLike" resultType="com.ciel.pocket.link.model.Tag">
+  <select id="queryAllLike" resultType="com.ciel.loadstar.link.model.Tag">
     select *
     from tag
     where user_id = #{userId}
