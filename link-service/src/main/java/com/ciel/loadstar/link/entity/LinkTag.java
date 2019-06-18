@@ -1,6 +1,4 @@
-package com.ciel.loadstar.link.model;
-
-import org.apache.ibatis.type.Alias;
+package com.ciel.loadstar.link.entity;
 
 public class LinkTag {
 

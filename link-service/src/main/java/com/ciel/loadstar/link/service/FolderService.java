@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ciel.loadstar.link.dto.output.FolderTreeOutput;
-import com.ciel.loadstar.link.model.Folder;
+import com.ciel.loadstar.link.entity.Folder;
 
 import java.util.List;
 

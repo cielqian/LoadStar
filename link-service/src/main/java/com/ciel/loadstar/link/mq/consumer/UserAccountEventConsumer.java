@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtils;
-import com.ciel.loadstar.link.model.Folder;
+import com.ciel.loadstar.link.entity.Folder;
 import com.ciel.loadstar.link.service.FolderService;
 import lombok.extern.java.Log;
 import org.apache.commons.lang.StringUtils;

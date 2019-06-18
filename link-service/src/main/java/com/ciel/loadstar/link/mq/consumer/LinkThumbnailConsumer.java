@@ -1,6 +1,6 @@
 package com.ciel.loadstar.link.mq.consumer;
 
-import com.ciel.loadstar.link.model.Link;
+import com.ciel.loadstar.link.entity.Link;
 import com.ciel.loadstar.link.service.LinkService;
 import gui.ava.html.Html2Image;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

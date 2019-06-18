@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtils;
 import com.ciel.loadstar.link.es.model.ESLink;
 import com.ciel.loadstar.link.es.ESRestClient;
-import com.ciel.loadstar.link.model.Link;
+import com.ciel.loadstar.link.entity.Link;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

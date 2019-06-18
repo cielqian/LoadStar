@@ -5,7 +5,7 @@ import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
 import com.ciel.loadstar.link.dto.output.PageableListModel;
-import com.ciel.loadstar.link.model.Link;
+import com.ciel.loadstar.link.entity.Link;
 
 import java.util.List;
 

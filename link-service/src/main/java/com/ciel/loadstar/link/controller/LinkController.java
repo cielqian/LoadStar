@@ -7,7 +7,7 @@ import com.ciel.loadstar.link.dto.input.CreateLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.input.UpdateLinkInput;
 import com.ciel.loadstar.link.dto.output.PageableListModel;
-import com.ciel.loadstar.link.model.Link;
+import com.ciel.loadstar.link.entity.Link;
 import com.ciel.loadstar.link.service.LinkService;
 import com.ciel.loadstar.link.service.TagService;
 import io.swagger.annotations.Api;

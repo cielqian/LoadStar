@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ciel.loadstar.link.model.Folder;
+import com.ciel.loadstar.link.entity.Folder;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.repository;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ciel.loadstar.link.model.LinkIcon;
+import com.ciel.loadstar.link.entity.LinkIcon;
 
 /**
  * @author cielqian

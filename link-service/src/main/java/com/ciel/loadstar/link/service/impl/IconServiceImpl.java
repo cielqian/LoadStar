@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ciel.loadstar.link.model.LinkIcon;
+import com.ciel.loadstar.link.entity.LinkIcon;
 import com.ciel.loadstar.link.repository.LinkIconRepository;
 import com.ciel.loadstar.link.service.IconService;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ciel.loadstar.link.dto.output.QueryTagListOutput;
-import com.ciel.loadstar.link.model.Tag;
+import com.ciel.loadstar.link.entity.Tag;
 
 import java.util.List;
 

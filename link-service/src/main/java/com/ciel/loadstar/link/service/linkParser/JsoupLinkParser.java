@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.service.linkParser;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
-import com.ciel.loadstar.link.model.LinkIcon;
+import com.ciel.loadstar.link.entity.LinkIcon;
 import com.ciel.loadstar.link.service.IconService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;

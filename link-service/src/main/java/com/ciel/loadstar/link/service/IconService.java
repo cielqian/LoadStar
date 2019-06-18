@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.ciel.loadstar.link.model.LinkIcon;
+import com.ciel.loadstar.link.entity.LinkIcon;
 
 /**
  * @author cielqian

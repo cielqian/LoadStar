@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.link.dto.output.FolderTreeOutput;
-import com.ciel.loadstar.link.model.Folder;
+import com.ciel.loadstar.link.entity.Folder;
 import com.ciel.loadstar.link.repository.FolderRepository;
 import com.ciel.loadstar.link.service.FolderService;
 import org.springframework.stereotype.Service;

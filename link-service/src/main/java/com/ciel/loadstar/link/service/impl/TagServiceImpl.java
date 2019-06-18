@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.link.dto.output.QueryTagListOutput;
-import com.ciel.loadstar.link.model.Tag;
+import com.ciel.loadstar.link.entity.Tag;
 import com.ciel.loadstar.link.repository.TagRepository;
 import com.ciel.loadstar.link.service.TagService;
 import org.springframework.stereotype.Service;

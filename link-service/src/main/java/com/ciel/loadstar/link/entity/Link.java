@@ -1,13 +1,12 @@
-package com.ciel.loadstar.link.model;
+package com.ciel.loadstar.link.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
-public class Tag {
+public class Link {
     @TableId(type = IdType.ID_WORKER)
     private Long id;
 
@@ -18,15 +17,27 @@ public class Tag {
 
     private Date updateTime;
 
-    private String code;
+    private String comment;
 
-    private Boolean isSystem;
+    private Long folderId;
+
+    private String icon;
+
+    private Date lastSeen;
 
     private String name;
 
     private Integer sortIndex;
 
+    private String title;
+
+    private String url;
+
     private Long userId;
+
+    private Integer visitedCount;
+
+    private String thumbnail;
 
     /**
      * @return id
@@ -85,31 +96,59 @@ public class Tag {
     }
 
     /**
-     * @return code
+     * @return comment
      */
-    public String getCode() {
-        return code;
+    public String getComment() {
+        return comment;
     }
 
     /**
-     * @param code
+     * @param comment
      */
-    public void setCode(String code) {
-        this.code = code;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     /**
-     * @return is_system
+     * @return folder_id
      */
-    public Boolean getIsSystem() {
-        return isSystem;
+    public Long getFolderId() {
+        return folderId;
     }
 
     /**
-     * @param isSystem
+     * @param folderId
      */
-    public void setIsSystem(Boolean isSystem) {
-        this.isSystem = isSystem;
+    public void setFolderId(Long folderId) {
+        this.folderId = folderId;
+    }
+
+    /**
+     * @return icon
+     */
+    public String getIcon() {
+        return icon;
+    }
+
+    /**
+     * @param icon
+     */
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    /**
+     * @return last_seen
+     */
+    public Date getLastSeen() {
+        return lastSeen;
+    }
+
+    /**
+     * @param lastSeen
+     */
+    public void setLastSeen(Date lastSeen) {
+        this.lastSeen = lastSeen;
     }
 
     /**
@@ -141,6 +180,34 @@ public class Tag {
     }
 
     /**
+     * @return title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return url
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * @param url
+     */
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    /**
      * @return user_id
      */
     public Long getUserId() {
@@ -154,7 +221,25 @@ public class Tag {
         this.userId = userId;
     }
 
-    public Tag() {
-        isDelete = false;
+    /**
+     * @return visited_count
+     */
+    public Integer getVisitedCount() {
+        return visitedCount;
+    }
+
+    /**
+     * @param visitedCount
+     */
+    public void setVisitedCount(Integer visitedCount) {
+        this.visitedCount = visitedCount;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.thumbnail = thumbnail;
     }
 }

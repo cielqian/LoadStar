@@ -24,7 +24,7 @@ public class LinkApplication {
 //        MybatisSqlSessionFactoryBean sqlSessionFactoryBean = new MybatisSqlSessionFactoryBean();
 //        sqlSessionFactoryBean.setDataSource(dataSource);
 //        sqlSessionFactoryBean.setMapperLocations();
-//        sqlSessionFactoryBean.setTypeAliasesPackage("com.ciel.pocket.link.model,com.ciel.pocket.link.dto.output");
+//        sqlSessionFactoryBean.setTypeAliasesPackage("com.ciel.pocket.link.entity,com.ciel.pocket.link.dto.output");
 //        return sqlSessionFactoryBean.getObject();
 //    }
 

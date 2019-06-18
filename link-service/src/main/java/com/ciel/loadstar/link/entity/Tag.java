@@ -1,14 +1,13 @@
-package com.ciel.loadstar.link.model;
+package com.ciel.loadstar.link.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
-public class VisitRecord {
-    @TableId(type = IdType.AUTO)
+public class Tag {
+    @TableId(type = IdType.ID_WORKER)
     private Long id;
 
     private Date createTime;
@@ -18,9 +17,15 @@ public class VisitRecord {
 
     private Date updateTime;
 
-    private Long userId;
+    private String code;
 
-    private Long linkId;
+    private Boolean isSystem;
+
+    private String name;
+
+    private Integer sortIndex;
+
+    private Long userId;
 
     /**
      * @return id
@@ -79,6 +84,62 @@ public class VisitRecord {
     }
 
     /**
+     * @return code
+     */
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * @param code
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
+     * @return is_system
+     */
+    public Boolean getIsSystem() {
+        return isSystem;
+    }
+
+    /**
+     * @param isSystem
+     */
+    public void setIsSystem(Boolean isSystem) {
+        this.isSystem = isSystem;
+    }
+
+    /**
+     * @return name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * @return sort_index
+     */
+    public Integer getSortIndex() {
+        return sortIndex;
+    }
+
+    /**
+     * @param sortIndex
+     */
+    public void setSortIndex(Integer sortIndex) {
+        this.sortIndex = sortIndex;
+    }
+
+    /**
      * @return user_id
      */
     public Long getUserId() {
@@ -92,21 +153,7 @@ public class VisitRecord {
         this.userId = userId;
     }
 
-    /**
-     * @return link_id
-     */
-    public Long getLinkId() {
-        return linkId;
-    }
-
-    /**
-     * @param linkId
-     */
-    public void setLinkId(Long linkId) {
-        this.linkId = linkId;
-    }
-
-    public VisitRecord() {
+    public Tag() {
         isDelete = false;
     }
 }

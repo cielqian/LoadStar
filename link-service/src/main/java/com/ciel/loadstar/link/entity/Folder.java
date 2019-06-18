@@ -1,9 +1,8 @@
-package com.ciel.loadstar.link.model;
+package com.ciel.loadstar.link.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
