@@ -7,7 +7,7 @@ spring:
     enabled: true
     base-url: http://loadstar.top:9411
 mybatis-plus:
-  mapper-locations: classpath*:/repository/*.xml
+  mapper-locations: classpath*:/mapper/*.xml
   typeAliasesPackage: com.ciel.loadstar.auth.entity
   global-config:
     db-config:

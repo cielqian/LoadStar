@@ -18,7 +18,7 @@ public enum ListTypeEnum{
     }
 //
 //    @Override
-//    public Integer getValue() {
-//        return this.value;
-//    }
+    public Integer getValue() {
+        return this.value;
+    }
 }

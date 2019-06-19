@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ciel.loadstar.link.entity.Link;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+@Mapper
 public interface LinkRepository extends BaseMapper<Link> {
 
     List<Link> queryAllUnderTag(@Param("userId") Long userId, @Param("tagId") Long tagId);

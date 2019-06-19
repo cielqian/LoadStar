@@ -11,7 +11,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.4.RELEASE</version>
+        <version>2.0.5.RELEASE</version>
         <relativePath/>
     </parent>
 
@@ -31,6 +31,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <docker.image.prefix>loadstar</docker.image.prefix>
+        <spring-boot.version>2.0.5.RELEASE</spring-boot.version>
         <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
         <spring.cloud.alibaba>0.2.2.RELEASE</spring.cloud.alibaba>
         <fastjson.version>1.2.47</fastjson.version>
@@ -38,7 +39,7 @@
         <lombok.version>1.16.18</lombok.version>
         <swagger.version>2.9.2</swagger.version>
         <logback.version>1.2.3</logback.version>
-        <mybatisplus.version>3.0.7.1</mybatisplus.version>
+        <mybatisplus.version>3.1.1</mybatisplus.version>
         <druid.version>1.1.10</druid.version>
     </properties>
 

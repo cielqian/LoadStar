@@ -21,7 +21,7 @@ hystrix:
           thread:
             timeoutInMilliseconds: 20000
 mybatis-plus:
-  mapper-locations: classpath*:/repository/*.xml
+  mapper-locations: classpath*:/mapper/*.xml
   typeAliasesPackage: com.ciel.loadstar.user.entity,com.ciel.loadstar.user.dto.output
   typeEnumsPackage: com.ciel.loadstar.user.infrastructure.enums
   global-config:
