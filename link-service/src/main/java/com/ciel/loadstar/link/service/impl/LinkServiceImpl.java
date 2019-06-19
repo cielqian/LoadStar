@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.infrastructure.events.LinkEvent;
-import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtils;
+import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
@@ -100,7 +100,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent();
         event.setEvent("NEW");
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
@@ -164,7 +164,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent();
         event.setEvent("UPDATE");
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
@@ -201,7 +201,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent();
         event.setEvent("DELETE");
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
@@ -309,7 +309,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         MatchQueryBuilder titleMatchQueryBuilder = QueryBuilders.matchQuery("title", queryInput.getKeyword());
         TermQueryBuilder accountIdTermQueryBuilder = QueryBuilders.termQuery("userId", accountId);
-        TermQueryBuilder profileTermQueryBuilder = QueryBuilders.termQuery("profile", ApplicationContextUtils.getActiveProfile());
+        TermQueryBuilder profileTermQueryBuilder = QueryBuilders.termQuery("profile", ApplicationContextUtil.getActiveProfile());
 
         boolQueryBuilder.must(titleMatchQueryBuilder)
                 .must(accountIdTermQueryBuilder)
@@ -388,7 +388,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent();
         event.setEvent("DELETE");
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);

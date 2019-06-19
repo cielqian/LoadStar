@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtils;
+import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.entity.Folder;
 import com.ciel.loadstar.link.service.FolderService;
 import lombok.extern.java.Log;
@@ -27,7 +27,7 @@ public class UserAccountEventConsumer {
         String json = record.value();
         JSONObject jsonObject = JSONObject.parseObject(json);
         String profile = jsonObject.getString("profile");
-        if (!StringUtils.equals(ApplicationContextUtils.getActiveProfile(), profile))
+        if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile))
             return;
 
         String event = jsonObject.getString("event");

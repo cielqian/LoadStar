@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.events.UserAccountEvent;
 import com.ciel.loadstar.infrastructure.exceptions.ObjectNotExistingException;
-import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtils;
+import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
 import com.ciel.loadstar.user.client.AuthServiceClient;
 import com.ciel.loadstar.user.client.FolderServiceClient;
@@ -81,7 +81,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         UserAccountEvent event = new UserAccountEvent();
         event.setEvent("NEW");
         event.setId(remoteResult.getData().toString());
-        event.setProfile(ApplicationContextUtils.getActiveProfile());
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         String jsonString = event.toJson();
         ListenableFuture future = kafkaTemplate.send(createFolderTopic, jsonString);
         future.addCallback(o -> log.info("send to topic UserAccountEvent success:" + jsonString)

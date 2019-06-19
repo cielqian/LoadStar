@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtils;
+import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.es.model.ESLink;
 import com.ciel.loadstar.link.es.ESRestClient;
 import com.ciel.loadstar.link.entity.Link;
@@ -57,7 +57,7 @@ public class LinkEventConsumer {
         String json = record.value();
         JSONObject jsonObject = JSONObject.parseObject(json);
         String profile = jsonObject.getString("profile");
-        if (!StringUtils.equals(ApplicationContextUtils.getActiveProfile(), profile))
+        if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile))
             return;
 
         String event = jsonObject.getString("event");
@@ -71,7 +71,7 @@ public class LinkEventConsumer {
             esLink.setTitle(link.getTitle());
             esLink.setTableId(link.getId());
             esLink.setUserId(link.getUserId());
-            esLink.setProfile(ApplicationContextUtils.getActiveProfile());
+            esLink.setProfile(ApplicationContextUtil.getActiveProfile());
             esLink.setCreatetime(link.getCreateTime());
             esLink.setUrl(link.getUrl());
 
@@ -117,7 +117,7 @@ public class LinkEventConsumer {
             esLink.setTitle(link.getTitle());
             esLink.setTableId(link.getId());
             esLink.setUserId(link.getUserId());
-            esLink.setProfile(ApplicationContextUtils.getActiveProfile());
+            esLink.setProfile(ApplicationContextUtil.getActiveProfile());
             esLink.setCreatetime(link.getCreateTime());
             esLink.setUrl(link.getUrl());
 
