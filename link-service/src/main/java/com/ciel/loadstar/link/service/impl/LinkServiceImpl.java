@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ciel.loadstar.infrastructure.events.EventType;
 import com.ciel.loadstar.infrastructure.events.LinkEvent;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
@@ -15,6 +16,7 @@ import com.ciel.loadstar.link.entity.Folder;
 import com.ciel.loadstar.link.entity.Link;
 import com.ciel.loadstar.link.entity.LinkTag;
 import com.ciel.loadstar.link.entity.VisitRecord;
+import com.ciel.loadstar.link.mq.LoadstarTopic;
 import com.ciel.loadstar.link.repository.FolderRepository;
 import com.ciel.loadstar.link.repository.LinkRepository;
 import com.ciel.loadstar.link.repository.LinkTagRepository;
@@ -70,9 +72,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    @Value("${loadstar.kafka.topic.LinkEvent}")
-    private String linkTopic;
-
     @Autowired
     private ESRestClient esRestClient;
 
@@ -97,15 +96,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         baseMapper.insert(link);
 
-        LinkEvent event = new LinkEvent();
-        event.setEvent("NEW");
+        LinkEvent event = new LinkEvent(EventType.CREATE);
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
+        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
+        future.addCallback(o -> log.info("send to topic LinkEvent success [{}]" + jsonString)
+                , throwable -> log.info("send to topic LinkEvent fail [{}]" + jsonString));
 
 //        RestHighLevelClient client = new RestHighLevelClient(
 //                RestClient.builder(
@@ -161,13 +158,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
                 linkTagMapper.insert(linkTag);
             });
         }
-        LinkEvent event = new LinkEvent();
-        event.setEvent("UPDATE");
+        LinkEvent event = new LinkEvent(EventType.UPDATE);
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
+        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic LinkEvent success link: [{}]", jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail link: [{}]", jsonString));
 
@@ -198,13 +193,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
 
-        LinkEvent event = new LinkEvent();
-        event.setEvent("DELETE");
+        LinkEvent event = new LinkEvent(EventType.DELETE);
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
+        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
     }
@@ -385,13 +378,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         link.setId(-1L);
         link.setFolderId(folderId);
         link.setUserId(accountId);
-        LinkEvent event = new LinkEvent();
-        event.setEvent("DELETE");
+        LinkEvent event = new LinkEvent(EventType.DELETE);
         event.setId(link.getId().toString());
-        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(linkTopic, jsonString);
+        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
     }

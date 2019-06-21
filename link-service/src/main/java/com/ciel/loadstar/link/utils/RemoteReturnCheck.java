@@ -1,4 +1,4 @@
-package com.ciel.loadstar.link.infrastructure.utils;
+package com.ciel.loadstar.link.utils;
 
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.exceptions.FriendlyException;

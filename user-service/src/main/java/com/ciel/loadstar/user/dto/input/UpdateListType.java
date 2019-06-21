@@ -1,6 +1,6 @@
 package com.ciel.loadstar.user.dto.input;
 
-import com.ciel.loadstar.user.infrastructure.enums.ListTypeEnum;
+import com.ciel.loadstar.user.enums.ListTypeEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.ciel.loadstar.link.controller.open;
 
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
 import com.ciel.loadstar.link.service.LinkService;
@@ -27,6 +27,6 @@ public class OpenLinkController {
     public ReturnModel<AnalysisLinkOutput> analysisLink(@RequestBody AnalysisLinkInput uri){
         log.info("analysis url : " + uri.getUrl());
         AnalysisLinkOutput links = linkService.analysis(uri);
-        return ReturnUtil.ok("解析成功", links);
+        return ApiReturnUtil.ok("解析成功", links);
     }
 }

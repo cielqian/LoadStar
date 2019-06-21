@@ -1,4 +1,4 @@
-package com.ciel.loadstar.link.infrastructure.utils;
+package com.ciel.loadstar.link.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.java.Log;

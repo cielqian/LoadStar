@@ -3,7 +3,7 @@ package com.ciel.loadstar.link.controller;
 import com.alibaba.fastjson.JSON;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.link.dto.input.CreateTagInput;
 import com.ciel.loadstar.link.dto.output.QueryTagListOutput;
 import com.ciel.loadstar.link.entity.Link;
@@ -43,7 +43,7 @@ public class TagController {
         tag.setIsSystem(true);
         Long tagId = tagService.create(tag);
 
-        return ReturnUtil.ok("", tagId);
+        return ApiReturnUtil.ok("", tagId);
     }
 
     @ApiOperation("查询标签下的书签")
@@ -51,7 +51,7 @@ public class TagController {
 //    @Cacheable(value = "links", key = "'t:' + #tagId + ':u:' + #accountId", sync = true)
     public ReturnModel<List<Link>> queryLinkUnderTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long tagId){
         List<Link> links = linkService.queryLinksUnderTag(accountId, tagId);
-        return ReturnUtil.ok("查询成功", links);
+        return ApiReturnUtil.ok("查询成功", links);
     }
 
     @RequestMapping(path = "/current", method = RequestMethod.GET)
@@ -61,20 +61,20 @@ public class TagController {
 
         String json = JSON.toJSONString(tags);
 
-        return ReturnUtil.ok("", tags);
+        return ApiReturnUtil.ok("", tags);
     }
 
     @RequestMapping(path = "", method = RequestMethod.GET)
     @ApiOperation("查询标签")
     public ReturnModel<List<Tag>> queryTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestParam("keyword") String keyword ){
         List<Tag> tags = tagService.queryAllTag(accountId, "%" + keyword + "%");
-        return ReturnUtil.ok("", tags);
+        return ApiReturnUtil.ok("", tags);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation("删除标签")
     public ReturnModel deleteTag(@PathVariable("id") Long tagId){
         tagService.delete(tagId);
-        return ReturnUtil.ok("删除成功");
+        return ApiReturnUtil.ok("删除成功");
     }
 }

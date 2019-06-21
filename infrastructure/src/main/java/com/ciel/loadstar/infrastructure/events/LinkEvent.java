@@ -12,4 +12,7 @@ import java.util.Date;
  */
 @Data
 public class LinkEvent extends BaseEvent {
+    public LinkEvent(String eventType){
+        setEventType(eventType);
+    }
 }

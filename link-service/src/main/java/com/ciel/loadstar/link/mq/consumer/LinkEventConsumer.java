@@ -1,6 +1,8 @@
 package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ciel.loadstar.infrastructure.events.EventType;
+import com.ciel.loadstar.infrastructure.events.LinkEvent;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.es.model.ESLink;
 import com.ciel.loadstar.link.es.ESRestClient;
@@ -30,6 +32,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import javax.swing.event.HyperlinkEvent;
 import java.io.IOException;
 
 /**
@@ -56,15 +59,17 @@ public class LinkEventConsumer {
     public void listen (ConsumerRecord<String, String> record) throws Exception {
         String json = record.value();
         JSONObject jsonObject = JSONObject.parseObject(json);
-        String profile = jsonObject.getString("profile");
-        if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile))
+        LinkEvent linkEvent = jsonObject.toJavaObject(LinkEvent.class);
+        String profile = linkEvent.getProfile();
+        if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile)){
             return;
+        }
 
-        String event = jsonObject.getString("event");
-        Long linkId = jsonObject.getLong("id");
-        Link link = JSONObject.parseObject(jsonObject.getString("obj"), Link.class);
+        String eventType = linkEvent.getEventType();
+        Long linkId = Long.parseLong(linkEvent.getId());
+        Link link = (Link) linkEvent.getObj();
 
-        if (StringUtils.equals(event, "NEW")){
+        if (StringUtils.equals(eventType, EventType.CREATE)){
             RestHighLevelClient client = esRestClient.getClient();
             ESLink esLink = new ESLink();
             esLink.setName(link.getName());
@@ -80,15 +85,15 @@ public class LinkEventConsumer {
 
             try {
                 client.index(request, RequestOptions.DEFAULT);
-                log.info("sync to es for link success, id : " + linkId);
+                log.info("sync link [{}] to es success", linkId);
 
             } catch (IOException e) {
-                log.info("sync to es for link fail, id : " + linkId);
+                log.info("sync link [{}] to es fail", linkId);
 
                 e.printStackTrace();
             }
         }
-        else if(StringUtils.equals(event, "DELETE")){
+        else if(StringUtils.equals(eventType, EventType.DELETE)){
             DeleteByQueryRequest request = new DeleteByQueryRequest(index);
             request.setConflicts("proceed");
 
@@ -103,14 +108,14 @@ public class LinkEventConsumer {
                 RestHighLevelClient client = esRestClient.getClient();
                 BulkByScrollResponse response =
                         client.deleteByQuery(request, RequestOptions.DEFAULT);
-                log.info("delete from es for link success, id [{}]" ,linkId);
+                log.info("delete link [{}] from es success" ,linkId);
             }
             catch (IOException e) {
-                log.info("delete from es for link fail, id [{}] " + linkId);
+                log.info("delete link [{}] from es fail" + linkId);
                 e.printStackTrace();
             }
         }
-        else if(StringUtils.equals(event, "UPDATE")){
+        else if(StringUtils.equals(eventType, EventType.UPDATE)){
             RestHighLevelClient client = esRestClient.getClient();
             ESLink esLink = new ESLink();
             esLink.setName(link.getName());
@@ -145,16 +150,16 @@ public class LinkEventConsumer {
                         UpdateRequest updateRequest = new UpdateRequest(index, document, esId);
                         updateRequest.doc(JSONObject.toJSONString(esLink), XContentType.JSON);
                         client.update(updateRequest, RequestOptions.DEFAULT);
-                        log.info("update to es for link success, id [{}]",linkId);
+                        log.info("update link [{}] to es success",linkId);
                     }else{
                         IndexRequest request = new IndexRequest(index, document);
                         request.source(JSONObject.toJSONString(esLink), XContentType.JSON);
                         try {
                             client.index(request, RequestOptions.DEFAULT);
-                            log.info("sync to es for link success, id : " + linkId);
+                            log.info("sync link [{}] to es success" , linkId);
 
                         } catch (IOException e) {
-                            log.info("sync to es for link fail, id : " + linkId);
+                            log.info("sync link [{}] to es fail" , linkId);
 
                             e.printStackTrace();
                         }

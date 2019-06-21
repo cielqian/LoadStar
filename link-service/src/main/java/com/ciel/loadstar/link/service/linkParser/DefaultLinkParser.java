@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.service.linkParser;
 
 import com.ciel.loadstar.infrastructure.exceptions.FriendlyException;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
-import com.ciel.loadstar.link.infrastructure.utils.HttpUtil;
+import com.ciel.loadstar.link.utils.HttpUtil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;

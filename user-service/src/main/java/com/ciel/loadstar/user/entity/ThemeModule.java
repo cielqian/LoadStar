@@ -1,6 +1,6 @@
 package com.ciel.loadstar.user.entity;
 
-import com.ciel.loadstar.user.infrastructure.enums.ThemeModuleEnum;
+import com.ciel.loadstar.user.enums.ThemeModuleEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

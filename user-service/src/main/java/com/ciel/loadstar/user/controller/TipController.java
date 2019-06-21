@@ -3,7 +3,7 @@ package com.ciel.loadstar.user.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.user.entity.Tip;
 import com.ciel.loadstar.user.dto.input.ReadTip;
 import com.ciel.loadstar.user.service.TipService;
@@ -36,7 +36,7 @@ public class TipController {
 
         List<Tip> tips = tipService.list(qw);
 
-        return ReturnUtil.ok("查询成功",tips);
+        return ApiReturnUtil.ok("查询成功",tips);
     }
 
     @ApiOperation("更新当前用户Tip")
@@ -45,6 +45,6 @@ public class TipController {
 
         tipService.readTip(accountId, readTipInput.getTip());
 
-        return ReturnUtil.ok("更新成功");
+        return ApiReturnUtil.ok("更新成功");
     }
 }

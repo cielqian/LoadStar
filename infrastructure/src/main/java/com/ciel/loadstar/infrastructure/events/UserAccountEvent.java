@@ -1,6 +1,7 @@
 package com.ciel.loadstar.infrastructure.events;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import lombok.Data;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
@@ -14,4 +15,9 @@ import java.util.Date;
 
 @Data
 public class UserAccountEvent extends BaseEvent{
+    public UserAccountEvent(){}
+
+    public UserAccountEvent(String eventType){
+        setEventType(eventType);
+    }
 }

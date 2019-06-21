@@ -3,7 +3,7 @@ package com.ciel.loadstar.user.controller;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.exceptions.FriendlyException;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.user.entity.User;
 import com.ciel.loadstar.user.dto.input.CreateUser;
 import com.ciel.loadstar.user.dto.output.UserInfo;
@@ -39,13 +39,13 @@ public class AccountController {
         }
         User account = accountService.create(user);
         log.info("create account success, id " + account.getId());
-        return ReturnUtil.ok("创建成功",account);
+        return ApiReturnUtil.ok("创建成功",account);
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public ReturnModel delete(@PathVariable("userId") Long userId){
         accountService.delete(userId);
-        return ReturnUtil.ok("删除成功");
+        return ApiReturnUtil.ok("删除成功");
     }
 
     @RequestMapping(value = "/current",method = RequestMethod.GET)
@@ -58,7 +58,7 @@ public class AccountController {
         userInfo.setNickname(user.getNickname());
         userInfo.setLastSeen(user.getLastSeen());
 
-        return ReturnUtil.ok("查询成功",userInfo);
+        return ApiReturnUtil.ok("查询成功",userInfo);
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/{id}")

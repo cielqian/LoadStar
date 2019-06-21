@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.user.entity.Passbook;
 import com.ciel.loadstar.user.service.PassbookService;
 import io.swagger.annotations.Api;
@@ -38,7 +38,7 @@ public class PassbookController {
         passbookService.save(passbook);
         log.info("create passbook");
         passbook.setPassword("");
-        return ReturnUtil.ok("创建成功",passbook);
+        return ApiReturnUtil.ok("创建成功",passbook);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class PassbookController {
         IPage links = passbookService.page(page, qw);
         pagePassbook.setItems(links.getRecords());
         pagePassbook.setTotal(links.getTotal());
-        return ReturnUtil.ok("查询成功", pagePassbook);
+        return ApiReturnUtil.ok("查询成功", pagePassbook);
     }
 
     @ApiOperation("删除账号")
@@ -62,7 +62,7 @@ public class PassbookController {
     public ReturnModel<Long> delete(@PathVariable("id") Long id){
         passbookService.removeById(id);
         log.info("delete passbook id " + id);
-        return ReturnUtil.ok("删除成功",id);
+        return ApiReturnUtil.ok("删除成功",id);
     }
 
     @ApiOperation("更新账号")
@@ -70,6 +70,6 @@ public class PassbookController {
     public ReturnModel<Long> update(@PathVariable("id") Long id, @RequestBody @Valid Passbook passbook){
         passbookService.updateById(passbook);
         log.info("update passbook id " + id);
-        return ReturnUtil.ok("更新成功",id);
+        return ApiReturnUtil.ok("更新成功",id);
     }
 }

@@ -1,10 +1,13 @@
 package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ciel.loadstar.infrastructure.events.EventType;
+import com.ciel.loadstar.infrastructure.events.UserAccountEvent;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.entity.Folder;
 import com.ciel.loadstar.link.service.FolderService;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @date 2019/2/25 19:16
  */
 @Component
-@Log
+@Slf4j
 public class UserAccountEventConsumer {
     @Autowired
     FolderService folderService;
@@ -26,13 +29,14 @@ public class UserAccountEventConsumer {
     public void listen (ConsumerRecord<String, String> record) throws Exception {
         String json = record.value();
         JSONObject jsonObject = JSONObject.parseObject(json);
-        String profile = jsonObject.getString("profile");
+        UserAccountEvent userAccountEvent = jsonObject.toJavaObject(UserAccountEvent.class);
+        String profile = userAccountEvent.getProfile();
         if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile))
             return;
 
-        String event = jsonObject.getString("event");
-        if (StringUtils.equals(event, "NEW")){
-            Long userId = jsonObject.getLong("id");
+        String eventType = userAccountEvent.getEventType();
+        if (StringUtils.equals(eventType, EventType.CREATE)){
+            Long userId = Long.parseLong(userAccountEvent.getId());
             Folder defaultFolder = new Folder();
             defaultFolder.setParentId(0L);
             defaultFolder.setName("未归档");
@@ -58,7 +62,7 @@ public class UserAccountEventConsumer {
             folderService.create(trashFolder);
             folderService.create(loadStarFolder);
 
-            log.info("create default folder for user, id : " + userId);
+            log.info("create default folder for user [{}]", userId);
 
         }
     }

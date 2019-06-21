@@ -1,4 +1,4 @@
-package com.ciel.loadstar.link.infrastructure.utils;
+package com.ciel.loadstar.link.utils;
 
 import com.sun.net.httpserver.HttpsParameters;
 import org.apache.commons.collections4.MapUtils;

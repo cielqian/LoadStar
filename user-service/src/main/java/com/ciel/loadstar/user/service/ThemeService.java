@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.ciel.loadstar.infrastructure.enums.Language;
 import com.ciel.loadstar.user.entity.Theme;
 import com.ciel.loadstar.user.entity.User;
-import com.ciel.loadstar.user.infrastructure.enums.ListTypeEnum;
-import com.ciel.loadstar.user.infrastructure.enums.ThemeModuleEnum;
+import com.ciel.loadstar.user.enums.ListTypeEnum;
+import com.ciel.loadstar.user.enums.ThemeModuleEnum;
 
 public interface ThemeService extends IService<Theme> {
     Theme create(User account);

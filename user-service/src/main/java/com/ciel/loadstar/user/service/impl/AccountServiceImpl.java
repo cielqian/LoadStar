@@ -2,14 +2,16 @@ package com.ciel.loadstar.user.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
+import com.ciel.loadstar.infrastructure.events.EventType;
 import com.ciel.loadstar.infrastructure.events.UserAccountEvent;
 import com.ciel.loadstar.infrastructure.exceptions.ObjectNotExistingException;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
 import com.ciel.loadstar.user.client.AuthServiceClient;
 import com.ciel.loadstar.user.client.FolderServiceClient;
 import com.ciel.loadstar.user.entity.User;
 import com.ciel.loadstar.user.dto.input.CreateUser;
+import com.ciel.loadstar.user.mq.LoadstarTopic;
 import com.ciel.loadstar.user.repository.ThemeRepository;
 import com.ciel.loadstar.user.repository.UserRepository;
 import com.ciel.loadstar.user.service.AccountService;
@@ -49,9 +51,6 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     @Autowired
     private KafkaTemplate kafkaTemplate;
 
-    @Value("${loadstar.kafka.topic.UserAccountEvent}")
-    private String createFolderTopic;
-
     @Override
     public User queryById(Long id) {
         User user = accountRepository.selectById(id);
@@ -66,7 +65,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         Assert.isNull(existing, "用户已存在");
 
         ReturnModel<Long> remoteResult = authServiceClient.createUser(user);
-        ReturnUtil.checkSuccess(remoteResult);
+        ApiReturnUtil.checkSuccess(remoteResult);
 
         User account = new User();
         account.setAccountId(remoteResult.getData());
@@ -78,17 +77,13 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         themeService.create(account);
 
-        UserAccountEvent event = new UserAccountEvent();
-        event.setEvent("NEW");
+        UserAccountEvent event = new UserAccountEvent(EventType.CREATE);
         event.setId(remoteResult.getData().toString());
-        event.setProfile(ApplicationContextUtil.getActiveProfile());
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(createFolderTopic, jsonString);
+        ListenableFuture future =
+                kafkaTemplate.send(new LoadstarTopic().getUserAccountEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic UserAccountEvent success:" + jsonString)
                 , throwable -> log.info("send to topic UserAccountEvent fail:" + jsonString));
-
-//        remoteResult = folderServiceClient.createDefault(remoteResult.getData());
-//        ReturnUtil.checkSuccess(remoteResult);
 
         return account;
     }
@@ -97,7 +92,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     public void delete(Long userId) {
         User user = queryById(userId);
         ReturnModel remoteResult = authServiceClient.deleteUser(user.getUsername());
-        ReturnUtil.checkSuccess(remoteResult);
+        ApiReturnUtil.checkSuccess(remoteResult);
 
         accountRepository.deleteById(userId);
     }

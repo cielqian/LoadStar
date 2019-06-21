@@ -1,4 +1,4 @@
-package com.ciel.loadstar.user.infrastructure.enums;
+package com.ciel.loadstar.user.enums;
 
 import com.baomidou.mybatisplus.core.enums.IEnum;
 

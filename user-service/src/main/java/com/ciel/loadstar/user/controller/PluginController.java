@@ -1,7 +1,7 @@
 package com.ciel.loadstar.user.controller;
 
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.user.entity.Plugin;
 import com.ciel.loadstar.user.service.PluginService;
 import io.swagger.annotations.Api;
@@ -30,6 +30,6 @@ public class PluginController {
     @RequestMapping(method = RequestMethod.GET)
     public ReturnModel<List<Plugin>> query(){
         List plugins = pluginService.list();
-        return ReturnUtil.ok("查询成功",plugins);
+        return ApiReturnUtil.ok("查询成功",plugins);
     }
 }

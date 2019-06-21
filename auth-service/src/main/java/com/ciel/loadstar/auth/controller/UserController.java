@@ -2,7 +2,7 @@ package com.ciel.loadstar.auth.controller;
 
 import com.ciel.loadstar.auth.dto.input.CreateUser;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.auth.entity.User;
 import com.ciel.loadstar.auth.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,7 +44,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public ReturnModel<Long> createUser(@Valid @RequestBody CreateUser user){
         User user1 = userService.createUser(new User(user.getUsername(), user.getPassword()));
-        return ReturnUtil.ok("创建成功",user1.getId());
+        return ApiReturnUtil.ok("创建成功",user1.getId());
     }
 
 //    @ApiOperation(value="删除用户")
@@ -55,7 +55,7 @@ public class UserController {
 //    @RequestMapping(value = "/{username}",method = RequestMethod.DELETE)
 //    public ReturnModel deleteUser(@PathVariable("username") String username){
 //        userService.deleteUser(username);
-//        return ReturnUtil.ok("删除成功");
+//        return ApiReturnUtil.ok("删除成功");
 //    }
 
     @ApiOperation(value="删除用户")
@@ -66,6 +66,6 @@ public class UserController {
     @RequestMapping(value = "/{userId}",method = RequestMethod.DELETE)
     public ReturnModel deleteUser(@PathVariable("userId") String userId){
         userService.deleteUser(userId);
-        return ReturnUtil.ok("删除成功");
+        return ApiReturnUtil.ok("删除成功");
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
  * @CreateDate 2018/10/1
  * @Comment
  */
-public class ReturnUtil {
+public class ApiReturnUtil {
     public static <T> ReturnModel<T> ok(String msg, T data){
         return general(HttpStatus.OK.value(), msg, data);
     }

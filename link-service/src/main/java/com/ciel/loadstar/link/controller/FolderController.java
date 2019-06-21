@@ -2,7 +2,7 @@ package com.ciel.loadstar.link.controller;
 
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.utils.ReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.link.dto.input.CreateFolderInput;
 import com.ciel.loadstar.link.dto.output.FolderTreeOutput;
 import com.ciel.loadstar.link.entity.Folder;
@@ -38,14 +38,14 @@ public class FolderController {
     @RequestMapping(path = "/current", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> query(@RequestHeader(Constants.Header_AccountId) Long accountId){
         List<FolderTreeOutput> links = folderService.queryFolderTree(accountId);
-        return ReturnUtil.ok("查询成功",links);
+        return ApiReturnUtil.ok("查询成功",links);
     }
 
     @ApiOperation("查询文件夹")
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ReturnModel<List<FolderTreeOutput>> queryById(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, accountId);
-        return ReturnUtil.ok("查询成功",links);
+        return ApiReturnUtil.ok("查询成功",links);
     }
 
     @ApiOperation("查询文件夹下的书签")
@@ -53,14 +53,14 @@ public class FolderController {
     @Cacheable(value = "links", key = "'f:' + #folderId + ':u:' + #accountId", sync = true)
     public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
-        return ReturnUtil.ok("查询成功",links);
+        return ApiReturnUtil.ok("查询成功",links);
     }
 
     @ApiOperation("清空文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.DELETE)
     public ReturnModel deleteLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         linkService.deleteLinksUnderFolder(accountId, folderId);
-        return ReturnUtil.ok("删除成功");
+        return ApiReturnUtil.ok("删除成功");
     }
 
     @ApiOperation("创建文件夹")
@@ -74,7 +74,7 @@ public class FolderController {
         folder.setCode(UUID.randomUUID().toString());
         folderService.create(folder);
 
-        return ReturnUtil.ok("创建成功", folder.getId());
+        return ApiReturnUtil.ok("创建成功", folder.getId());
     }
 
     @ApiOperation("创建文件夹")
@@ -88,14 +88,14 @@ public class FolderController {
 
         folderService.create(folder);
 
-        return ReturnUtil.ok("创建成功", folder.getId());
+        return ApiReturnUtil.ok("创建成功", folder.getId());
     }
 
     @ApiOperation("删除文件夹")
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public ReturnModel deleteFolderForCurrent(@PathVariable(name = "id") Long folderId){
         folderService.removeById(folderId);
-        return ReturnUtil.ok("删除成功");
+        return ApiReturnUtil.ok("删除成功");
     }
 
     @ApiOperation("创建默认文件夹")
@@ -126,6 +126,6 @@ public class FolderController {
         folderService.create(trashFolder);
         folderService.create(loadStarFolder);
 
-        return ReturnUtil.ok("创建成功");
+        return ApiReturnUtil.ok("创建成功");
     }
 }
