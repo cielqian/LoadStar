@@ -31,7 +31,7 @@ zuul:
       user-service:
         end-points: /notify
         brokers:  /topic
-        destination-prefixes: /send
+        destination-prefixes: /notify
 security:
   oauth2:
     resource:
