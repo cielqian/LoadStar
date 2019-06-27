@@ -18,7 +18,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry webSocketHandlerRegistry) {
-        webSocketHandlerRegistry.addHandler(notifySocketHandler(), "/notify").withSockJS();
+        webSocketHandlerRegistry.addHandler(notifySocketHandler(), "/notify")
+                .setAllowedOrigins("*").withSockJS();
     }
 
     @Bean

@@ -26,6 +26,12 @@ zuul:
       path: /link-service/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: link-service
+  ws:
+    brokerages:
+      user-service:
+        end-points: /notify
+        brokers:  /topic
+        destination-prefixes: /send
 security:
   oauth2:
     resource:
