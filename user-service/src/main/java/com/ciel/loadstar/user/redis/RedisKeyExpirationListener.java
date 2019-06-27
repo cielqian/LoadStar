@@ -1,5 +1,7 @@
 package com.ciel.loadstar.user.redis;
 
+import com.ciel.loadstar.user.entity.AlarmClock;
+import com.ciel.loadstar.user.service.AlarmClockService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
@@ -20,6 +22,9 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
         super(listenerContainer);
     }
 
+    @Autowired
+    AlarmClockService alarmClockService;
+
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String expiredKey = message.toString();
@@ -30,6 +35,9 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
             String[] values = expiredKey.split(":");
             Long id = Long.parseLong(values[2]);
             log.info("trigger alarm clock id [{}]", id);
+            AlarmClock clock = alarmClockService.getById(id);
+            clock.setAlarmed(true);
+            alarmClockService.updateById(clock);
         }
     }
 }

@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -45,5 +46,12 @@ public class AlarmClockServiceImpl extends ServiceImpl<AlarmClockRepository, Ala
         }
 
         return success;
+    }
+
+    @Override
+    public boolean removeById(Serializable id) {
+        String cacheKey = "NOTIFY:" + ApplicationContextUtil.getActiveProfile() + ":" + id;
+        redisTemplate.delete(cacheKey);
+        return super.removeById(id);
     }
 }
