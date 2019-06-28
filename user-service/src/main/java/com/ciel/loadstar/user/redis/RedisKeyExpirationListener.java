@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.Message;
 import org.springframework.data.redis.listener.KeyExpirationEventMessageListener;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
+import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Component;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 
@@ -25,6 +26,9 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
     @Autowired
     AlarmClockService alarmClockService;
 
+    @Autowired
+    private SimpMessageSendingOperations simpMessageSendingOperations;
+
     @Override
     public void onMessage(Message message, byte[] pattern) {
         String expiredKey = message.toString();
@@ -38,6 +42,7 @@ public class RedisKeyExpirationListener extends KeyExpirationEventMessageListene
             AlarmClock clock = alarmClockService.getById(id);
             clock.setAlarmed(true);
             alarmClockService.updateById(clock);
+            simpMessageSendingOperations.convertAndSendToUser(clock.getUserId().toString(),"/queue/greetings", clock);
         }
     }
 }

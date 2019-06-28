@@ -18,6 +18,9 @@ public class UserInfo {
     @ApiModelProperty(name = "用户Id")
     private Long userId;
 
+    @ApiModelProperty(name = "账号Id")
+    private Long accountId;
+
     @ApiModelProperty(name = "用户账号")
     private String username;
 

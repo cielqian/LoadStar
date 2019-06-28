@@ -54,6 +54,7 @@ public class AccountController {
         //accountService.findByName(principal.getName());
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(user.getId());
+        userInfo.setAccountId(user.getAccountId());
         userInfo.setUsername(user.getUsername());
         userInfo.setNickname(user.getNickname());
         userInfo.setLastSeen(user.getLastSeen());
