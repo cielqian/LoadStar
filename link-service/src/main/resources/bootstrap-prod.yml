@@ -3,3 +3,10 @@ spring:
     nacos:
       config:
         namespace: 49ba12a5-bcf2-4a13-87c5-97e54fb3bd4a
+logging:
+  config: classpath:log-config.xml
+  level:
+    root: WARN
+    com:
+      ciel:
+        loadstar: INFO

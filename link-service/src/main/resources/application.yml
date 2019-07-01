@@ -5,7 +5,17 @@ spring:
 ribbon:
   eager-load:
     enabled: true
-logging:
-  config: classpath:log-config.xml
-  level:
-    root: INFO
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  typeAliasesPackage: com.ciel.loadstar.link.entity,com.ciel.loadstar.link.dto.output
+  global-config:
+    db-config:
+      id-type: id_worker
+      column-underline: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: 'null'

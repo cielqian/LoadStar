@@ -19,18 +19,22 @@ zuul:
       serviceId: auth-service
     user:
       path: /user-service/**
-      sensitiveHeaders: Cookie,Set-Cookie
+#      sensitiveHeaders: Cookie,Set-Cookie
       serviceId: user-service
-
+      customSensitiveHeaders: true
+      url: http://user-service:9082
     link:
       path: /link-service/**
       sensitiveHeaders: Cookie,Set-Cookie
       serviceId: link-service
+  ws:
+    brokerages:
+      user:
+        end-points: /gs-guide-websocket
+        brokers:  /topic,/queue
+        destination-prefixes: /app
 security:
   oauth2:
     resource:
       jwt:
         key-value: loadstar
-logback:
-  access:
-    config: classpath:logback-access.xml

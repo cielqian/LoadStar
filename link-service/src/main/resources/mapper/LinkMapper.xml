@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ciel.pocket.link.mapper.LinkMapper" >
-  <resultMap id="Link" type="com.ciel.pocket.link.model.Link" >
+<mapper namespace="com.ciel.loadstar.link.repository.LinkRepository" >
+  <resultMap id="Link" type="com.ciel.loadstar.link.entity.Link" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -14,7 +14,7 @@
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="last_seen" property="lastSeen" jdbcType="TIMESTAMP" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="sort_index" property="sortIndex" jdbcType="INTEGER" />
+    <result column="sort_index" property="queryAllUnderTagsortIndex" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="BIGINT" />
@@ -29,7 +29,7 @@
       <!--,#{url}, #{userId},#{visitedCount})-->
     <!--</insert>-->
 
-  <select id="queryAllUnderTag" resultType="com.ciel.pocket.link.model.Link">
+  <select id="queryAllUnderTag" resultType="com.ciel.loadstar.link.entity.Link">
       SELECT l.*
       FROM link_tag AS lt
       LEFT JOIN link AS l
@@ -39,7 +39,7 @@
       AND lt.tag_id = #{tagId}
   </select>
     
-    <select id="queryAllUnderFolder" resultType="com.ciel.pocket.link.model.Link">
+    <select id="queryAllUnderFolder" resultType="com.ciel.loadstar.link.entity.Link">
       SELECT *
       from link
       where is_delete = 0
@@ -53,12 +53,6 @@
       where user_id = #{userId}
       and is_delete = 0
   </select>
-
-    <update id="deleteById">
-      update link
-      set is_delete = 1
-      where id = #{linkId}
-    </update>
 
     <update id="updateFolderById">
       update link

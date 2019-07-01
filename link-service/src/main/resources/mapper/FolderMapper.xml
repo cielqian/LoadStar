@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ciel.pocket.link.mapper.FolderMapper" >
-  <resultMap id="BaseResultMap" type="com.ciel.pocket.link.model.Folder" >
+<mapper namespace="com.ciel.loadstar.link.repository.FolderRepository" >
+  <resultMap id="BaseResultMap" type="com.ciel.loadstar.link.entity.Folder" >
     <!--
       WARNING - @mbg.generated
     -->
@@ -18,20 +18,20 @@
     <result column="user_id" property="userId" jdbcType="BIGINT" />
   </resultMap>
   
-  <select id="queryAll" resultType="com.ciel.pocket.link.model.Folder">
+  <select id="queryAll" resultType="com.ciel.loadstar.link.entity.Folder">
       select *
       from folder
       where user_id = #{userId}
   </select>
 
-  <select id="queryAllUnderFolder" resultType="com.ciel.pocket.link.model.Folder">
+  <select id="queryAllUnderFolder" resultType="com.ciel.loadstar.link.entity.Folder">
       select *
       from folder
       where user_id = #{userId}
       and parent_id =  #{folderId}
   </select>
 
-    <select id="queryFolderByCode" resultType="com.ciel.pocket.link.model.Folder">
+    <select id="queryFolderByCode" resultType="com.ciel.loadstar.link.entity.Folder">
       select *
       from folder
       where user_id = #{userId}
