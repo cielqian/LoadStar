@@ -1,5 +1,6 @@
 package com.ciel.loadstar.user.socket.dto;
 
+import com.ciel.loadstar.user.enums.NotifyEnum;
 import lombok.Data;
 
 /**
@@ -10,5 +11,7 @@ import lombok.Data;
 
 @Data
 public class SocketMessage {
-    String content;
+    NotifyEnum type;
+
+    Object data;
 }

@@ -4,8 +4,6 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import java.util.logging.SocketHandler;
-
 /**
  * @author cielqian
  * @email qianhong91@outlook.com

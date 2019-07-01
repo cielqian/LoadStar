@@ -33,7 +33,7 @@ public class NotifyController {
         Set users = userRegistry.getUsers();
 
         SocketMessage message = new SocketMessage();
-        message.setContent("message content");
+        message.setData("message content");
 //        simpMessageSendingOperations.convertAndSendToUser(principal.getName(),"/queue/greetings", message);
 //        simpMessageSendingOperations.convertAndSend("/topic/greetings", message);
         return message;
