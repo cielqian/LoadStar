@@ -78,6 +78,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     @Autowired
     CacheManager cacheManager;
 
+    @Autowired
+    LoadstarTopic loadstarTopic;
+
     @Override
     public Long create(Link link, List<Long> tags) {
         Integer totalCount = baseMapper.countByUser(link.getUserId());
@@ -100,30 +103,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         event.setId(link.getId().toString());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
+        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic LinkEvent success [{}]" + jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail [{}]" + jsonString));
-
-//        RestHighLevelClient client = new RestHighLevelClient(
-//                RestClient.builder(
-//                        new HttpHost("loadstar-6473901552.us-west-2.bonsaisearch.net", 80, "http"))
-//                .setHttpClientConfigCallback(new RestClientBuilder.HttpClientConfigCallback() {
-//                    @Override
-//                    public HttpAsyncClientBuilder customizeHttpClient(HttpAsyncClientBuilder httpClientBuilder ) {
-//                        return httpClientBuilder
-//                                .setDefaultCredentialsProvider(credentialsProvider);
-//                    }
-//                })
-//                .setRequestConfigCallback(new RestClientBuilder.RequestConfigCallback() {
-//                    @Override
-//                    public RequestConfig.Builder customizeRequestConfig(RequestConfig.Builder builder) {
-//                        return builder.setConnectTimeout(5000).setSocketTimeout(60000);
-//                    }
-//                })
-//                .setMaxRetryTimeoutMillis(60000)
-//        );
-
-
 
         if (tags != null){
             tags.forEach(tagId -> {
@@ -162,7 +144,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         event.setId(link.getId().toString());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
+        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic LinkEvent success link: [{}]", jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail link: [{}]", jsonString));
 
@@ -197,7 +179,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         event.setId(link.getId().toString());
         event.setObj(link);
         String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
+        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
         future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
                 , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
     }
