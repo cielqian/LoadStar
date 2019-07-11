@@ -7,14 +7,19 @@ import com.ciel.loadstar.link.dto.input.CreateLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.input.UpdateLinkInput;
 import com.ciel.loadstar.link.dto.output.PageableListModel;
+import com.ciel.loadstar.link.dto.output.QueryCalendarOutput;
+import com.ciel.loadstar.link.entity.DailyStatistical;
 import com.ciel.loadstar.link.entity.Link;
 import com.ciel.loadstar.link.service.LinkService;
 import com.ciel.loadstar.link.service.TagService;
+import com.github.dozermapper.core.DozerBeanMapperBuilder;
+import com.github.dozermapper.core.Mapper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
@@ -22,6 +27,9 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Api("链接相关api")
@@ -188,6 +196,39 @@ public class LinkController {
     @RequestMapping(path = "/{linkId}/down", method = RequestMethod.GET)
     public ReturnModel shortLink(@PathVariable(name = "linkId") Long linkId){
         linkService.down(linkId);
+        return ApiReturnUtil.ok("更新成功");
+    }
+
+    @ApiOperation("当月浏览记录")
+    @RequestMapping(path = "/calendar/visit/month/{month}", method = RequestMethod.GET)
+    public ReturnModel visitMonth(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "month") String month){
+        Date date = null;
+        try {
+            date = DateUtils.parseDate(month, "YYY-MM-dd");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        List<DailyStatistical> calendars = linkService.queryDailyStatistical(accountId, date, "VISIT");
+        List<QueryCalendarOutput> out = new ArrayList<>();
+        Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+        for (DailyStatistical calendar: calendars){
+            out.add(mapper.map(calendar,  QueryCalendarOutput.class));
+        }
+
+        return ApiReturnUtil.ok("更新成功", out);
+    }
+
+    @ApiOperation("当日浏览记录")
+    @RequestMapping(path = "/calendar/visit//day/{day}", method = RequestMethod.GET)
+    public ReturnModel visitDay(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "day") String day){
+        Date date = null;
+        try {
+            date = DateUtils.parseDate(day, "YYY-MM-dd");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         return ApiReturnUtil.ok("更新成功");
     }
 }

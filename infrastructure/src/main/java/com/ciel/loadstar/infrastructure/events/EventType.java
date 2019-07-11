@@ -10,6 +10,7 @@ public class EventType {
     public final static String CREATE = "NEW";
     public final static String DELETE = "DELETE";
     public final static String UPDATE = "UPDATE";
+    public final static String VIEW = "VIEW";
 
     public EventType(String typeString){
         this.typeString = typeString;

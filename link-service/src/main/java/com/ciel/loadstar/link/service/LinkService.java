@@ -5,8 +5,11 @@ import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
 import com.ciel.loadstar.link.dto.output.PageableListModel;
+import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
+import com.ciel.loadstar.link.entity.DailyStatistical;
 import com.ciel.loadstar.link.entity.Link;
 
+import java.util.Date;
 import java.util.List;
 
 public interface LinkService extends IService<Link> {
@@ -47,5 +50,9 @@ public interface LinkService extends IService<Link> {
     void addLinkToTag(Long linkId, Long tagId);
 
     void removeLinkFromTag(Long linkId, Long tagId);
+
+    List<DailyStatistical> queryDailyStatistical(Long accountId, Date day, String type);
+
+    List<QueryVisitRecordOutput> queryVisitRecords(Long accountId, Date day);
 
 }

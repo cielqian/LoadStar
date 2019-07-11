@@ -11,16 +11,11 @@ import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
 import com.ciel.loadstar.link.dto.output.PageableListModel;
+import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
+import com.ciel.loadstar.link.entity.*;
 import com.ciel.loadstar.link.es.ESRestClient;
-import com.ciel.loadstar.link.entity.Folder;
-import com.ciel.loadstar.link.entity.Link;
-import com.ciel.loadstar.link.entity.LinkTag;
-import com.ciel.loadstar.link.entity.VisitRecord;
 import com.ciel.loadstar.link.mq.LoadstarTopic;
-import com.ciel.loadstar.link.repository.FolderRepository;
-import com.ciel.loadstar.link.repository.LinkRepository;
-import com.ciel.loadstar.link.repository.LinkTagRepository;
-import com.ciel.loadstar.link.repository.VisitRecordRepository;
+import com.ciel.loadstar.link.repository.*;
 import com.ciel.loadstar.link.service.LinkService;
 import com.ciel.loadstar.link.service.linkParser.JsoupLinkParser;
 import lombok.extern.slf4j.Slf4j;
@@ -40,7 +35,6 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -48,10 +42,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.concurrent.ListenableFuture;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -65,6 +56,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
     @Autowired
     VisitRecordRepository visitRecordMapper;
+
+    @Autowired
+    DailyStatisticalRepository dailyStatisticalRepository;
 
     @Autowired
     JsoupLinkParser linkParser;
@@ -204,6 +198,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         visitRecord.setUserId(link.getUserId());
         visitRecordMapper.insert(visitRecord);
 
+        LinkEvent event = new LinkEvent(EventType.VIEW);
+        event.setId(link.getId().toString());
+        event.setObj(link);
+        String jsonString = event.toJson();
+        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
+        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
+                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
     }
 
     @Override
@@ -402,5 +403,35 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         qw.eq("tag_id", tagId);
 
         linkTagMapper.delete(qw);
+    }
+
+    @Override
+    public List<DailyStatistical> queryDailyStatistical(Long accountId, Date day, String type) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date begin = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date end = calendar.getTime();
+
+        QueryWrapper<DailyStatistical> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("date", begin, end);
+        queryWrapper.eq("type", type);
+        queryWrapper.eq("user_id", accountId);
+
+        return dailyStatisticalRepository.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<QueryVisitRecordOutput> queryVisitRecords(Long accountId, Date day) {
+        QueryWrapper<DailyStatistical> queryWrapper = new QueryWrapper<>();
+//        queryWrapper.between("date", begin, end);
+//        queryWrapper.eq("type", type);
+//        queryWrapper.eq("user_id", accountId);
+//        visitRecordMapper.selectList()
+
+
+        return null;
     }
 }

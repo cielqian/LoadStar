@@ -1,6 +1,7 @@
 package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ciel.loadstar.infrastructure.cache.CacheKeyFactory;
 import com.ciel.loadstar.infrastructure.events.EventType;
 import com.ciel.loadstar.infrastructure.events.LinkEvent;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
@@ -9,6 +10,8 @@ import com.ciel.loadstar.link.es.ESRestClient;
 import com.ciel.loadstar.link.entity.Link;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.search.SearchRequest;
@@ -29,11 +32,15 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import javax.swing.event.HyperlinkEvent;
 import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author cielqian
@@ -55,6 +62,9 @@ public class LinkEventConsumer {
     @Value("${loadstar.es.doc.link:links}")
     String document;
 
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
+
     @KafkaListener(topics = "${loadstar.kafka.topic.LinkEvent}")
     public void listen (ConsumerRecord<String, String> record) throws Exception {
         String json = record.value();
@@ -67,7 +77,7 @@ public class LinkEventConsumer {
 
         String eventType = linkEvent.getEventType();
         Long linkId = Long.parseLong(linkEvent.getId());
-        Link link = (Link) linkEvent.getObj();
+        Link link = ((JSONObject)linkEvent.getObj()).toJavaObject(Link.class);
 
         if (StringUtils.equals(eventType, EventType.CREATE)){
             RestHighLevelClient client = esRestClient.getClient();
@@ -167,10 +177,22 @@ public class LinkEventConsumer {
                 }
             } catch (IOException e) {
                 log.info("update to es for link fail, id [{}]",linkId);
-
-                e.printStackTrace();
             }
 
+        }
+        else if(StringUtils.equals(eventType, EventType.VIEW)){
+            Map<String, String> cacheMap = new HashMap<>();
+            cacheMap.put("service", "link");
+            cacheMap.put("userid", link.getUserId().toString());
+            cacheMap.put("date", DateFormatUtils.format(new Date(), "YYYY-MM-dd"));
+
+            String cacheKey = CacheKeyFactory.build(CacheKeyFactory.LINK_VIEW_COUNT, cacheMap);
+            if (!redisTemplate.hasKey(cacheKey)){
+                redisTemplate.opsForValue().increment(cacheKey, 1);
+                redisTemplate.expireAt(cacheKey, DateUtils.addDays(new Date(), 1));
+            }else{
+                redisTemplate.opsForValue().increment(cacheKey, 1);
+            }
         }
     }
 }
