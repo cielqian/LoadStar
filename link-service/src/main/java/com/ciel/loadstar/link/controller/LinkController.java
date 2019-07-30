@@ -26,12 +26,17 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * 链接接口
+ * @author ciel
+ */
 @Api("链接相关api")
 @RestController
 @RequestMapping(path = "/api/link")
@@ -48,7 +53,7 @@ public class LinkController {
     @Caching(evict={
             @CacheEvict(value = "links", key = "'t:-1:u:' + #accountId")
             ,@CacheEvict(value = "links", key = "'f:' + #input.folderId + ':u:' + #accountId")})
-    public ReturnModel<Long> createLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") CreateLinkInput input, Principal principal){
+    public ReturnModel<Long> createLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") @Valid CreateLinkInput input){
         Link link = new Link();
         link.setUserId(accountId);
         link.setUrl(input.getUrl());
