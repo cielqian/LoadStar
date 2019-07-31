@@ -58,16 +58,16 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-//        Authentication a = SecurityContextHolder.getContext().getAuthentication();
-//        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) a.getDetails();
-//        OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
-//        Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
-//
-//        Object userIdObj = additionalInformation.get("id");
-//        String userId = userIdObj.toString();
-//        RequestContext requestContext = RequestContext.getCurrentContext();
-//        requestContext.addZuulRequestHeader(Constants.Header_AccountId, userId);
-//        MDC.put("AccountId", userId);
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
+        OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) a.getDetails();
+        OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
+        Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();
+
+        Object userIdObj = additionalInformation.get("id");
+        String userId = userIdObj.toString();
+        RequestContext requestContext = RequestContext.getCurrentContext();
+        requestContext.addZuulRequestHeader(Constants.Header_AccountId, userId);
+        MDC.put("AccountId", userId);
         return null;
     }
 }

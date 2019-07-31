@@ -8,9 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -29,15 +31,16 @@ public class GatewayApplication extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers(
-                        "/**/api-docs"
-                        ,"/oauth/**"
-                        ,"/auth-service/**"
-                        , "/user-service/api/account").permitAll()
+                        "/**/api-docs",
+                        "/oauth/**",
+                        "/auth-service/**",
+                        "/user-service/api/account").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/*.html", "/**/*.html","/swagger-resources/**").permitAll()
                 .anyRequest().authenticated();
-
     }
 
-//    @Bean
+    //    @Bean
 //    public FilterRegistrationBean corsFilter() {
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 //        CorsConfiguration config = new CorsConfiguration();
