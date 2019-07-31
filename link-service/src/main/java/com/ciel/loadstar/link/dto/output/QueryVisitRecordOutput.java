@@ -2,6 +2,8 @@ package com.ciel.loadstar.link.dto.output;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @author cielqian
  * @email qianhong91@outlook.com
@@ -9,5 +11,9 @@ import lombok.Data;
  */
 @Data
 public class QueryVisitRecordOutput {
-    private String name;
+    private String title;
+
+    private Date visitTime;
+
+    private Long linkId;
 }

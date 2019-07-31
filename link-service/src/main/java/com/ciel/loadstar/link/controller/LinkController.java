@@ -8,6 +8,7 @@ import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.input.UpdateLinkInput;
 import com.ciel.loadstar.link.dto.output.PageableListModel;
 import com.ciel.loadstar.link.dto.output.QueryCalendarOutput;
+import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
 import com.ciel.loadstar.link.entity.DailyStatistical;
 import com.ciel.loadstar.link.entity.Link;
 import com.ciel.loadstar.link.service.LinkService;
@@ -204,7 +205,7 @@ public class LinkController {
     public ReturnModel visitMonth(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "month") String month){
         Date date = null;
         try {
-            date = DateUtils.parseDate(month, "YYY-MM-dd");
+            date = DateUtils.parseDate(month, "YYYY-MM-dd");
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -219,16 +220,15 @@ public class LinkController {
     }
 
     @ApiOperation("当日浏览记录")
-    @RequestMapping(path = "/calendar/visit//day/{day}", method = RequestMethod.GET)
+    @RequestMapping(path = "/calendar/visit/day/{day}", method = RequestMethod.GET)
     public ReturnModel visitDay(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "day") String day){
         Date date = null;
         try {
-            date = DateUtils.parseDate(day, "YYY-MM-dd");
+            date = DateUtils.parseDate(day, "YYYY-MM-dd");
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-        return ApiReturnUtil.ok("更新成功");
+        List<QueryVisitRecordOutput> out = linkService.queryVisitRecords(accountId, date);
+        return ApiReturnUtil.ok("更新成功", out);
     }
 }

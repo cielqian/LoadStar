@@ -425,13 +425,18 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
     @Override
     public List<QueryVisitRecordOutput> queryVisitRecords(Long accountId, Date day) {
-        QueryWrapper<DailyStatistical> queryWrapper = new QueryWrapper<>();
-//        queryWrapper.between("date", begin, end);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        Date begin = calendar.getTime();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        Date end = calendar.getTime();
+
+        QueryWrapper<QueryVisitRecordOutput> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("visitTIme", begin, end);
 //        queryWrapper.eq("type", type);
-//        queryWrapper.eq("user_id", accountId);
+        queryWrapper.eq("user_id", accountId);
 //        visitRecordMapper.selectList()
-
-
-        return null;
+        return visitRecordMapper.queryVisitRecords(queryWrapper);
     }
 }
