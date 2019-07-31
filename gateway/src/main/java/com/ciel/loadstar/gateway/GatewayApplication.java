@@ -28,8 +28,13 @@ public class GatewayApplication extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/oauth/**","/auth-service/**", "/user-service/api/account")
-                .permitAll();
+                .antMatchers(
+                        "/**/api-docs"
+                        ,"/oauth/**"
+                        ,"/auth-service/**"
+                        , "/user-service/api/account").permitAll()
+                .anyRequest().authenticated();
+
     }
 
 //    @Bean
