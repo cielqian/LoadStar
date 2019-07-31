@@ -6,7 +6,9 @@ import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.exception.MQClientException;
 import org.apache.rocketmq.common.message.MessageExt;
+import org.apache.rocketmq.remoting.common.RemotingHelper;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -32,7 +34,15 @@ public class Consumer {
             @Override
             public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
                                                             ConsumeConcurrentlyContext context) {
-                System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), msgs);
+                byte[] body = msgs.get(0).getBody();
+
+                try {
+                    String bodyStr = new String(body, RemotingHelper.DEFAULT_CHARSET);
+                    System.out.printf("%s Receive New Messages: %s %n", Thread.currentThread().getName(), bodyStr);
+
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
             }
         });

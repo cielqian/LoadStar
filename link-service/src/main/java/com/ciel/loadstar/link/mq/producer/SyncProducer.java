@@ -24,8 +24,7 @@ public class SyncProducer {
             //Create a message instance, specifying topic, tag and message body.
             Message msg = new Message("TopicTest" /* Topic */,
                     "TagA" /* Tag */,
-                    ("Hello RocketMQ " +
-                            i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
+                    ("Hello RocketMQ " + i).getBytes(RemotingHelper.DEFAULT_CHARSET) /* Message body */
             );
             //Call send message to deliver message to one of brokers.
             SendResult sendResult = producer.send(msg);
