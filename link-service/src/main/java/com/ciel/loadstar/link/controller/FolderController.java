@@ -52,7 +52,7 @@ public class FolderController {
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
     @Cacheable(value = "links", key = "'f:' + #folderId + ':u:' + #accountId", sync = true)
     public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
-        List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
+        List<Link> links = linkService.queryLinksUnderFolder(folderId);
         return ApiReturnUtil.ok("查询成功",links);
     }
 

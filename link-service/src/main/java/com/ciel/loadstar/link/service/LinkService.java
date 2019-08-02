@@ -1,10 +1,11 @@
 package com.ciel.loadstar.link.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
+import com.ciel.loadstar.infrastructure.dto.web.PageReturnModel;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
-import com.ciel.loadstar.link.dto.output.PageableListModel;
 import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
 import com.ciel.loadstar.link.entity.DailyStatistical;
 import com.ciel.loadstar.link.entity.Link;
@@ -31,15 +32,15 @@ public interface LinkService extends IService<Link> {
 
     Link query(Long linkId);
 
-    PageableListModel<Link> queryPageList(Long accountId, QueryLinkListInput queryInput);
+    PageOutput<Link> queryPageList(Long accountId, QueryLinkListInput queryInput);
 
-    PageableListModel<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput);
+    PageOutput<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput);
 
     List<Link> queryTop5List(Long accountId);
 
     List<Link> queryRecent5List(Long accountId);
 
-    List<Link> queryLinksUnderFolder(Long accountId, Long folderId);
+    List<Link> queryLinksUnderFolder(Long folderId);
 
     void deleteLinksUnderFolder(Long accountId,Long folderId);
 

@@ -4,13 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ciel.loadstar.infrastructure.events.EventType;
+import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
 import com.ciel.loadstar.infrastructure.events.link.LinkEvent;
+import com.ciel.loadstar.infrastructure.events.link.LinkEventType;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
-import com.ciel.loadstar.link.dto.output.PageableListModel;
 import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
 import com.ciel.loadstar.link.entity.*;
 import com.ciel.loadstar.link.es.ESRestClient;
@@ -88,7 +89,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         baseMapper.insert(link);
 
-        LinkEvent event = new LinkEvent(EventType.CREATE);
+        LinkEvent event = new LinkEvent(LinkEventType.CREATE);
         event.setId(link.getId().toString());
         event.setObj(link);
 
@@ -127,7 +128,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
                 linkTagMapper.insert(linkTag);
             });
         }
-        LinkEvent event = new LinkEvent(EventType.UPDATE);
+        LinkEvent event = new LinkEvent(LinkEventType.UPDATE);
         event.setId(link.getId().toString());
         event.setObj(link);
         linkEventProducer.send(event);
@@ -159,7 +160,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
 
-        LinkEvent event = new LinkEvent(EventType.DELETE);
+        LinkEvent event = new LinkEvent(LinkEventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
         linkEventProducer.send(event);
@@ -185,7 +186,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         visitRecord.setUserId(link.getUserId());
         visitRecordMapper.insert(visitRecord);
 
-        LinkEvent event = new LinkEvent(EventType.VIEW);
+        LinkEvent event = new LinkEvent(LinkEventType.VIEW);
         event.setId(link.getId().toString());
         event.setObj(link);
         linkEventProducer.send(event);
@@ -234,8 +235,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public PageableListModel<Link> queryPageList(Long accountId, QueryLinkListInput queryInput) {
-        PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
+    public PageOutput<Link> queryPageList(Long accountId, QueryLinkListInput queryInput) {
+        PageOutput<Link> linkPageableListModel = new PageOutput<>();
         Page<Link> page = new Page<Link>();
         page.setSize(queryInput.getPageSize());
         page.setPages(queryInput.getCurrentPage());
@@ -256,8 +257,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public PageableListModel<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput) {
-        PageableListModel<Link> result = new PageableListModel<>();
+    public PageOutput<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput) {
+        PageOutput<Link> result = new PageOutput<>();
         result.setItems(new ArrayList<>());
 
         RestHighLevelClient client = esRestClient.getClient();
@@ -331,8 +332,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public List<Link> queryLinksUnderFolder(Long accountId, Long folderId) {
-        return baseMapper.queryAllUnderFolder(accountId, folderId);
+    public List<Link> queryLinksUnderFolder(Long folderId) {
+        return baseMapper.queryAllUnderFolder(SessionResourceUtil.currentAccountId(), folderId);
     }
 
     @Override
@@ -345,7 +346,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         link.setId(-1L);
         link.setFolderId(folderId);
         link.setUserId(accountId);
-        LinkEvent event = new LinkEvent(EventType.DELETE);
+        LinkEvent event = new LinkEvent(LinkEventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
         linkEventProducer.send(event);

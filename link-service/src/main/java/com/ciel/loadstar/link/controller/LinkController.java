@@ -1,12 +1,14 @@
 package com.ciel.loadstar.link.controller;
 
 import com.ciel.loadstar.infrastructure.constants.Constants;
+import com.ciel.loadstar.infrastructure.constants.LinkConstants;
+import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
+import com.ciel.loadstar.infrastructure.dto.web.PageReturnModel;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
 import com.ciel.loadstar.link.dto.input.CreateLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.input.UpdateLinkInput;
-import com.ciel.loadstar.link.dto.output.PageableListModel;
 import com.ciel.loadstar.link.dto.output.QueryCalendarOutput;
 import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
 import com.ciel.loadstar.link.entity.DailyStatistical;
@@ -23,12 +25,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +80,14 @@ public class LinkController {
         return ApiReturnUtil.ok("创建成功",linkId);
     }
 
+    @ApiOperation("查询首页链接")
+    @RequestMapping(path = "/loadstar", method = RequestMethod.GET)
+    @Cacheable(value = "links", key = "'f:1:u:' + #accountId")
+    public ReturnModel<List<Link>> queryLoadstarLinks(@RequestHeader(Constants.Header_AccountId) Long accountId){
+        List<Link> links = linkService.queryLinksUnderFolder(LinkConstants.LOADSTAR_FOLDER_ID);
+        return ApiReturnUtil.ok("查询成功", links);
+    }
+
     @RequestMapping(path = "", method = RequestMethod.PUT)
     @ApiOperation("更新链接")
     public ReturnModel<Long> updateLink(@RequestBody @ApiParam(name = "更新链接参数") UpdateLinkInput input){
@@ -106,16 +116,16 @@ public class LinkController {
 
     @ApiOperation("分页查询链接")
     @RequestMapping(path = "", method = RequestMethod.GET)
-    public ReturnModel<PageableListModel<Link>> queryList(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
-        PageableListModel<Link> links = linkService.queryPageList(accountId, queryInput);
-        return ApiReturnUtil.ok("查询成功",links);
+    public PageReturnModel<Link> queryList(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
+        PageOutput<Link> pageLinks = linkService.queryPageList(accountId, queryInput);
+        return ApiReturnUtil.page(pageLinks);
     }
 
     @ApiOperation("全文搜索")
     @RequestMapping(path = "/search", method = RequestMethod.GET)
-    public ReturnModel<PageableListModel<Link>> search(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
-        PageableListModel<Link> links = linkService.fullTextSearch(accountId, queryInput);
-        return ApiReturnUtil.ok("查询成功",links);
+    public PageReturnModel<Link> search(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
+        PageOutput<Link> links = linkService.fullTextSearch(accountId, queryInput);
+        return ApiReturnUtil.page(links);
     }
 
     @ApiOperation("查询最近访问链接")

@@ -1,5 +1,7 @@
 package com.ciel.loadstar.infrastructure.utils;
 
+import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
+import com.ciel.loadstar.infrastructure.dto.web.PageReturnModel;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.exceptions.FriendlyException;
 import org.springframework.http.HttpStatus;
@@ -12,6 +14,10 @@ import org.springframework.http.HttpStatus;
 public class ApiReturnUtil {
     public static <T> ReturnModel<T> ok(String msg, T data){
         return general(HttpStatus.OK.value(), msg, data);
+    }
+
+    public static PageReturnModel page(PageOutput data){
+        return new PageReturnModel(HttpStatus.OK.value(), "查询成功", data);
     }
 
     public static ReturnModel ok(String msg){
