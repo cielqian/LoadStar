@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 @Slf4j
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Throwable.class)
     ReturnModel handleControllerException(HttpServletRequest request, Throwable ex) {
         logger.error(ex);
         return ApiReturnUtil.fail(ex.getMessage());

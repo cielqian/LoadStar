@@ -16,7 +16,6 @@ import org.springframework.kafka.annotation.EnableKafka;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableHystrix
-@EnableKafka
 public class UserApplication {
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);

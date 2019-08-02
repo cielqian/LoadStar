@@ -7,8 +7,8 @@ spring:
     nacos:
       config:
         server-addr: loadstar.top:8848
-        shared-dataids: redis.yml,kafka.yml,loadstar.yml,nacos.yml
-        refreshable-dataids: redis.yml,kafka.yml,loadstar.yml,nacos.yml
+        shared-dataids: redis.yml,loadstar.yml
+        refreshable-dataids: redis.yml,loadstar.yml
         file-extension: yml
 server:
   port: 9083

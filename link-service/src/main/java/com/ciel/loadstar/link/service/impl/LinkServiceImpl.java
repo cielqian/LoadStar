@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.infrastructure.events.EventType;
-import com.ciel.loadstar.infrastructure.events.LinkEvent;
+import com.ciel.loadstar.infrastructure.events.link.LinkEvent;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
@@ -14,7 +14,7 @@ import com.ciel.loadstar.link.dto.output.PageableListModel;
 import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
 import com.ciel.loadstar.link.entity.*;
 import com.ciel.loadstar.link.es.ESRestClient;
-import com.ciel.loadstar.link.mq.LoadstarTopic;
+import com.ciel.loadstar.link.mq.producer.LinkEventProducer;
 import com.ciel.loadstar.link.repository.*;
 import com.ciel.loadstar.link.service.LinkService;
 import com.ciel.loadstar.link.service.linkParser.JsoupLinkParser;
@@ -36,10 +36,8 @@ import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.io.IOException;
 import java.util.*;
@@ -64,16 +62,13 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     JsoupLinkParser linkParser;
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
-
-    @Autowired
     private ESRestClient esRestClient;
 
     @Autowired
     CacheManager cacheManager;
 
     @Autowired
-    LoadstarTopic loadstarTopic;
+    LinkEventProducer linkEventProducer;
 
     @Override
     public Long create(Link link, List<Long> tags) {
@@ -96,10 +91,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(EventType.CREATE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success [{}]" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail [{}]" + jsonString));
+
+        linkEventProducer.send(event);
 
         if (tags != null){
             tags.forEach(tagId -> {
@@ -137,10 +130,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(EventType.UPDATE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success link: [{}]", jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail link: [{}]", jsonString));
+        linkEventProducer.send(event);
 
         String cacheKey = "f:" + link.getFolderId() + ":u:" + link.getUserId();
         cacheManager.getCache("links").evict(cacheKey);
@@ -172,10 +162,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(EventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
+        linkEventProducer.send(event);
     }
 
     @Override
@@ -201,10 +188,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(EventType.VIEW);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
+        linkEventProducer.send(event);
     }
 
     @Override
@@ -364,10 +348,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(EventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
+        linkEventProducer.send(event);
     }
 
     @Override

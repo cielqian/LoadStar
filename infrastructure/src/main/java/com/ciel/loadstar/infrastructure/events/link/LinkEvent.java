@@ -1,6 +1,7 @@
-package com.ciel.loadstar.infrastructure.events;
+package com.ciel.loadstar.infrastructure.events.link;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ciel.loadstar.infrastructure.events.BaseEvent;
 import lombok.Data;
 
 import java.util.Date;

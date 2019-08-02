@@ -2,7 +2,6 @@ package com.ciel.loadstar.link.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.java.Log;
-import org.apache.kafka.common.utils.ByteBufferInputStream;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

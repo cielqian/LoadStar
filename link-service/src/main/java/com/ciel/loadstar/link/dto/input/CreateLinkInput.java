@@ -18,7 +18,6 @@ public class CreateLinkInput {
     @ApiModelProperty(value = "链接地址")
     private String url;
 
-    @NotBlank
     @ApiModelProperty(value = "名称")
     private String name;
 
