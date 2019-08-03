@@ -1,20 +1,24 @@
 package com.ciel.loadstar.link.service.impl;
 
+import static org.mockito.Mockito.*;
+
+import com.ciel.loadstar.infrastructure.constants.LinkConstants;
 import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.link.entity.Link;
-import com.ciel.loadstar.link.service.LinkService;
+import com.ciel.loadstar.link.repository.LinkRepository;
+import com.sun.org.apache.bcel.internal.classfile.Constant;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
 
 /**
  * @Author cielqian
@@ -26,11 +30,22 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class LinkServiceImplTest {
 
-    @Autowired
-    LinkService linkService;
+    @InjectMocks
+    LinkServiceImpl linkService = new LinkServiceImpl();
+
+    @Mock
+    LinkRepository linkPapper;
+
+    Long accountId = 1121332677336698882L;
 
     @Before
     public void setUp() throws Exception {
+        SessionResourceUtil.setCurrentAccountId(accountId);
+
+        List<Link> links = new ArrayList<>();
+        when(linkPapper.queryAllUnderFolder(accountId, LinkConstants.LOADSTAR_FOLDER_ID))
+                .thenReturn(links);
+
     }
 
     @After
@@ -39,7 +54,7 @@ public class LinkServiceImplTest {
 
     @Test
     public void queryLinksUnderFolder() {
-        SessionResourceUtil.setCurrentAccountId(1121332677336698882L);
+
         List<Link> links = linkService.queryLinksUnderFolder(1L);
         Assert.assertTrue(links != null);
     }
