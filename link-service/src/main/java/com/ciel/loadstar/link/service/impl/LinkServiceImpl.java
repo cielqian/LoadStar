@@ -333,7 +333,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
     @Override
     public List<Link> queryLinksUnderFolder(Long folderId) {
-        return baseMapper.queryAllUnderFolder(SessionResourceUtil.currentAccountId(), folderId);
+        return baseMapper.queryAllUnderFolder(SessionResourceUtil.getCurrentAccountId(), folderId);
     }
 
     @Override

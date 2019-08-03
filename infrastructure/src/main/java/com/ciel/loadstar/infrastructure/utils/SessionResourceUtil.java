@@ -14,13 +14,25 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 public class SessionResourceUtil {
-    public static Long currentAccountId(){
+    public static Long getCurrentAccountId(){
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
                 .getRequestAttributes()).getRequest();
         String id = request.getHeader(Constants.Header_AccountId);
-        if (StringUtils.isNotEmpty(id)){
-            return Long.parseLong(id);
+        if (StringUtils.isEmpty(id)){
+            Object idAttribute = request.getAttribute(Constants.Header_AccountId);
+            if (idAttribute != null){
+                id = idAttribute.toString();
+            }else{
+                id = "0";
+            }
         }
-        return 0L;
+
+        return Long.parseLong(id);
+    }
+
+    public static void setCurrentAccountId(Long accountId){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder
+                .getRequestAttributes()).getRequest();
+        request.setAttribute(Constants.Header_AccountId, accountId);
     }
 }

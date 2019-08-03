@@ -2,8 +2,8 @@ package com.ciel.loadstar.link.mq.consumer;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ciel.loadstar.infrastructure.cache.CacheKeyFactory;
-import com.ciel.loadstar.infrastructure.events.EventType;
 import com.ciel.loadstar.infrastructure.events.link.LinkEvent;
+import com.ciel.loadstar.infrastructure.events.link.LinkEventType;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.link.entity.Link;
 import com.ciel.loadstar.link.es.ESRestClient;
@@ -112,7 +112,7 @@ public class LinkEventConsumer {
                     Long linkId = Long.parseLong(linkEvent.getId());
                     Link link = ((JSONObject)linkEvent.getObj()).toJavaObject(Link.class);
 
-                    if (StringUtils.equals(eventType, EventType.CREATE)){
+                    if (StringUtils.equals(eventType, LinkEventType.CREATE)){
                         RestHighLevelClient client = esRestClient.getClient();
                         ESLink esLink = new ESLink();
                         esLink.setName(link.getName());
@@ -136,7 +136,7 @@ public class LinkEventConsumer {
                             e.printStackTrace();
                         }
                     }
-                    else if(StringUtils.equals(eventType, EventType.DELETE)){
+                    else if(StringUtils.equals(eventType, LinkEventType.DELETE)){
                         DeleteByQueryRequest request = new DeleteByQueryRequest(index);
                         request.setConflicts("proceed");
 
@@ -158,7 +158,7 @@ public class LinkEventConsumer {
                             e.printStackTrace();
                         }
                     }
-                    else if(StringUtils.equals(eventType, EventType.UPDATE)){
+                    else if(StringUtils.equals(eventType, LinkEventType.UPDATE)){
                         RestHighLevelClient client = esRestClient.getClient();
                         ESLink esLink = new ESLink();
                         esLink.setName(link.getName());
@@ -213,7 +213,7 @@ public class LinkEventConsumer {
                         }
 
                     }
-                    else if(StringUtils.equals(eventType, EventType.VIEW)){
+                    else if(StringUtils.equals(eventType, LinkEventType.VIEW)){
                         Map<String, String> cacheMap = new HashMap<>();
                         cacheMap.put("service", "link");
                         cacheMap.put("userid", link.getUserId().toString());
