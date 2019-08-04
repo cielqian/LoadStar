@@ -9,6 +9,7 @@ package com.ciel.loadstar.infrastructure.events.link;
 public class LinkEventType {
     public final static String CREATE = "NEW";
     public final static String DELETE = "DELETE";
+    public final static String TRASH = "TRASH";
     public final static String UPDATE = "UPDATE";
     public final static String VIEW = "VIEW";
 

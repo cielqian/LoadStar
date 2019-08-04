@@ -7,6 +7,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
+ * 书签事件
  * @author cielqian
  * @email qianhong91@outlook.com
  * @date 2019/5/15 14:34

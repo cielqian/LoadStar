@@ -3,6 +3,7 @@ package com.ciel.loadstar.link.controller;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.link.dto.input.CreateFolderInput;
 import com.ciel.loadstar.link.dto.output.FolderTreeOutput;
 import com.ciel.loadstar.link.entity.Folder;
@@ -12,7 +13,6 @@ import com.ciel.loadstar.link.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,15 +34,15 @@ public class FolderController {
     @Autowired
     LinkService linkService;
 
-    @ApiOperation("查询文件夹")
-    @RequestMapping(path = "/current", method = RequestMethod.GET)
+    @ApiOperation("查询当前用户所有文件夹")
+    @GetMapping(path = "/current")
     public ReturnModel<List<FolderTreeOutput>> query(@RequestHeader(Constants.Header_AccountId) Long accountId){
         List<FolderTreeOutput> links = folderService.queryFolderTree(accountId);
         return ApiReturnUtil.ok("查询成功",links);
     }
 
-    @ApiOperation("查询文件夹")
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @ApiOperation("根据id查询文件夹")
+    @GetMapping(path = "/{id}")
     public ReturnModel<List<FolderTreeOutput>> queryById(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
         List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, accountId);
         return ApiReturnUtil.ok("查询成功",links);
@@ -50,9 +50,9 @@ public class FolderController {
 
     @ApiOperation("查询文件夹下的书签")
     @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    @Cacheable(value = "links", key = "'f:' + #folderId + ':u:' + #accountId", sync = true)
-    public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
-        List<Link> links = linkService.queryLinksUnderFolder(folderId);
+    public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") Long folderId){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+        List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
         return ApiReturnUtil.ok("查询成功",links);
     }
 

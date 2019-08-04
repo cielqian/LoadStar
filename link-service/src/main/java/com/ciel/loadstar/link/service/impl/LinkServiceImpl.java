@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.ciel.loadstar.infrastructure.constants.LinkConstants;
 import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
 import com.ciel.loadstar.infrastructure.events.link.LinkEvent;
 import com.ciel.loadstar.infrastructure.events.link.LinkEventType;
@@ -141,26 +142,34 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public void delete(Long linkId) {
-        Link link = query(linkId);
+    public void delete(Long accountId, Long linkId) {
+        QueryWrapper<Link> qw = new QueryWrapper<Link>();
+        qw.eq("user_id", accountId);
+        qw.eq("id", linkId);
+
+        Link link = baseMapper.selectOne(qw);
+
         Assert.notNull(link, "链接不存在");
 
-        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         baseMapper.deleteById(linkId);
-        //linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
+
+        LinkEvent event = new LinkEvent(LinkEventType.DELETE);
+        event.setId(link.getId().toString());
+        event.setObj(link);
+        linkEventProducer.send(event);
     }
 
     @Override
-    public void trash(Long linkId, Long accountId) {
-        Link link = baseMapper.selectById(linkId);
-        Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
-        if (folder != null){
-            baseMapper.updateFolderById(linkId, folder.getId());
-        }
-        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
-        cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
+    public void trash(Long accountId, Long linkId) {
+        QueryWrapper<Link> qw = new QueryWrapper<Link>();
+        qw.eq("user_id", accountId);
+        qw.eq("id", linkId);
 
-        LinkEvent event = new LinkEvent(LinkEventType.DELETE);
+        Link link = baseMapper.selectOne(qw);
+
+        baseMapper.updateFolderById(linkId, LinkConstants.TRASH_FOLDER_ID);
+
+        LinkEvent event = new LinkEvent(LinkEventType.TRASH);
         event.setId(link.getId().toString());
         event.setObj(link);
         linkEventProducer.send(event);
@@ -332,7 +341,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public List<Link> queryLinksUnderFolder(Long folderId) {
+    public List<Link> queryLinksUnderFolder(Long accountId, Long folderId) {
         return baseMapper.queryAllUnderFolder(SessionResourceUtil.getCurrentAccountId(), folderId);
     }
 

@@ -4,6 +4,7 @@ import com.ciel.loadstar.infrastructure.events.BaseEvent;
 import lombok.Data;
 
 /**
+ * 账户事件
  * @author cielqian
  * @email qianhong91@outlook.com
  * @date 2019/8/2 10:38

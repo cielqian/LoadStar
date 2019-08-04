@@ -11,6 +11,7 @@ public class AccountEventType {
     public final static String DELETE = "DELETE";
     public final static String UPDATE = "UPDATE";
     public final static String LOGIN = "LOGIN";
+    public final static String LOGOUT = "LOGOUT";
 
     public AccountEventType(String typeString){
         this.typeString = typeString;

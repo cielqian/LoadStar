@@ -45,7 +45,6 @@ public class LinkServiceImplTest {
         List<Link> links = new ArrayList<>();
         when(linkPapper.queryAllUnderFolder(accountId, LinkConstants.LOADSTAR_FOLDER_ID))
                 .thenReturn(links);
-
     }
 
     @After
@@ -55,7 +54,7 @@ public class LinkServiceImplTest {
     @Test
     public void queryLinksUnderFolder() {
 
-        List<Link> links = linkService.queryLinksUnderFolder(1L);
+        List<Link> links = linkService.queryLinksUnderFolder(accountId, 1L);
         Assert.assertTrue(links != null);
     }
 }
