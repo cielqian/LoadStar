@@ -25,10 +25,12 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -51,7 +53,9 @@ public class LinkController {
 
     @PostMapping
     @ApiOperation("创建链接")
-    public ReturnModel<Long> createLink(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") @Valid CreateLinkInput input){
+    public ReturnModel<Long> createLink(@RequestBody @ApiParam(name = "创建链接参数") @Valid CreateLinkInput input){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+
         Link link = new Link();
         link.setUserId(accountId);
         link.setUrl(input.getUrl());
@@ -102,7 +106,6 @@ public class LinkController {
         return ApiReturnUtil.ok("删除成功");
     }
 
-
     @ApiOperation("查询首页链接")
     @GetMapping("/loadstar")
     public ReturnModel<List<Link>> queryLoadstarLinks(){
@@ -110,7 +113,6 @@ public class LinkController {
         List<Link> links = linkService.queryLinksUnderFolder(accountId, LinkConstants.LOADSTAR_FOLDER_ID);
         return ApiReturnUtil.ok("查询成功", links);
     }
-
 
     @ApiOperation("浏览链接")
     @ApiImplicitParam(name = "linkId", value = "链接Id")
@@ -121,7 +123,7 @@ public class LinkController {
     }
 
     @ApiOperation("分页查询链接")
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @GetMapping("/page")
     public PageReturnModel<Link> queryList(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
         PageOutput<Link> pageLinks = linkService.queryPageList(accountId, queryInput);
         return ApiReturnUtil.page(pageLinks);
@@ -148,12 +150,11 @@ public class LinkController {
         return ApiReturnUtil.ok("查询成功",links);
     }
 
-
-
     @ApiOperation("移动链接")
     @ApiParam(name = "linkId", value = "链接ID")
-    @RequestMapping(path = "/{linkId}/to/{folderId}", method = RequestMethod.PUT)
-    public ReturnModel moveLinkToFolder(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "folderId") Long folderId){
+    @PutMapping("/{linkId}/toFolder/{folderId}")
+    public ReturnModel moveLinkToFolder(@PathVariable(name = "linkId") @NotNull Long linkId
+            , @PathVariable(name = "folderId") @NotNull Long folderId){
         linkService.move(linkId, folderId);
         return ApiReturnUtil.ok("更新成功");
     }
