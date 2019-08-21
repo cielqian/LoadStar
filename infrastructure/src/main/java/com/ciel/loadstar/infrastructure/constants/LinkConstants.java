@@ -7,11 +7,11 @@ package com.ciel.loadstar.infrastructure.constants;
  */
 
 public class LinkConstants {
-    //首页
-    public final static Long LOADSTAR_FOLDER_ID = 1L;
     //回收箱
-    public final static Long TRASH_FOLDER_ID = 2L;
+    public final static Long FOLDER_TRASH_ID = 2L;
     //未归档
-    public final static Long UNFOLDED_FOLDER_ID = 3L;
+    public final static Long FOLDER_DEFAULT_ID = 1L;
 
+    //首页
+    public final static Long TAG_DASH_ID = 1L;
 }

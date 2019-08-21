@@ -52,7 +52,7 @@ public interface LinkService extends IService<Link> {
     void deleteLinksUnderFolder(Long accountId, Long folderId);
 
     @Cacheable(value = "links", key = "'t:' + #tagId + ':u:' + #accountId")
-    List<Link> queryLinksUnderTag(Long accountId, Long tagId);
+    List<Link> queryLinksWithTag(Long accountId, Long tagId);
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 

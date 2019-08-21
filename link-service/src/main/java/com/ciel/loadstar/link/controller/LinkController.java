@@ -79,7 +79,7 @@ public class LinkController {
         return ApiReturnUtil.ok("创建成功",linkId);
     }
 
-    @PostMapping
+    @PutMapping
     @ApiOperation("更新链接")
     public ReturnModel<Long> updateLink(@RequestBody @ApiParam(name = "更新链接参数") UpdateLinkInput input){
 
@@ -98,9 +98,8 @@ public class LinkController {
     }
 
     @ApiOperation("删除链接")
-    @ApiParam(name = "linkId", value = "链接ID")
     @DeleteMapping(path = "/{linkId}")
-    public ReturnModel deleteLink(@PathVariable(name = "linkId") Long linkId){
+    public ReturnModel deleteLink(@PathVariable(name = "linkId") @ApiParam("链接ID") Long linkId){
         Long accountId = SessionResourceUtil.getCurrentAccountId();
         linkService.delete(accountId, linkId);
         return ApiReturnUtil.ok("删除成功");
@@ -110,7 +109,7 @@ public class LinkController {
     @GetMapping("/loadstar")
     public ReturnModel<List<Link>> queryLoadstarLinks(){
         Long accountId = SessionResourceUtil.getCurrentAccountId();
-        List<Link> links = linkService.queryLinksUnderFolder(accountId, LinkConstants.LOADSTAR_FOLDER_ID);
+        List<Link> links = linkService.queryLinksWithTag(accountId, LinkConstants.TAG_DASH_ID);
         return ApiReturnUtil.ok("查询成功", links);
     }
 
@@ -124,7 +123,8 @@ public class LinkController {
 
     @ApiOperation("分页查询链接")
     @GetMapping("/page")
-    public PageReturnModel<Link> queryList(@RequestHeader(Constants.Header_AccountId) Long accountId, QueryLinkListInput queryInput){
+    public PageReturnModel<Link> queryList(QueryLinkListInput queryInput){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         PageOutput<Link> pageLinks = linkService.queryPageList(accountId, queryInput);
         return ApiReturnUtil.page(pageLinks);
     }
@@ -151,42 +151,39 @@ public class LinkController {
     }
 
     @ApiOperation("移动链接")
-    @ApiParam(name = "linkId", value = "链接ID")
     @PutMapping("/{linkId}/toFolder/{folderId}")
-    public ReturnModel moveLinkToFolder(@PathVariable(name = "linkId") @NotNull Long linkId
-            , @PathVariable(name = "folderId") @NotNull Long folderId){
+    public ReturnModel moveLinkToFolder(@PathVariable(name = "linkId") @NotNull @ApiParam("链接Id") Long linkId
+            , @PathVariable(name = "folderId") @NotNull @ApiParam("文件夹Id") Long folderId){
         linkService.move(linkId, folderId);
         return ApiReturnUtil.ok("更新成功");
     }
 
     @ApiOperation("链接添加Tag")
-    @ApiParam(name = "linkId", value = "链接ID")
-    @RequestMapping(path = "/{linkId}/addTag/{tagId}", method = RequestMethod.PUT)
-    public ReturnModel linkAddTag(@PathVariable(name = "linkId") Long linkId, @PathVariable(name = "tagId") Long tagId){
+    @PutMapping(path = "/{linkId}/addTag/{tagId}")
+    public ReturnModel linkAddTag(@PathVariable(name = "linkId") @ApiParam("链接Id") Long linkId
+            , @PathVariable(name = "tagId") @ApiParam("标签Id") Long tagId){
         linkService.addLinkToTag(linkId, tagId);
         return ApiReturnUtil.ok("更新成功");
     }
 
-    @ApiOperation("链接添加至常用")
-    @ApiParam(name = "linkId", value = "链接ID")
-    @RequestMapping(path = "/{linkId}/addToOften", method = RequestMethod.PUT)
-    public ReturnModel linkAddToOften(@PathVariable(name = "linkId") Long linkId){
-        linkService.addLinkToTag(linkId, -1L);
+    @ApiOperation("链接添加至首页常用")
+    @PutMapping(path = "/{linkId}/addToDash")
+    public ReturnModel linkAddToLoadstar(@PathVariable(name = "linkId") @ApiParam("链接Id") Long linkId){
+        linkService.addLinkToTag(linkId, LinkConstants.TAG_DASH_ID);
         return ApiReturnUtil.ok("更新成功");
     }
 
     @ApiOperation("链接从常用移除")
     @ApiParam(name = "linkId", value = "链接ID")
-    @RequestMapping(path = "/{linkId}/removeFromOften", method = RequestMethod.PUT)
-    public ReturnModel linkRemoveFromOften(@PathVariable(name = "linkId") Long linkId){
-        linkService.removeLinkFromTag(linkId, -1L);
+    @PutMapping(path = "/{linkId}/removeFromDash")
+    public ReturnModel linkRemoveFromLoadstar(@PathVariable(name = "linkId") @ApiParam("链接Id") Long linkId){
+        linkService.removeLinkFromTag(linkId, LinkConstants.TAG_DASH_ID);
         return ApiReturnUtil.ok("更新成功");
     }
 
     @ApiOperation("链接移到回收站")
-    @ApiParam(name = "linkId", value = "链接ID")
-    @RequestMapping(path = "/trash/{linkId}", method = RequestMethod.PUT)
-    public ReturnModel trash(@PathVariable(name = "linkId") Long linkId){
+    @PutMapping(path = "/trash/{linkId}")
+    public ReturnModel trash(@PathVariable(name = "linkId") @ApiParam("链接ID") Long linkId){
         Long accountId = SessionResourceUtil.getCurrentAccountId();
         linkService.trash(accountId, linkId);
         return ApiReturnUtil.ok("更新成功");
@@ -194,7 +191,7 @@ public class LinkController {
 
     @ApiOperation("上移链接")
     @ApiParam(name = "linkId", value = "链接ID")
-        @RequestMapping(path = "/{linkId}/up", method = RequestMethod.PUT)
+    @PutMapping(path = "/{linkId}/up")
     public ReturnModel upLink(@PathVariable(name = "linkId") Long linkId){
         linkService.up(linkId);
         return ApiReturnUtil.ok("更新成功");

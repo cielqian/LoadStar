@@ -167,7 +167,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         Link link = baseMapper.selectOne(qw);
 
-        baseMapper.updateFolderById(linkId, LinkConstants.TRASH_FOLDER_ID);
+        baseMapper.updateFolderById(linkId, LinkConstants.FOLDER_TRASH_ID);
 
         LinkEvent event = new LinkEvent(LinkEventType.TRASH);
         event.setId(link.getId().toString());
@@ -362,7 +362,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public List<Link> queryLinksUnderTag(Long accountId, Long tagId) {
+    public List<Link> queryLinksWithTag(Long accountId, Long tagId) {
         return baseMapper.queryAllUnderTag(accountId, tagId);
     }
 

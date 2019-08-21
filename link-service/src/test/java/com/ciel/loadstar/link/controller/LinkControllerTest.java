@@ -56,7 +56,7 @@ public class LinkControllerTest {
     @Rollback(true)
     public void createLink() throws Exception {
         CreateLinkInput createLinkInput = new CreateLinkInput();
-        createLinkInput.setFolderId(LinkConstants.LOADSTAR_FOLDER_ID);
+        createLinkInput.setFolderId(LinkConstants.FOLDER_DEFAULT_ID);
         createLinkInput.setName("百度1");
         createLinkInput.setTitle("百度1");
         createLinkInput.setUrl("http://www.baidu.com");
