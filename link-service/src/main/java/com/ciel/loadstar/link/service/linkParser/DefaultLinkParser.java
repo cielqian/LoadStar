@@ -8,6 +8,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
@@ -122,14 +123,20 @@ public class DefaultLinkParser {
 
     private String httpGet(String uri){
         boolean isHttps = uri.startsWith("https://");
-        HttpClient client = null;
-        client = HttpClients.createDefault();
-
-        HttpGet request = new HttpGet(uri);
+        CloseableHttpClient client = null;
         HttpResponse response = null;
-        try {
+        try{
+            client = HttpClients.createDefault();
+            HttpGet request = new HttpGet(uri);
             response = client.execute(request);
         } catch (IOException e) {
+            if (client != null){
+                try {
+                    client.close();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         }
 

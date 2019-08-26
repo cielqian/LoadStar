@@ -1,5 +1,6 @@
 package com.ciel.loadstar.link.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.link.dto.output.FolderTreeOutput;
 import com.ciel.loadstar.link.entity.Folder;
@@ -55,6 +56,19 @@ public class FolderServiceImpl extends ServiceImpl<FolderRepository, Folder> imp
                 c(folders, element);
             });
         }
+
+        QueryWrapper queryWrapper = new QueryWrapper();
+        queryWrapper.eq("is_system", "1");
+        queryWrapper.eq("is_delete", "0");
+        List<Folder> systemFolders = baseMapper.selectList(queryWrapper);
+        systemFolders.forEach(x -> {
+            FolderTreeOutput element = new FolderTreeOutput();
+            element.setId(x.getId());
+            element.setName(x.getName());
+            element.setSystem(x.getIsSystem());
+            element.setCode(x.getCode());
+            folderTreeOutputs.add(element);
+        });
         return folderTreeOutputs;
     }
 

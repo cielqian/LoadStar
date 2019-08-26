@@ -11,7 +11,6 @@ public class LinkConstants {
     public final static Long FOLDER_TRASH_ID = 2L;
     //未归档
     public final static Long FOLDER_DEFAULT_ID = 1L;
-
     //首页
     public final static Long TAG_DASH_ID = 1L;
 }

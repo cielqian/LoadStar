@@ -73,7 +73,7 @@ public class LinkController {
         Long linkId = linkService.create(link, input.getTags());
 
         if (input.isOften()){
-            linkService.addLinkToTag(linkId, -1L);
+            linkService.addLinkToTag(accountId, linkId, LinkConstants.TAG_DASH_ID);
         }
 
         return ApiReturnUtil.ok("创建成功",linkId);
@@ -162,14 +162,16 @@ public class LinkController {
     @PutMapping(path = "/{linkId}/addTag/{tagId}")
     public ReturnModel linkAddTag(@PathVariable(name = "linkId") @ApiParam("链接Id") Long linkId
             , @PathVariable(name = "tagId") @ApiParam("标签Id") Long tagId){
-        linkService.addLinkToTag(linkId, tagId);
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+        linkService.addLinkToTag(accountId, linkId, tagId);
         return ApiReturnUtil.ok("更新成功");
     }
 
     @ApiOperation("链接添加至首页常用")
     @PutMapping(path = "/{linkId}/addToDash")
     public ReturnModel linkAddToLoadstar(@PathVariable(name = "linkId") @ApiParam("链接Id") Long linkId){
-        linkService.addLinkToTag(linkId, LinkConstants.TAG_DASH_ID);
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+        linkService.addLinkToTag(accountId, linkId, LinkConstants.TAG_DASH_ID);
         return ApiReturnUtil.ok("更新成功");
     }
 
@@ -177,7 +179,8 @@ public class LinkController {
     @ApiParam(name = "linkId", value = "链接ID")
     @PutMapping(path = "/{linkId}/removeFromDash")
     public ReturnModel linkRemoveFromLoadstar(@PathVariable(name = "linkId") @ApiParam("链接Id") Long linkId){
-        linkService.removeLinkFromTag(linkId, LinkConstants.TAG_DASH_ID);
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+        linkService.removeLinkFromTag(accountId, linkId, LinkConstants.TAG_DASH_ID);
         return ApiReturnUtil.ok("更新成功");
     }
 

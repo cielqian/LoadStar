@@ -34,8 +34,8 @@ public class TagController {
     @Autowired
     LinkService linkService;
 
-    @PostMapping
     @ApiOperation("创建标签")
+    @PostMapping
     public ReturnModel<Long> createTag(@RequestBody @ApiParam(name = "创建链接参数") CreateTagInput input){
         Tag tag = new Tag();
         tag.setName(input.getName());

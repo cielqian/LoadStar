@@ -56,9 +56,11 @@ public interface LinkService extends IService<Link> {
 
     AnalysisLinkOutput analysis(AnalysisLinkInput uri);
 
-    void addLinkToTag(Long linkId, Long tagId);
+    @CacheEvict(value = "links", key = "'t:' + #tagId + ':u:' + #accountId")
+    void addLinkToTag(Long accountId, Long linkId, Long tagId);
 
-    void removeLinkFromTag(Long linkId, Long tagId);
+    @CacheEvict(value = "links", key = "'t:' + #tagId + ':u:' + #accountId")
+    void removeLinkFromTag(Long accountId, Long linkId, Long tagId);
 
     List<DailyStatistical> queryDailyStatistical(Long accountId, Date day, String type);
 

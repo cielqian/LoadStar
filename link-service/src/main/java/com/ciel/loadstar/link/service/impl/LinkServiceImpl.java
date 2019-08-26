@@ -372,7 +372,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public void addLinkToTag(Long linkId, Long tagId) {
+    public void addLinkToTag(Long accountId, Long linkId, Long tagId) {
         QueryWrapper<LinkTag> wrapper = new QueryWrapper<>();
         wrapper.eq("link_id", linkId);
         wrapper.eq("tag_id", tagId);
@@ -387,7 +387,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public void removeLinkFromTag(Long linkId, Long tagId) {
+    public void removeLinkFromTag(Long accountId, Long linkId, Long tagId) {
 
         QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
         qw.eq("link_id", linkId);

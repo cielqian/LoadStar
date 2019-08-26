@@ -47,62 +47,57 @@ public class AccountEventConsumer {
         DefaultMQPushConsumer consumer = new DefaultMQPushConsumer(topicGroupName);
         consumer.setNamesrvAddr(mqHost);
         consumer.subscribe(mqAccountEventTopic, "*");
-        consumer.registerMessageListener(new MessageListenerConcurrently() {
-            @Override
-            public ConsumeConcurrentlyStatus consumeMessage(List<MessageExt> msgs,
-                                                            ConsumeConcurrentlyContext context) {
-                for (MessageExt msg: msgs){
-                    String tag = msg.getTags();
-                    String bodyContent = "";
-                    try {
-                        bodyContent = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
-                    } catch (UnsupportedEncodingException e) {
-                        log.warn("received message error, messageId [{}]", msg.getMsgId());
-                    }
-
-                    JSONObject jsonObject = JSONObject.parseObject(bodyContent);
-                    AccountEvent userAccountEvent = jsonObject.toJavaObject(AccountEvent.class);
-                    String profile = userAccountEvent.getProfile();
-                    if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile)){
-                        return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
-                    }
-
-                    String eventType = userAccountEvent.getEventType();
-                    if (StringUtils.equals(eventType, AccountEventType.CREATE)){
-                        Long userId = Long.parseLong(userAccountEvent.getId());
-                        Folder defaultFolder = new Folder();
-                        defaultFolder.setParentId(0L);
-                        defaultFolder.setName("未归档");
-                        defaultFolder.setCode("default");
-                        defaultFolder.setUserId(userId);
-                        defaultFolder.setIsSystem(true);
-
-                        Folder trashFolder = new Folder();
-                        trashFolder.setParentId(0L);
-                        trashFolder.setName("回收站");
-                        trashFolder.setCode("trash");
-                        trashFolder.setUserId(userId);
-                        trashFolder.setIsSystem(true);
-
-                        Folder loadStarFolder = new Folder();
-                        loadStarFolder.setParentId(0L);
-                        loadStarFolder.setName("快捷");
-                        loadStarFolder.setCode("loadstar");
-                        loadStarFolder.setUserId(userId);
-                        loadStarFolder.setIsSystem(true);
-
-                        folderService.create(defaultFolder);
-                        folderService.create(trashFolder);
-                        folderService.create(loadStarFolder);
-
-                        log.info("create default folder for user [{}]", userId);
-
-                    }
+        consumer.registerMessageListener((MessageListenerConcurrently) (msgs, context) -> {
+            for (MessageExt msg: msgs){
+                String bodyContent = "";
+                try {
+                    bodyContent = new String(msg.getBody(), RemotingHelper.DEFAULT_CHARSET);
+                } catch (UnsupportedEncodingException e) {
+                    log.warn("received message error, messageId [{}]", msg.getMsgId());
                 }
 
+                JSONObject jsonObject = JSONObject.parseObject(bodyContent);
+                AccountEvent userAccountEvent = jsonObject.toJavaObject(AccountEvent.class);
+                String profile = userAccountEvent.getProfile();
+                if (!StringUtils.equals(ApplicationContextUtil.getActiveProfile(), profile)){
+                    return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                }
 
-                return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
+                String eventType = userAccountEvent.getEventType();
+                if (StringUtils.equals(eventType, AccountEventType.CREATE)){
+                    Long userId = Long.parseLong(userAccountEvent.getId());
+                    Folder defaultFolder = new Folder();
+                    defaultFolder.setParentId(0L);
+                    defaultFolder.setName("未归档");
+                    defaultFolder.setCode("default");
+                    defaultFolder.setUserId(userId);
+                    defaultFolder.setIsSystem(true);
+
+                    Folder trashFolder = new Folder();
+                    trashFolder.setParentId(0L);
+                    trashFolder.setName("回收站");
+                    trashFolder.setCode("trash");
+                    trashFolder.setUserId(userId);
+                    trashFolder.setIsSystem(true);
+
+                    Folder loadStarFolder = new Folder();
+                    loadStarFolder.setParentId(0L);
+                    loadStarFolder.setName("快捷");
+                    loadStarFolder.setCode("loadstar");
+                    loadStarFolder.setUserId(userId);
+                    loadStarFolder.setIsSystem(true);
+
+                    folderService.create(defaultFolder);
+                    folderService.create(trashFolder);
+                    folderService.create(loadStarFolder);
+
+                    log.info("create default folder for user [{}]", userId);
+
+                }
             }
+
+
+            return ConsumeConcurrentlyStatus.CONSUME_SUCCESS;
         });
     }
 }
