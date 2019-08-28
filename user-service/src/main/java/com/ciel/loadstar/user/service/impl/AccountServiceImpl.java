@@ -1,5 +1,6 @@
 package com.ciel.loadstar.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.events.account.AccountEvent;
@@ -57,7 +58,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
     @Override
     public User create(CreateUser user) {
-        User existing = accountRepository.findByUsername(user.getUsername());
+        User existing = findByName(user.getUsername());
         Assert.isNull(existing, "用户已存在");
 
         ReturnModel<Long> remoteResult = authServiceClient.createUser(user);
@@ -75,7 +76,6 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         AccountEvent event = new AccountEvent(AccountEventType.CREATE);
         event.setId(remoteResult.getData().toString());
-
         accountEventProducer.send(event);
 
         return account;
@@ -88,16 +88,24 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         ApiReturnUtil.checkSuccess(remoteResult);
 
         accountRepository.deleteById(userId);
+
+        AccountEvent event = new AccountEvent(AccountEventType.DELETE);
+        event.setId(userId.toString());
+        accountEventProducer.send(event);
     }
 
     @Override
     public User findByName(String username) {
-        return accountRepository.findByUsername(username);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return accountRepository.selectOne(queryWrapper);
     }
 
     @Override
-    public User findByAccountId(String accountId) {
-        return accountRepository.findByAccountId(accountId);
+    public User findByAccountId(Long accountId) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("accountId", accountId);
+        return accountRepository.selectOne(queryWrapper);
     }
 
 }

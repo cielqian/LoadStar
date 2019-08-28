@@ -29,15 +29,15 @@ public class HystrixFallbackProvider implements FallbackProvider {
     public ClientHttpResponse fallbackResponse(String route, Throwable cause) {
         //标记不同的异常为不同的http状态值
         if (cause instanceof HystrixTimeoutException) {
-            return response(HttpStatus.GATEWAY_TIMEOUT);
+            return response(HttpStatus.OK, cause );
         } else {
             //可继续添加自定义异常类
-            return response(HttpStatus.INTERNAL_SERVER_ERROR);
+            return response(HttpStatus.OK, cause);
         }
     }
 
     //处理
-    private ClientHttpResponse response(final HttpStatus status) {
+    private ClientHttpResponse response(final HttpStatus status, Throwable cause) {
         return new ClientHttpResponse() {
             @Override
             public HttpStatus getStatusCode() throws IOException {
@@ -62,7 +62,7 @@ public class HystrixFallbackProvider implements FallbackProvider {
             public InputStream getBody() throws IOException {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("status", "400");
-                jsonObject.put("message", "服务暂时不可用");
+                jsonObject.put("message", cause.getMessage());
                 return new ByteArrayInputStream(jsonObject.toJSONString().getBytes());
             }
 
