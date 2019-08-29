@@ -1,108 +1,132 @@
 version: "3"
 services:
-#  redis:
-#    image: hub.c.163.com/nce2/redis
-#    restart: always
-#    command: redis-server --requirepass 123456!
-#    ports:
-#      - 6379:6379
-#    volumes:
-#      - /root/redis/data:/data
+  #  redis:
+  #    image: hub.c.163.com/nce2/redis
+  #    restart: always
+  #    command: redis-server --requirepass 123456!
+  #    ports:
+  #      - 6379:6379
+  #    volumes:
+  #      - /root/redis/data:/data
 
-#  rabbitmq:
-#    image: rabbitmq:3-management
-#    restart: always
-#    ports:
-#      - 4369:4369
-#      - 5672:5672
-#      - 15672:15672
-#      - 25672:25672
+  #  rabbitmq:
+  #    image: rabbitmq:3-management
+  #    restart: always
+  #    ports:
+  #      - 4369:4369
+  #      - 5672:5672
+  #      - 15672:15672
+  #      - 25672:25672
 
-#  mysql:
-#    image: mysql
-#    restart: always
-#    command: --default-authentication-plugin=mysql_native_password
-#    ports:
-#      - 3306:3306
-#    environment:
-#      MYSQL_ROOT_PASSWORD: 123456!
-#    volumes:
-#      - /root/db/mysql/data:/var/lib/mysql
-#      - /root/db/mysql/conf:/etc/mysql/conf.d
-#
-#  registry:
-#    image: cielqian/pocket-registry
-#    restart: always
-#    ports:
-#      - 9001:9001
-#    networks:
-#      - default
-#      - loadstar
-#
+  #  mysql:
+  #    image: mysql
+  #    restart: always
+  #    command: --default-authentication-plugin=mysql_native_password
+  #    ports:
+  #      - 3306:3306
+  #    environment:
+  #      MYSQL_ROOT_PASSWORD: 123456!
+  #    volumes:
+  #      - /root/db/mysql/data:/var/lib/mysql
+  #      - /root/db/mysql/conf:/etc/mysql/conf.d
+  #
+  #  registry:
+  #    image: cielqian/pocket-registry
+  #    restart: always
+  #    ports:
+  #      - 9001:9001
+  #    networks:
+  #      - default
+  #      - loadstar
+  #
   gateway:
     image: cielqian/pocket-gateway
     restart: always
     ports:
       - 9080:9080
-    depends_on: 
+    depends_on:
       - registry
     volumes:
       - /usr/dock/loadstar/logs:/logs
-    networks: 
-      - default 
-      - loadstar 
-      
+    networks:
+      - default
+      - loadstar
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+
   auth-service:
     image: cielqian/pocket-auth-service
     restart: always
     ports:
       - 9081:9081
-    depends_on: 
+    depends_on:
       - registry
     volumes:
       - /usr/dock/loadstar/logs/auth-service:/logs
-    networks: 
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    networks:
       - default
-      - loadstar 
-      
+      - loadstar
+
   user-service:
     image: cielqian/pocket-user-service
     restart: always
     ports:
       - 9082:9082
-    depends_on: 
+    depends_on:
       - registry
     volumes:
       - /usr/dock/loadstar/logs/user-service:/logs
-    networks: 
-      - default 
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    networks:
+      - default
       - loadstar
-      
+
   link-service:
     image: cielqian/pocket-link-service
     restart: always
     ports:
       - 9083:9083
-    depends_on: 
+    depends_on:
       - registry
-    volumes: 
+    volumes:
       - /usr/dock/loadstar/logs/link-service:/logs
-    networks: 
-      - default 
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 128M
+    networks:
+      - default
       - loadstar
 
-#  schedule-service:
-#    image: cielqian/pocket-schedule-service
-#    restart: always
-#    ports:
-#      - 9084:9084
-#    depends_on:
-#      - registry
-#    volumes:
-#      - /usr/dock/loadstar/logs/schedule-service:/logs
-#    networks:
-#      - default
-#      - loadstar
+  #  schedule-service:
+  #    image: cielqian/pocket-schedule-service
+  #    restart: always
+  #    ports:
+  #      - 9084:9084
+  #    depends_on:
+  #      - registry
+  #    volumes:
+  #      - /usr/dock/loadstar/logs/schedule-service:/logs
+  #    networks:
+  #      - default
+  #      - loadstar
 
   web-container:
     image: cielqian/pocket-web

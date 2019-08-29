@@ -104,7 +104,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     @Override
     public User findByAccountId(Long accountId) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("accountId", accountId);
+        queryWrapper.eq("account_id", accountId);
         return accountRepository.selectOne(queryWrapper);
     }
 

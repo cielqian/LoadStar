@@ -24,7 +24,6 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         Map<String, Object> additionalInfo = new HashMap<>();
 
         User principal = (User)oAuth2Authentication.getPrincipal();
-
         additionalInfo.put(
                 "id", principal.getId());
 
