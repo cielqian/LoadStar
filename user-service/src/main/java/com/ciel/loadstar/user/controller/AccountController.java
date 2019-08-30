@@ -4,6 +4,7 @@ import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.exceptions.FriendlyException;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.user.entity.User;
 import com.ciel.loadstar.user.dto.input.CreateUser;
 import com.ciel.loadstar.user.dto.output.UserInfo;
@@ -49,9 +50,9 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/current",method = RequestMethod.GET)
-    public ReturnModel<UserInfo> current(@RequestHeader(Constants.Header_AccountId) String accountId){
+    public ReturnModel<UserInfo> current(){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         User user = accountService.findByAccountId(accountId);
-        //accountService.findByName(principal.getName());
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(user.getId());
         userInfo.setAccountId(user.getAccountId());

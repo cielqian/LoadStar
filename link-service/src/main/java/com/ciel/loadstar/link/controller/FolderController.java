@@ -1,8 +1,8 @@
 package com.ciel.loadstar.link.controller;
 
-import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.link.dto.input.CreateFolderInput;
 import com.ciel.loadstar.link.dto.output.FolderTreeOutput;
 import com.ciel.loadstar.link.entity.Folder;
@@ -12,9 +12,9 @@ import com.ciel.loadstar.link.service.LinkService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,38 +34,42 @@ public class FolderController {
     @Autowired
     LinkService linkService;
 
-    @ApiOperation("查询文件夹")
-    @RequestMapping(path = "/current", method = RequestMethod.GET)
-    public ReturnModel<List<FolderTreeOutput>> query(@RequestHeader(Constants.Header_AccountId) Long accountId){
+    @ApiOperation("查询当前用户所有文件夹")
+    @GetMapping(path = "/current")
+    public ReturnModel<List<FolderTreeOutput>> query(){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         List<FolderTreeOutput> links = folderService.queryFolderTree(accountId);
         return ApiReturnUtil.ok("查询成功",links);
     }
 
-    @ApiOperation("查询文件夹")
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ReturnModel<List<FolderTreeOutput>> queryById(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
+    @ApiOperation("根据id查询文件夹")
+    @GetMapping(path = "/{id}")
+    public ReturnModel<List<FolderTreeOutput>> queryById(@PathVariable(name = "id") @NotNull Long folderId){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         List<FolderTreeOutput> links = folderService.queryFolderTree(folderId, accountId);
         return ApiReturnUtil.ok("查询成功",links);
     }
 
     @ApiOperation("查询文件夹下的书签")
-    @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-    @Cacheable(value = "links", key = "'f:' + #folderId + ':u:' + #accountId", sync = true)
-    public ReturnModel<List<Link>> queryLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
+    @GetMapping(path = "/{id}/link")
+    public ReturnModel<List<Link>> queryLinkUnderFolder(@PathVariable(name = "id") @NotNull Long folderId){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         List<Link> links = linkService.queryLinksUnderFolder(accountId, folderId);
         return ApiReturnUtil.ok("查询成功",links);
     }
 
     @ApiOperation("清空文件夹下的书签")
-    @RequestMapping(path = "/{id}/link", method = RequestMethod.DELETE)
-    public ReturnModel deleteLinkUnderFolder(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long folderId){
+    @DeleteMapping(path = "/{id}/link")
+    public ReturnModel deleteLinkUnderFolder(@PathVariable(name = "id") @NotNull Long folderId){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         linkService.deleteLinksUnderFolder(accountId, folderId);
         return ApiReturnUtil.ok("删除成功");
     }
 
     @ApiOperation("创建文件夹")
-    @RequestMapping(path = "/{userId}", method = RequestMethod.POST)
-    public ReturnModel createFolderForUser(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody CreateFolderInput createFolderInput){
+    @PostMapping(path = "/{userId}")
+    public ReturnModel createFolderForUser(@RequestBody CreateFolderInput createFolderInput){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         Folder folder = new Folder();
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
@@ -78,8 +82,9 @@ public class FolderController {
     }
 
     @ApiOperation("创建文件夹")
-    @RequestMapping(path = "/current", method = RequestMethod.POST)
-    public ReturnModel createFolderForCurrent(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody CreateFolderInput createFolderInput){
+    @PostMapping(path = "/current")
+    public ReturnModel createFolderForCurrent(@RequestBody CreateFolderInput createFolderInput){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         Folder folder = new Folder();
         folder.setParentId(createFolderInput.getParentId());
         folder.setName(createFolderInput.getName());
@@ -92,40 +97,10 @@ public class FolderController {
     }
 
     @ApiOperation("删除文件夹")
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
-    public ReturnModel deleteFolderForCurrent(@PathVariable(name = "id") Long folderId){
+    @DeleteMapping(path = "/{id}")
+    public ReturnModel deleteFolderForCurrent(@PathVariable(name = "id") @NotNull Long folderId){
         folderService.removeById(folderId);
         return ApiReturnUtil.ok("删除成功");
     }
 
-    @ApiOperation("创建默认文件夹")
-    @RequestMapping(path = "/default/{userId}", method = RequestMethod.POST)
-    public ReturnModel createDefault(@PathVariable Long userId){
-        Folder defaultFolder = new Folder();
-        defaultFolder.setParentId(0L);
-        defaultFolder.setName("未归档");
-        defaultFolder.setCode("default");
-        defaultFolder.setUserId(userId);
-        defaultFolder.setIsSystem(true);
-
-        Folder trashFolder = new Folder();
-        trashFolder.setParentId(0L);
-        trashFolder.setName("回收站");
-        trashFolder.setCode("trash");
-        trashFolder.setUserId(userId);
-        trashFolder.setIsSystem(true);
-
-        Folder loadStarFolder = new Folder();
-        loadStarFolder.setParentId(0L);
-        loadStarFolder.setName("快捷");
-        loadStarFolder.setCode("loadstar");
-        loadStarFolder.setUserId(userId);
-        loadStarFolder.setIsSystem(true);
-
-        folderService.create(defaultFolder);
-        folderService.create(trashFolder);
-        folderService.create(loadStarFolder);
-
-        return ApiReturnUtil.ok("创建成功");
-    }
 }

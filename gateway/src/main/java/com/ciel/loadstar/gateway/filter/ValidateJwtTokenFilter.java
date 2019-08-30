@@ -46,7 +46,8 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
         String requestMethod = requestContext.getRequest().getMethod();
 
         // check if token validation should be enabled
-        if (url.startsWith("/auth-service") || url.equals("/user-service/api/account")) {
+        if (url.startsWith("/auth-service") || url.equals("/user-service/api/account")
+        || url.endsWith("/api-docs")) {
             return false;
         }
         return true;
@@ -57,8 +58,7 @@ public class ValidateJwtTokenFilter extends ZuulFilter {
 
     @Override
     public Object run() throws ZuulException {
-        Authentication a = SecurityContextHolder.getContext()
-                .getAuthentication();
+        Authentication a = SecurityContextHolder.getContext().getAuthentication();
         OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) a.getDetails();
         OAuth2AccessToken accessToken = tokenStore.readAccessToken(details.getTokenValue());
         Map<String, Object> additionalInformation = accessToken.getAdditionalInformation();

@@ -6,7 +6,7 @@
     <artifactId>loadstar</artifactId>
     <version>1.0.1</version>
     <packaging>pom</packaging>
-    <name>pocket</name>
+    <name>loadstar</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -101,6 +101,11 @@
             <version>${druid.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
+            <version>6.5.0</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.link.dto.input.CreateTagInput;
 import com.ciel.loadstar.link.dto.output.QueryTagListOutput;
 import com.ciel.loadstar.link.entity.Link;
@@ -33,45 +34,43 @@ public class TagController {
     @Autowired
     LinkService linkService;
 
-    @RequestMapping(path = "", method = RequestMethod.POST)
     @ApiOperation("创建标签")
-    public ReturnModel<Long> createTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody @ApiParam(name = "创建链接参数") CreateTagInput input){
+    @PostMapping
+    public ReturnModel<Long> createTag(@RequestBody @ApiParam(name = "创建链接参数") CreateTagInput input){
         Tag tag = new Tag();
         tag.setName(input.getName());
         tag.setSortIndex(0);
-        tag.setUserId(accountId);
-        tag.setIsSystem(true);
+        tag.setUserId(SessionResourceUtil.getCurrentAccountId());
+        tag.setIsSystem(false);
         Long tagId = tagService.create(tag);
 
         return ApiReturnUtil.ok("", tagId);
     }
 
     @ApiOperation("查询标签下的书签")
-    @RequestMapping(path = "/{id}/link", method = RequestMethod.GET)
-//    @Cacheable(value = "links", key = "'t:' + #tagId + ':u:' + #accountId", sync = true)
-    public ReturnModel<List<Link>> queryLinkUnderTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "id") Long tagId){
-        List<Link> links = linkService.queryLinksUnderTag(accountId, tagId);
+    @GetMapping(path = "/{id}/link")
+    public ReturnModel<List<Link>> queryLinkWithTag(@PathVariable(name = "id") Long tagId){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+        List<Link> links = linkService.queryLinksWithTag(accountId, tagId);
         return ApiReturnUtil.ok("查询成功", links);
     }
 
-    @RequestMapping(path = "/current", method = RequestMethod.GET)
-    @ApiOperation("查询标签")
-    public ReturnModel<List<QueryTagListOutput>> queryTag(@RequestHeader(Constants.Header_AccountId) Long accountId){
+    @ApiOperation("查询当前用户的标签")
+    @GetMapping(path = "/current")
+    public ReturnModel<List<QueryTagListOutput>> queryTag(){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         List<QueryTagListOutput> tags = tagService.queryAllTag(accountId);
-
-        String json = JSON.toJSONString(tags);
-
-        return ApiReturnUtil.ok("", tags);
+        return ApiReturnUtil.ok("查询成功", tags);
     }
 
-    @RequestMapping(path = "", method = RequestMethod.GET)
+    @GetMapping
     @ApiOperation("查询标签")
     public ReturnModel<List<Tag>> queryTag(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestParam("keyword") String keyword ){
         List<Tag> tags = tagService.queryAllTag(accountId, "%" + keyword + "%");
         return ApiReturnUtil.ok("", tags);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    @DeleteMapping(path = "/{id}")
     @ApiOperation("删除标签")
     public ReturnModel deleteTag(@PathVariable("id") Long tagId){
         tagService.delete(tagId);

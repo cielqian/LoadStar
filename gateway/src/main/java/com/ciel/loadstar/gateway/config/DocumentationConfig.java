@@ -2,6 +2,11 @@ package com.ciel.loadstar.gateway.config;
 
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.service.ApiKey;
+import springfox.documentation.service.AuthorizationScope;
+import springfox.documentation.service.SecurityReference;
+import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.swagger.web.SwaggerResource;
 import springfox.documentation.swagger.web.SwaggerResourcesProvider;
 

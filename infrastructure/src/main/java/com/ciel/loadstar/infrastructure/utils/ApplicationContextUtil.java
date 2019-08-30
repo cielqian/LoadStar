@@ -17,10 +17,13 @@ public class ApplicationContextUtil implements ApplicationContextAware {
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.context = applicationContext;
+        context = applicationContext;
     }
 
-    // 获取当前环境
+    /**
+     * 获取当前环境
+     * @return
+     */
     public static String getActiveProfile() {
         return context.getEnvironment().getActiveProfiles()[0];
     }

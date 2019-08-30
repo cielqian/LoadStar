@@ -17,12 +17,13 @@ import java.util.Map;
  */
 
 public class CustomTokenEnhancer implements TokenEnhancer {
+    private static final Long ONE_DAY = 1000 * 60 * 60 *  24L;
+
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken oAuth2AccessToken, OAuth2Authentication oAuth2Authentication) {
         Map<String, Object> additionalInfo = new HashMap<>();
 
         User principal = (User)oAuth2Authentication.getPrincipal();
-
         additionalInfo.put(
                 "id", principal.getId());
 
@@ -30,9 +31,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
 
         defaultOAuth2AccessToken.setAdditionalInformation(additionalInfo);
 
-        Long oneDay = 1000 * 60 * 60 *  24L;
-
-        defaultOAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis() + oneDay * 7));
+        defaultOAuth2AccessToken.setExpiration(new Date(System.currentTimeMillis() + ONE_DAY * 7));
         return oAuth2AccessToken;
     }
 }

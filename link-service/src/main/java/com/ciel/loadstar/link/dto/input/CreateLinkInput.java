@@ -4,11 +4,17 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 
+/**
+ * 创建链接Dto
+ * @author ciel
+ */
 @ApiModel
 @Data
 public class CreateLinkInput {
+    @NotBlank
     @ApiModelProperty(value = "链接地址")
     private String url;
 

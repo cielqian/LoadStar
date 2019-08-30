@@ -13,5 +13,5 @@ public interface AccountService extends IService<User> {
 
     User findByName(String accountName);
 
-    User findByAccountId(String accountId);
+    User findByAccountId(Long accountId);
 }

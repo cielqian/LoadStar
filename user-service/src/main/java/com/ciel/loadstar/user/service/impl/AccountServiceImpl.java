@@ -1,27 +1,24 @@
 package com.ciel.loadstar.user.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
-import com.ciel.loadstar.infrastructure.events.EventType;
-import com.ciel.loadstar.infrastructure.events.UserAccountEvent;
+import com.ciel.loadstar.infrastructure.events.account.AccountEvent;
+import com.ciel.loadstar.infrastructure.events.account.AccountEventType;
 import com.ciel.loadstar.infrastructure.exceptions.ObjectNotExistingException;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
-import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
 import com.ciel.loadstar.user.client.AuthServiceClient;
 import com.ciel.loadstar.user.client.FolderServiceClient;
-import com.ciel.loadstar.user.entity.User;
 import com.ciel.loadstar.user.dto.input.CreateUser;
-import com.ciel.loadstar.user.mq.LoadstarTopic;
+import com.ciel.loadstar.user.entity.User;
+import com.ciel.loadstar.user.mq.producer.AccountEventProducer;
 import com.ciel.loadstar.user.repository.ThemeRepository;
 import com.ciel.loadstar.user.repository.UserRepository;
 import com.ciel.loadstar.user.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.util.Date;
 
@@ -49,7 +46,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
     ThemeServiceImpl themeService;
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    AccountEventProducer accountEventProducer;
 
     @Override
     public User queryById(Long id) {
@@ -61,7 +58,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
     @Override
     public User create(CreateUser user) {
-        User existing = accountRepository.findByUsername(user.getUsername());
+        User existing = findByName(user.getUsername());
         Assert.isNull(existing, "用户已存在");
 
         ReturnModel<Long> remoteResult = authServiceClient.createUser(user);
@@ -77,13 +74,9 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         themeService.create(account);
 
-        UserAccountEvent event = new UserAccountEvent(EventType.CREATE);
+        AccountEvent event = new AccountEvent(AccountEventType.CREATE);
         event.setId(remoteResult.getData().toString());
-        String jsonString = event.toJson();
-        ListenableFuture future =
-                kafkaTemplate.send(new LoadstarTopic().getUserAccountEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic UserAccountEvent success:" + jsonString)
-                , throwable -> log.info("send to topic UserAccountEvent fail:" + jsonString));
+        accountEventProducer.send(event);
 
         return account;
     }
@@ -95,16 +88,24 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
         ApiReturnUtil.checkSuccess(remoteResult);
 
         accountRepository.deleteById(userId);
+
+        AccountEvent event = new AccountEvent(AccountEventType.DELETE);
+        event.setId(userId.toString());
+        accountEventProducer.send(event);
     }
 
     @Override
     public User findByName(String username) {
-        return accountRepository.findByUsername(username);
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        return accountRepository.selectOne(queryWrapper);
     }
 
     @Override
-    public User findByAccountId(String accountId) {
-        return accountRepository.findByAccountId(accountId);
+    public User findByAccountId(Long accountId) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("account_id", accountId);
+        return accountRepository.selectOne(queryWrapper);
     }
 
 }

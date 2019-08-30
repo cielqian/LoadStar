@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableCaching
 public class LinkApplication {
     public static void main(String[] args) {
         SpringApplication.run(LinkApplication.class, args);

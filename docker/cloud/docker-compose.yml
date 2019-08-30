@@ -10,6 +10,59 @@ services:
         limits:
           cpus: '0.25'
           memory: 512M
+  #  rabbit:
+  #    image: rabbitmq:3-management
+  #    ports:
+  #      - "5672:5672"
+  #      - "15672:15672"
+  #    environment:
+  #      RABBITMQ_DEFAULT_USER: loadstar
+  #      RABBITMQ_DEFAULT_PASS: loadstar123
+  #    deploy:
+  #      resources:
+  #        limits:
+  #          cpus: '0.25'
+  #          memory: 128M
+  rocketmq_namesrv:
+    image: rocketmqinc/rocketmq:4.4.0
+    ports:
+      - 9876:9876
+    volumes:
+      - /usr/dock/rocketmq/namesrv/logs:/root/logs
+      - /usr/dock/rocketmq/namesrv/store:/root/store
+    command: sh mqnamesrv
+    networks:
+      - default
+      - loadstar
+  rocketmq_broker:
+    image: rocketmqinc/rocketmq:4.4.0
+    ports:
+      - 10909:10909
+      - 10911:10911
+    volumes:
+      - /usr/dock/rocketmq/broker1/logs:/root/logs
+      - /usr/dock/rocketmq/broker1/store:/root/store
+      - /usr/dock/rocketmq/broker1/config/broker.conf:/opt/rocketmq-4.4.0/conf/broker.conf
+    environment:
+      MAX_POSSIBLE_HEAP: 268435456
+      NAMESRV_ADDR: rocketmq_namesrv:9876
+    command: sh mqbroker -c /opt/rocketmq-4.4.0/conf/broker.conf
+    depends_on:
+      - rocketmq_namesrv
+    networks:
+      - default
+      - loadstar
+  rocketmq_console:
+    image: styletang/rocketmq-console-ng
+    ports:
+      - 9085:8080
+    environment:
+      JAVA_OPTS: '-Drocketmq.namesrv.addr=rocketmq_namesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false'
+    depends_on:
+      - rocketmq_namesrv
+    networks:
+      - default
+      - loadstar
   nacos:
     image: nacos/nacos-server
     ports:

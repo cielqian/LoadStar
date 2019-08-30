@@ -75,5 +75,5 @@ notifications:
   email:
     recipients:
       - qianhong91@outlook.com
-  on_success: change
+  on_success: always
   on_failure: always

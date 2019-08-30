@@ -4,23 +4,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.ciel.loadstar.infrastructure.events.EventType;
-import com.ciel.loadstar.infrastructure.events.LinkEvent;
+import com.ciel.loadstar.infrastructure.constants.LinkConstants;
+import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
+import com.ciel.loadstar.infrastructure.events.link.LinkEvent;
+import com.ciel.loadstar.infrastructure.events.link.LinkEventType;
 import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.link.dto.input.AnalysisLinkInput;
 import com.ciel.loadstar.link.dto.input.QueryLinkListInput;
 import com.ciel.loadstar.link.dto.output.AnalysisLinkOutput;
-import com.ciel.loadstar.link.dto.output.PageableListModel;
+import com.ciel.loadstar.link.dto.output.QueryVisitRecordOutput;
+import com.ciel.loadstar.link.entity.*;
 import com.ciel.loadstar.link.es.ESRestClient;
-import com.ciel.loadstar.link.entity.Folder;
-import com.ciel.loadstar.link.entity.Link;
-import com.ciel.loadstar.link.entity.LinkTag;
-import com.ciel.loadstar.link.entity.VisitRecord;
-import com.ciel.loadstar.link.mq.LoadstarTopic;
-import com.ciel.loadstar.link.repository.FolderRepository;
-import com.ciel.loadstar.link.repository.LinkRepository;
-import com.ciel.loadstar.link.repository.LinkTagRepository;
-import com.ciel.loadstar.link.repository.VisitRecordRepository;
+import com.ciel.loadstar.link.mq.producer.LinkEventProducer;
+import com.ciel.loadstar.link.repository.*;
 import com.ciel.loadstar.link.service.LinkService;
 import com.ciel.loadstar.link.service.linkParser.JsoupLinkParser;
 import lombok.extern.slf4j.Slf4j;
@@ -40,18 +37,12 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-import org.springframework.util.concurrent.ListenableFuture;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -67,10 +58,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     VisitRecordRepository visitRecordMapper;
 
     @Autowired
-    JsoupLinkParser linkParser;
+    DailyStatisticalRepository dailyStatisticalRepository;
 
     @Autowired
-    private KafkaTemplate kafkaTemplate;
+    JsoupLinkParser linkParser;
 
     @Autowired
     private ESRestClient esRestClient;
@@ -79,7 +70,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     CacheManager cacheManager;
 
     @Autowired
-    LoadstarTopic loadstarTopic;
+    LinkEventProducer linkEventProducer;
 
     @Override
     public Long create(Link link, List<Long> tags) {
@@ -99,13 +90,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         baseMapper.insert(link);
 
-        LinkEvent event = new LinkEvent(EventType.CREATE);
+        LinkEvent event = new LinkEvent(LinkEventType.CREATE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success [{}]" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail [{}]" + jsonString));
+
+        linkEventProducer.send(event);
 
         if (tags != null){
             tags.forEach(tagId -> {
@@ -140,13 +129,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
                 linkTagMapper.insert(linkTag);
             });
         }
-        LinkEvent event = new LinkEvent(EventType.UPDATE);
+        LinkEvent event = new LinkEvent(LinkEventType.UPDATE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success link: [{}]", jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail link: [{}]", jsonString));
+        linkEventProducer.send(event);
 
         String cacheKey = "f:" + link.getFolderId() + ":u:" + link.getUserId();
         cacheManager.getCache("links").evict(cacheKey);
@@ -156,32 +142,37 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public void delete(Long linkId) {
-        Link link = query(linkId);
+    public void delete(Long accountId, Long linkId) {
+        QueryWrapper<Link> qw = new QueryWrapper<Link>();
+        qw.eq("user_id", accountId);
+        qw.eq("id", linkId);
+
+        Link link = baseMapper.selectOne(qw);
+
         Assert.notNull(link, "链接不存在");
 
-        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
         baseMapper.deleteById(linkId);
-        //linkRepository.updateSortIndexBatch(link.getUserId(), link.getSortIndex());
+
+        LinkEvent event = new LinkEvent(LinkEventType.DELETE);
+        event.setId(link.getId().toString());
+        event.setObj(link);
+        linkEventProducer.send(event);
     }
 
     @Override
-    public void trash(Long linkId, Long accountId) {
-        Link link = baseMapper.selectById(linkId);
-        Folder folder = folderMapper.queryFolderByCode(accountId, "trash");
-        if (folder != null){
-            baseMapper.updateFolderById(linkId, folder.getId());
-        }
-        cacheManager.getCache("links").evict("f:" + link.getFolderId() + ":u:" + link.getUserId());
-        cacheManager.getCache("links").evict("f:" + folder.getId() + ":u:" + link.getUserId());
+    public void trash(Long accountId, Long linkId) {
+        QueryWrapper<Link> qw = new QueryWrapper<Link>();
+        qw.eq("user_id", accountId);
+        qw.eq("id", linkId);
 
-        LinkEvent event = new LinkEvent(EventType.DELETE);
+        Link link = baseMapper.selectOne(qw);
+
+        baseMapper.updateFolderById(linkId, LinkConstants.FOLDER_TRASH_ID);
+
+        LinkEvent event = new LinkEvent(LinkEventType.TRASH);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(loadstarTopic.getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
+        linkEventProducer.send(event);
     }
 
     @Override
@@ -204,6 +195,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         visitRecord.setUserId(link.getUserId());
         visitRecordMapper.insert(visitRecord);
 
+        LinkEvent event = new LinkEvent(LinkEventType.VIEW);
+        event.setId(link.getId().toString());
+        event.setObj(link);
+        linkEventProducer.send(event);
     }
 
     @Override
@@ -249,8 +244,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public PageableListModel<Link> queryPageList(Long accountId, QueryLinkListInput queryInput) {
-        PageableListModel<Link> linkPageableListModel = new PageableListModel<>();
+    public PageOutput<Link> queryPageList(Long accountId, QueryLinkListInput queryInput) {
+        PageOutput<Link> linkPageableListModel = new PageOutput<>();
         Page<Link> page = new Page<Link>();
         page.setSize(queryInput.getPageSize());
         page.setPages(queryInput.getCurrentPage());
@@ -271,8 +266,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public PageableListModel<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput) {
-        PageableListModel<Link> result = new PageableListModel<>();
+    public PageOutput<Link> fullTextSearch(Long accountId, QueryLinkListInput queryInput) {
+        PageOutput<Link> result = new PageOutput<>();
         result.setItems(new ArrayList<>());
 
         RestHighLevelClient client = esRestClient.getClient();
@@ -347,7 +342,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
     @Override
     public List<Link> queryLinksUnderFolder(Long accountId, Long folderId) {
-        return baseMapper.queryAllUnderFolder(accountId, folderId);
+        return baseMapper.queryAllUnderFolder(SessionResourceUtil.getCurrentAccountId(), folderId);
     }
 
     @Override
@@ -360,17 +355,14 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         link.setId(-1L);
         link.setFolderId(folderId);
         link.setUserId(accountId);
-        LinkEvent event = new LinkEvent(EventType.DELETE);
+        LinkEvent event = new LinkEvent(LinkEventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        String jsonString = event.toJson();
-        ListenableFuture future = kafkaTemplate.send(new LoadstarTopic().getLinkEventTopic(), jsonString);
-        future.addCallback(o -> log.info("send to topic LinkEvent success:" + jsonString)
-                , throwable -> log.info("send to topic LinkEvent fail:" + jsonString));
+        linkEventProducer.send(event);
     }
 
     @Override
-    public List<Link> queryLinksUnderTag(Long accountId, Long tagId) {
+    public List<Link> queryLinksWithTag(Long accountId, Long tagId) {
         return baseMapper.queryAllUnderTag(accountId, tagId);
     }
 
@@ -380,7 +372,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public void addLinkToTag(Long linkId, Long tagId) {
+    public void addLinkToTag(Long accountId, Long linkId, Long tagId) {
         QueryWrapper<LinkTag> wrapper = new QueryWrapper<>();
         wrapper.eq("link_id", linkId);
         wrapper.eq("tag_id", tagId);
@@ -395,12 +387,47 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     }
 
     @Override
-    public void removeLinkFromTag(Long linkId, Long tagId) {
+    public void removeLinkFromTag(Long accountId, Long linkId, Long tagId) {
 
         QueryWrapper<LinkTag> qw = new QueryWrapper<LinkTag>();
         qw.eq("link_id", linkId);
         qw.eq("tag_id", tagId);
 
         linkTagMapper.delete(qw);
+    }
+
+    @Override
+    public List<DailyStatistical> queryDailyStatistical(Long accountId, Date day, String type) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        Date begin = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.DAY_OF_MONTH, -1);
+        Date end = calendar.getTime();
+
+        QueryWrapper<DailyStatistical> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("date", begin, end);
+        queryWrapper.eq("type", type);
+        queryWrapper.eq("user_id", accountId);
+
+        return dailyStatisticalRepository.selectList(queryWrapper);
+    }
+
+    @Override
+    public List<QueryVisitRecordOutput> queryVisitRecords(Long accountId, Date day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(day);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        Date begin = calendar.getTime();
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        Date end = calendar.getTime();
+
+        QueryWrapper<QueryVisitRecordOutput> queryWrapper = new QueryWrapper<>();
+        queryWrapper.between("visitTIme", begin, end);
+//        queryWrapper.eq("type", type);
+        queryWrapper.eq("user_id", accountId);
+//        visitRecordMapper.selectList()
+        return visitRecordMapper.queryVisitRecords(queryWrapper);
     }
 }
