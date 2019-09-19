@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.user.dto.input.CreateAlarmClock;
 import com.ciel.loadstar.user.entity.AlarmClock;
 import com.ciel.loadstar.user.service.AlarmClockService;
@@ -30,9 +31,10 @@ public class AlarmClockController {
 
     @ApiOperation("创建提醒")
     @RequestMapping(method = RequestMethod.POST)
-    public ReturnModel<Long> create(@RequestBody @Valid CreateAlarmClock alarmClockInput, @RequestHeader(Constants.Header_AccountId) Long userId){
+    public ReturnModel<Long> create(@RequestBody @Valid CreateAlarmClock alarmClockInput){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         AlarmClock alarmClock = new AlarmClock();
-        alarmClock.setUserId(userId);
+        alarmClock.setUserId(accountId);
         alarmClock.setAlarmTime(alarmClockInput.getAlarmTime());
         alarmClock.setAlarmed(false);
         alarmClock.setComment(alarmClockInput.getComment());
@@ -54,9 +56,11 @@ public class AlarmClockController {
 
     @ApiOperation("查询提醒")
     @RequestMapping(method = RequestMethod.GET)
-    public ReturnModel<List<AlarmClock>> query(@RequestHeader(Constants.Header_AccountId) Long userId){
+    public ReturnModel<List<AlarmClock>> query(){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
+
         QueryWrapper<AlarmClock> qw = new QueryWrapper<AlarmClock>();
-        qw.eq("user_id", userId);
+        qw.eq("user_id", accountId);
         qw.eq("is_alarmed", false);
         List<AlarmClock> alarmClocks = alarmClockService.list(qw);
         return ApiReturnUtil.ok("查询成功", alarmClocks);

@@ -7,6 +7,7 @@ import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.PageOutput;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.user.entity.Passbook;
 import com.ciel.loadstar.user.service.PassbookService;
 import io.swagger.annotations.Api;
@@ -33,7 +34,8 @@ public class PassbookController {
 
     @ApiOperation("创建账号")
     @RequestMapping(method = RequestMethod.POST)
-    public ReturnModel<Passbook> create(@RequestBody @Valid Passbook passbook, @RequestHeader(Constants.Header_AccountId) Long accountId){
+    public ReturnModel<Passbook> create(@RequestBody @Valid Passbook passbook){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         passbook.setUserId(accountId);
         passbookService.save(passbook);
         log.info("create passbook");
@@ -43,8 +45,8 @@ public class PassbookController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ReturnModel<PageOutput<Passbook>> getAll(Page page
-            , @RequestHeader(Constants.Header_AccountId) Long accountId
             , @RequestParam(value = "note", required = false) String note){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         QueryWrapper<Passbook> qw = new QueryWrapper<Passbook>();
         qw.eq("user_id", accountId);
         if (StringUtils.isNotEmpty(note)){

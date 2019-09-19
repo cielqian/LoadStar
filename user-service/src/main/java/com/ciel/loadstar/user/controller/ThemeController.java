@@ -3,6 +3,7 @@ package com.ciel.loadstar.user.controller;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.user.entity.Theme;
 import com.ciel.loadstar.user.dto.input.UpdateLanguage;
 import com.ciel.loadstar.user.dto.input.UpdateListType;
@@ -22,28 +23,32 @@ public class ThemeController {
 
     @ApiOperation("查询当前用户主题")
     @RequestMapping(value = "/current",method = RequestMethod.GET)
-    public ReturnModel<Theme> current(@RequestHeader(Constants.Header_AccountId) Long accountId){
+    public ReturnModel<Theme> current(){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         Theme theme = themeService.queryByAccountId(accountId);
         return ApiReturnUtil.ok("查询成功",theme);
     }
 
     @ApiOperation("更新显示方式")
     @RequestMapping(value = "/listType",method = RequestMethod.POST)
-    public ReturnModel listTypeEnum(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody UpdateListType updateListType){
+    public ReturnModel listTypeEnum(@RequestBody UpdateListType updateListType){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         themeService.updateListType(accountId, updateListType.getListType());
         return ApiReturnUtil.ok("更新成功");
     }
 
     @ApiOperation("更新语言")
     @RequestMapping(value = "/language",method = RequestMethod.POST)
-    public ReturnModel changeLanguage(@RequestHeader(Constants.Header_AccountId) Long accountId, @RequestBody UpdateLanguage language){
+    public ReturnModel changeLanguage(@RequestBody UpdateLanguage language){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         themeService.changeLanguage(accountId, language.getLanguage());
         return ApiReturnUtil.ok("更新成功");
     }
 
     @ApiOperation("更新模块显示")
     @RequestMapping(value = "/modules/{moduleName}",method = RequestMethod.POST)
-    public ReturnModel triggerShowModules(@RequestHeader(Constants.Header_AccountId) Long accountId, @PathVariable(name = "moduleName") ThemeModuleEnum moduleName){
+    public ReturnModel triggerShowModules(@PathVariable(name = "moduleName") ThemeModuleEnum moduleName){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         themeService.triggerModule(accountId, moduleName);
         return ApiReturnUtil.ok("更新成功");
     }

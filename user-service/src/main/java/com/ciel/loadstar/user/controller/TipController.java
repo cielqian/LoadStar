@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ciel.loadstar.infrastructure.constants.Constants;
 import com.ciel.loadstar.infrastructure.dto.web.ReturnModel;
 import com.ciel.loadstar.infrastructure.utils.ApiReturnUtil;
+import com.ciel.loadstar.infrastructure.utils.SessionResourceUtil;
 import com.ciel.loadstar.user.entity.Tip;
 import com.ciel.loadstar.user.dto.input.ReadTip;
 import com.ciel.loadstar.user.service.TipService;
@@ -29,8 +30,8 @@ public class TipController {
 
     @ApiOperation("查询当前用户Tip")
     @RequestMapping(value = "/current",method = RequestMethod.GET)
-    public ReturnModel<List<Tip>> current(@RequestHeader(Constants.Header_AccountId) Long accountId){
-
+    public ReturnModel<List<Tip>> current(){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         QueryWrapper<Tip> qw = new QueryWrapper<Tip>();
         qw.eq("user_id", accountId);
 
@@ -41,8 +42,8 @@ public class TipController {
 
     @ApiOperation("更新当前用户Tip")
     @RequestMapping(value = "/read",method = RequestMethod.POST)
-    public ReturnModel update(@RequestHeader(Constants.Header_AccountId) Long accountId,@RequestBody ReadTip readTipInput){
-
+    public ReturnModel update(@RequestBody ReadTip readTipInput){
+        Long accountId = SessionResourceUtil.getCurrentAccountId();
         tipService.readTip(accountId, readTipInput.getTip());
 
         return ApiReturnUtil.ok("更新成功");
