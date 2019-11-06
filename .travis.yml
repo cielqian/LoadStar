@@ -2,7 +2,7 @@ sudo: required
 services:
   - docker
 language: java
-jdk: oraclejdk9
+jdk: oraclejdk8
 
 branches:
   only:
@@ -20,9 +20,7 @@ addons:
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-  - cd schedule
   - mvn clean package
-  - cd ..
 cache:
   directories:
     - '$HOME/.m2/repository'
