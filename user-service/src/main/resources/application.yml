@@ -1,7 +1,15 @@
+loadstar:
+  mq:
+    host:
 spring:
   zipkin:
     enabled: false
     base-url: http://loadstar.top:9411
+  datasource:
+    username: loadstaruserdev
+    password: loadstar123@
+    url: jdbc:mysql://den1.mysql6.gear.host:3306/loadstaruserdev?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
 feign:
   hystrix:
     enabled: true

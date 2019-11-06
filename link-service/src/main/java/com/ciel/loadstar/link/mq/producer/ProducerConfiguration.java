@@ -14,19 +14,19 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProducerConfiguration {
 
-    @Value("${loadstar.mq.host}")
-    String mqHost;
-
-    @Value("${spring.application.name}")
-    String topicConsumerName;
-
-    @Bean
-    public DefaultMQProducer defaultProducer() throws MQClientException {
-        DefaultMQProducer producer = new DefaultMQProducer(topicConsumerName);
-        producer.setNamesrvAddr(mqHost);
-        producer.setVipChannelEnabled(false);
-        producer.setRetryTimesWhenSendAsyncFailed(5);
-        producer.start();
-        return producer;
-    }
+//    @Value("${loadstar.mq.host}")
+//    String mqHost;
+//
+//    @Value("${spring.application.name}")
+//    String topicConsumerName;
+//
+//    @Bean
+//    public DefaultMQProducer defaultProducer() throws MQClientException {
+//        DefaultMQProducer producer = new DefaultMQProducer(topicConsumerName);
+//        producer.setNamesrvAddr(mqHost);
+//        producer.setVipChannelEnabled(false);
+//        producer.setRetryTimesWhenSendAsyncFailed(5);
+//        producer.start();
+//        return producer;
+//    }
 }

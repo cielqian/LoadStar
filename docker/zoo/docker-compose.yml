@@ -1,17 +1,10 @@
-version: '3'
+version: '2'
 
 services:
   zookeeper:
     image: wurstmeister/zookeeper
-    restart: unless-stopped
+    restart: always
     hostname: zoo1
     ports:
       - "2181:2181"
     container_name: zookeeper
-    networks: 
-      - default 
-      - loadstar 
-      
-networks:
-  loadstar:
-    external: true 

@@ -3,3 +3,5 @@ spring:
     nacos:
       config:
         namespace: 8c077941-0acf-4a58-9b1d-6930673e1f72
+      discovery:
+        namespace: 8c077941-0acf-4a58-9b1d-6930673e1f72

@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: jdbc:mysql://114.116.228.227:3306/LoadStar_Link_Dev?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: loadstar123!
