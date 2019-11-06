@@ -20,7 +20,6 @@ addons:
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:sonar
-  - mvn clean package
 cache:
   directories:
     - '$HOME/.m2/repository'
@@ -33,41 +32,29 @@ after_success:
   #TAG
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
 
-  # REGISTRY
-  - export REGISTRY=cielqian/pocket-registry
-  - docker build -t $REGISTRY:$COMMIT ./registry
-  - docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
-  - docker push $REGISTRY
-
   # GATEWAY
-  - export GATEWAY=cielqian/pocket-gateway
+  - export GATEWAY=cielqian/loadstar-gateway
   - docker build -t $GATEWAY:$COMMIT ./gateway
   - docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
   - docker push $GATEWAY
 
   # AUTH SERVICE
-  - export AUTH_SERVICE=cielqian/pocket-auth-service
+  - export AUTH_SERVICE=cielqian/loadstar-auth-service
   - docker build -t $AUTH_SERVICE:$COMMIT ./auth-service
   - docker tag $AUTH_SERVICE:$COMMIT $AUTH_SERVICE:$TAG
   - docker push $AUTH_SERVICE
 
   # USER SERVICE
-  - export USER_SERVICE=cielqian/pocket-user-service
+  - export USER_SERVICE=cielqian/loadstar-user-service
   - docker build -t $USER_SERVICE:$COMMIT ./user-service
   - docker tag $USER_SERVICE:$COMMIT $USER_SERVICE:$TAG
   - docker push $USER_SERVICE
 
   # LINK SERVICE
-  - export LINK_SERVICE=cielqian/pocket-link-service
+  - export LINK_SERVICE=cielqian/loadstar-link-service
   - docker build -t $LINK_SERVICE:$COMMIT ./link-service
   - docker tag $LINK_SERVICE:$COMMIT $LINK_SERVICE:$TAG
   - docker push $LINK_SERVICE
-  -
-  # LINK SERVICE
-  - export SCHEDULE_SERVICE=cielqian/pocket-schedule-service
-  - docker build -t $SCHEDULE_SERVICE:$COMMIT ./schedule
-  - docker tag $SCHEDULE_SERVICE:$COMMIT $SCHEDULE_SERVICE:$TAG
-  - docker push $SCHEDULE_SERVICE
 
 notifications:
   email:
