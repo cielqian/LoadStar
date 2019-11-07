@@ -18,12 +18,12 @@
     <modules>
         <module>auth-service</module>
         <module>user-service</module>
-        <module>registry</module>
+<!--        <module>registry</module>-->
         <module>link-service</module>
         <module>infrastructure</module>
         <module>gateway</module>
-        <module>turbine</module>
-        <module>turbine-dashboard</module>
+<!--        <module>turbine</module>-->
+<!--        <module>turbine-dashboard</module>-->
     </modules>
 
     <properties>
