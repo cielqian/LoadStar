@@ -19,7 +19,8 @@ addons:
       secure: $SONARCLOUD_PASS # encrypted value of your token
 script:
   # JaCoCo is used to have code coverage, the agent has to be activated
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dmaven.test.skip=true sonar:sonar
+  # - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package -Dmaven.test.skip=true sonar:sonar
+  - mvn clean package -Dmaven.test.skip=true
 cache:
   directories:
     - '$HOME/.m2/repository'
