@@ -19,22 +19,22 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class AccountEventProducer {
-    @Autowired
-    DefaultMQProducer defaultMQProducer;
-
-    @Value("${loadstar.mq.topic.AccountEvent}")
-    private String mqAccountEventTopic;
-
-    public void send(AccountEvent accountEvent) {
-        Message msg = null;
-        try {
-            msg = new Message(mqAccountEventTopic,accountEvent.getEventType(),
-                    accountEvent.toJson().getBytes(RemotingHelper.DEFAULT_CHARSET));
-
-            SendResult sendResult = defaultMQProducer.send(msg);
-            log.info("send accountEvent success, event object id [{}], messageid [{}]",accountEvent.getId(), sendResult.getMsgId());
-        } catch (Exception e) {
-            log.info("send accountEvent fail, event object id [{}]", accountEvent.getId());
-        }
-    }
+//    @Autowired
+//    DefaultMQProducer defaultMQProducer;
+//
+//    @Value("${loadstar.mq.topic.AccountEvent}")
+//    private String mqAccountEventTopic;
+//
+//    public void send(AccountEvent accountEvent) {
+//        Message msg = null;
+//        try {
+//            msg = new Message(mqAccountEventTopic,accountEvent.getEventType(),
+//                    accountEvent.toJson().getBytes(RemotingHelper.DEFAULT_CHARSET));
+//
+//            SendResult sendResult = defaultMQProducer.send(msg);
+//            log.info("send accountEvent success, event object id [{}], messageid [{}]",accountEvent.getId(), sendResult.getMsgId());
+//        } catch (Exception e) {
+//            log.info("send accountEvent fail, event object id [{}]", accountEvent.getId());
+//        }
+//    }
 }

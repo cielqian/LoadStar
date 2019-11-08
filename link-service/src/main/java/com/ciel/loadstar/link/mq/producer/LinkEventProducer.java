@@ -18,21 +18,21 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class LinkEventProducer {
-    @Autowired
-    DefaultMQProducer defaultMQProducer;
-
-    @Value("${loadstar.mq.topic.LinkEvent}")
-    private String mqLinkEventTopic;
-
-    public void send(LinkEvent linkEvent) {
-        Message msg = null;
-        try {
-            msg = new Message(mqLinkEventTopic,linkEvent.getEventType(),
-                    linkEvent.toJson().getBytes(RemotingHelper.DEFAULT_CHARSET));
-            SendResult sendResult = defaultMQProducer.send(msg);
-            log.info("send linkevent success, event object id [{}], messageid [{}]",linkEvent.getId(), sendResult.getMsgId());
-        } catch (Exception e) {
-            log.info("send linkevent fail, event object id [{}]", linkEvent.getId());
-        }
-    }
+//    @Autowired
+//    DefaultMQProducer defaultMQProducer;
+//
+//    @Value("${loadstar.mq.topic.LinkEvent}")
+//    private String mqLinkEventTopic;
+//
+//    public void send(LinkEvent linkEvent) {
+//        Message msg = null;
+//        try {
+//            msg = new Message(mqLinkEventTopic,linkEvent.getEventType(),
+//                    linkEvent.toJson().getBytes(RemotingHelper.DEFAULT_CHARSET));
+//            SendResult sendResult = defaultMQProducer.send(msg);
+//            log.info("send linkevent success, event object id [{}], messageid [{}]",linkEvent.getId(), sendResult.getMsgId());
+//        } catch (Exception e) {
+//            log.info("send linkevent fail, event object id [{}]", linkEvent.getId());
+//        }
+//    }
 }

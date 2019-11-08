@@ -6,8 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
@@ -33,5 +35,9 @@ public class GatewayApplication extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg", "/*.html", "/**/*.html","/swagger-resources/**").permitAll()
                 .anyRequest().authenticated();
+
+        ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry registry
+                = http.authorizeRequests();
+        registry.requestMatchers(CorsUtils::isPreFlightRequest).permitAll();
     }
 }

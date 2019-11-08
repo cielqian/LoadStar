@@ -76,7 +76,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         AccountEvent event = new AccountEvent(AccountEventType.CREATE);
         event.setId(remoteResult.getData().toString());
-        accountEventProducer.send(event);
+//        accountEventProducer.send(event);
 
         return account;
     }
@@ -91,7 +91,7 @@ public class AccountServiceImpl extends ServiceImpl<UserRepository, User> implem
 
         AccountEvent event = new AccountEvent(AccountEventType.DELETE);
         event.setId(userId.toString());
-        accountEventProducer.send(event);
+//        accountEventProducer.send(event);
     }
 
     @Override

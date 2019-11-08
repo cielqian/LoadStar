@@ -94,7 +94,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         event.setId(link.getId().toString());
         event.setObj(link);
 
-        linkEventProducer.send(event);
+//        linkEventProducer.send(event);
 
         if (tags != null){
             tags.forEach(tagId -> {
@@ -132,7 +132,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.UPDATE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        linkEventProducer.send(event);
+//        linkEventProducer.send(event);
 
         String cacheKey = "f:" + link.getFolderId() + ":u:" + link.getUserId();
         cacheManager.getCache("links").evict(cacheKey);
@@ -156,7 +156,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        linkEventProducer.send(event);
+//        linkEventProducer.send(event);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.TRASH);
         event.setId(link.getId().toString());
         event.setObj(link);
-        linkEventProducer.send(event);
+//        linkEventProducer.send(event);
     }
 
     @Override
@@ -198,7 +198,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.VIEW);
         event.setId(link.getId().toString());
         event.setObj(link);
-        linkEventProducer.send(event);
+//        linkEventProducer.send(event);
     }
 
     @Override
@@ -358,7 +358,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
-        linkEventProducer.send(event);
+//        linkEventProducer.send(event);
     }
 
     @Override
