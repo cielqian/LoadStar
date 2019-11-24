@@ -84,10 +84,10 @@
         </dependency>
 
         <!--Kafka-->
-        <!--<dependency>-->
-            <!--<groupId>org.springframework.kafka</groupId>-->
-            <!--<artifactId>spring-kafka</artifactId>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
 
         <!--html2image -->
         <!-- https://mvnrepository.com/artifact/gui.ava/html2image -->
@@ -135,11 +135,11 @@
             <version>${elasticsearch.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.apache.rocketmq</groupId>
-            <artifactId>rocketmq-client</artifactId>
-            <version>4.3.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.rocketmq</groupId>-->
+<!--            <artifactId>rocketmq-client</artifactId>-->
+<!--            <version>4.3.0</version>-->
+<!--        </dependency>-->
 
     </dependencies>
     <!-- Package as an executable jar -->

@@ -99,10 +99,7 @@ public class JsoupLinkParser {
                 linkIcon.setIcon(result.getIcon());
                 iconService.save(linkIcon);
             }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
         }
         log.info("parse success:"+ result.toString());
         return result;

@@ -1,26 +1,7 @@
 package com.ciel.loadstar.link.mq.consumer;
 
-import com.alibaba.fastjson.JSONObject;
-import com.ciel.loadstar.infrastructure.events.account.AccountEvent;
-import com.ciel.loadstar.infrastructure.events.account.AccountEventType;
-import com.ciel.loadstar.infrastructure.utils.ApplicationContextUtil;
-import com.ciel.loadstar.link.entity.Folder;
-import com.ciel.loadstar.link.service.FolderService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
-import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
-import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
-import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
-import org.apache.rocketmq.common.message.MessageExt;
-import org.apache.rocketmq.remoting.common.RemotingHelper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 /**
  * @author cielqian

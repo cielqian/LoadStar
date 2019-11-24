@@ -37,6 +37,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -72,6 +73,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
     @Autowired
     LinkEventProducer linkEventProducer;
 
+    @Value("${loadstar.es.index:loadstar}")
+    String index;
+
     @Override
     public Long create(Link link, List<Long> tags) {
         Integer totalCount = baseMapper.countByUser(link.getUserId());
@@ -94,7 +98,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         event.setId(link.getId().toString());
         event.setObj(link);
 
-//        linkEventProducer.send(event);
+        linkEventProducer.send(event);
 
         if (tags != null){
             tags.forEach(tagId -> {
@@ -248,8 +252,8 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         PageOutput<Link> linkPageableListModel = new PageOutput<>();
         Page<Link> page = new Page<Link>();
         page.setSize(queryInput.getPageSize());
-        page.setPages(queryInput.getCurrentPage());
-
+        page.setCurrent(queryInput.getCurrentPage());
+        page.setDesc("create_time");
         QueryWrapper<Link> qw = new QueryWrapper<Link>();
         qw.eq("is_delete", "0");
         qw.eq("user_id", accountId);
@@ -272,7 +276,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
         RestHighLevelClient client = esRestClient.getClient();
 
-        SearchRequest searchRequest = new SearchRequest("loadstar");
+        SearchRequest searchRequest = new SearchRequest(index);
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
