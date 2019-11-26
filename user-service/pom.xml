@@ -11,7 +11,6 @@
     <name>user-service</name>
     <packaging>jar</packaging>
 
-
     <parent>
         <groupId>com.ciel.loadstar</groupId>
         <artifactId>loadstar</artifactId>

@@ -28,6 +28,7 @@
     from tag
     where user_id = #{userId}
     and name like #{keyword}
+    and is_delete = 0
   </select>
 
 </mapper>
