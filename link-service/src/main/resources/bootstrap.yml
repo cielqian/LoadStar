@@ -12,31 +12,5 @@ spring:
         file-extension: yml
       discovery:
         server-addr: loadstar.top:8848
-  redis:
-    host: 114.116.228.227
-    port: 6379
-  kafka:
-    bootstrap-servers: kafka.loadstar.top:9093
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      group-id: linkdev
-      auto-offset-reset: earliest
-      enable-auto-commit: true
-      auto-commit-interval: 100
-loadstar:
-  es:
-    clustername: loadstar
-    index: loadstar
-    hosts:
-      - {'ip': loadstar-904239407.us-west-2.bonsaisearch.net,
-          'port': 443,
-          'schema': https,
-          'username': 5wba66ffxi,
-          'password': uifxf6u3om
-      }
 server:
   port: 9083

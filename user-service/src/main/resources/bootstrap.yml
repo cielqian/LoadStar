@@ -12,10 +12,6 @@ spring:
         file-extension: yml
       discovery:
         server-addr: loadstar.top:8848
-  redis:
-    host: redis-15457.c80.us-east-1-2.ec2.cloud.redislabs.com
-    port: 15457
-    password: 7lFM6EKWnBnf3SIhncPEEhVPGzAI7HKq
 logging:
   level:
     com:

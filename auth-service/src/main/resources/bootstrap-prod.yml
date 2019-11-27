@@ -3,6 +3,8 @@ spring:
     nacos:
       config:
         namespace: fc793924-c27a-4993-bf08-2eea72c93d80
+      discovery:
+        namespace: fc793924-c27a-4993-bf08-2eea72c93d80
 logging:
   config: classpath:log-config.xml
   level:
