@@ -7,17 +7,10 @@ spring:
     nacos:
       config:
         server-addr: loadstar.top:8848
-        shared-dataids: loadstar.yml,auth-service.yml
-        refreshable-dataids: loadstar.yml,auth-service.yml
+        shared-dataids: loadstar.yml
+        refreshable-dataids: loadstar.yml
         file-extension: yml
       discovery:
         server-addr: loadstar.top:8848
 server:
   port: 9081
-logging:
-  level:
-    root: WARN
-    com:
-      alibaba:
-        nacos:
-          naming: warn

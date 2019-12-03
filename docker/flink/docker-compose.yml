@@ -1,0 +1,31 @@
+version: "2"
+services:
+  jobmanager:
+    image: flink
+    expose:
+      - "6123"
+    ports:
+      - "8081:8081"
+    mem_limit: 512m
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      - "FLINK_PROPERTIES=jobmanager.heap.size: 256m"
+      - JAVA_OPTS=-Xmx512m -Xms256m
+      - JVM_ARGS=-Xmx512m -Xms256m
+  taskmanager:
+    image: flink
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    mem_limit: 512m
+    links:
+      - "jobmanager:jobmanager"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      - "FLINK_PROPERTIES=taskmanager.heap.size: 256m"
+      - JAVA_OPTS=-Xmx512m -Xms256m
+      - JVM_ARGS=-Xmx512m -Xms256m
