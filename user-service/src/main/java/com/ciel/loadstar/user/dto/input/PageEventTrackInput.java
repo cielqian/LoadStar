@@ -3,7 +3,7 @@ package com.ciel.loadstar.user.dto.input;
 import lombok.Data;
 
 @Data
-public class WebMetric {
+public class PageEventTrackInput {
     private String pageId;
 
     private Long eventTime;
