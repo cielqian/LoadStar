@@ -245,6 +245,7 @@ public class LinkController {
             e.printStackTrace();
         }
         List<QueryVisitRecordOutput> out = linkService.queryVisitRecords(accountId, date);
+
         return ApiReturnUtil.ok("更新成功", out);
     }
 }

@@ -1,25 +1,42 @@
 {
-  "mappings":{
-    "links":{
-      "properties": {
-        "tableId": {
-          "type": "long"
-        },
-        "profile": {
-          "type": "text"
-        },
-        "userId": {
-          "type": "long"
-        },
-        "name": {
-          "type": "text"
-        },
-        "title": {
-          "type": "text"
-        },
-        "createtime": {
-          "type": "date"
+  "mappings": {
+    "properties": {
+      "createtime": {
+        "type": "long"
+      },
+      "name": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
         }
+      },
+      "tableId": {
+        "type": "long"
+      },
+      "title": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "url": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword",
+            "ignore_above": 256
+          }
+        }
+      },
+      "userId": {
+        "type": "text",
+        "index": false
       }
     }
   }

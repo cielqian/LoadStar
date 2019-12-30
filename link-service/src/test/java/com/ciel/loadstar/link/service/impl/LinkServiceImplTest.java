@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +37,8 @@ import java.util.List;
 @SpringBootTest
 public class LinkServiceImplTest {
 
-    @InjectMocks
-    LinkServiceImpl linkService = new LinkServiceImpl();
+    @Inject
+    LinkServiceImpl linkService;
 
     @Autowired
     LinkRepository linkRepository;
@@ -52,9 +53,9 @@ public class LinkServiceImplTest {
 
 //        linkRepository = Mockito.mock(LinkRepository.class, CALLS_REAL_METHODS);
 
-        List<Link> links = new ArrayList<>();
-        when(linkRepository.queryAllUnderFolder(accountId, LinkConstants.FOLDER_DEFAULT_ID))
-                .thenReturn(links);
+//        List<Link> links = new ArrayList<>();
+//        when(linkRepository.queryAllUnderFolder(accountId, LinkConstants.FOLDER_DEFAULT_ID))
+//                .thenReturn(links);
 //        when(linkRepository.queryAll(null, null)).thenCallRealMethod();
     }
 
@@ -78,5 +79,14 @@ public class LinkServiceImplTest {
 
         Assert.assertTrue(links.getTotal() > 0);
 
+    }
+
+    @Test
+    public void fullTextSearch() {
+
+        QueryLinkListInput queryInput = new QueryLinkListInput();
+        queryInput.setKeyword("flink");
+        PageOutput<Link> result = linkService.fullTextSearch(1199928125973499905L, queryInput);
+        Assert.assertEquals(result.getTotal(), 35);
     }
 }

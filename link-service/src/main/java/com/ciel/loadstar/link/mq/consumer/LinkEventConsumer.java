@@ -65,7 +65,7 @@ public class LinkEventConsumer {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    @KafkaListener(topics = {"LinkEvent_Dev"})
+//    @KafkaListener(topics = {"LinkEvent_Dev"})
     public void consume(ConsumerRecord<String, String> record) throws Exception {
 
         Optional<String> kafkaMessage = Optional.ofNullable(record.value());

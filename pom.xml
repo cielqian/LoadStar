@@ -41,7 +41,7 @@
         <logback.version>1.2.3</logback.version>
         <mybatisplus.version>3.1.1</mybatisplus.version>
         <druid.version>1.1.10</druid.version>
-        <elasticsearch.version>6.5.4</elasticsearch.version>
+        <elasticsearch.version>7.2.1</elasticsearch.version>
         <mysql.version>8.0.18</mysql.version>
     </properties>
 

@@ -160,7 +160,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.DELETE);
         event.setId(link.getId().toString());
         event.setObj(link);
-//        linkEventProducer.send(event);
+        linkEventProducer.send(event);
     }
 
     @Override
@@ -202,7 +202,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         LinkEvent event = new LinkEvent(LinkEventType.VIEW);
         event.setId(link.getId().toString());
         event.setObj(link);
-//        linkEventProducer.send(event);
+        linkEventProducer.send(event);
     }
 
     @Override
@@ -282,12 +282,12 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
 
         MatchQueryBuilder titleMatchQueryBuilder = QueryBuilders.matchQuery("title", queryInput.getKeyword());
-        TermQueryBuilder accountIdTermQueryBuilder = QueryBuilders.termQuery("userId", accountId);
-        TermQueryBuilder profileTermQueryBuilder = QueryBuilders.termQuery("profile", ApplicationContextUtil.getActiveProfile());
+        TermQueryBuilder accountIdTermQueryBuilder = QueryBuilders.termQuery("userId", accountId.toString());
+//        TermQueryBuilder profileTermQueryBuilder = QueryBuilders.termQuery("profile", ApplicationContextUtil.getActiveProfile());
 
         boolQueryBuilder.must(titleMatchQueryBuilder)
-                .must(accountIdTermQueryBuilder)
-                .must(profileTermQueryBuilder);
+                .must(accountIdTermQueryBuilder);
+//                .must(profileTermQueryBuilder);
 
         searchSourceBuilder.query(boolQueryBuilder);
 
@@ -298,7 +298,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         highlightBuilder.field(highlightTitle);
         searchSourceBuilder.highlighter(highlightBuilder);
 
-        searchRequest.types("links");
         searchRequest.source(searchSourceBuilder);
 
         try {
@@ -317,7 +316,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
 
                     result.getItems().add(link);
                 }
-                result.setTotal(hits.totalHits);
+                result.setTotal(hits.getTotalHits().value);
             }
         } catch (IOException e) {
             e.printStackTrace();

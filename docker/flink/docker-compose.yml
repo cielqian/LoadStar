@@ -22,10 +22,8 @@ services:
       - jobmanager
     command: taskmanager
     mem_limit: 512m
-    links:
-      - "jobmanager:jobmanager"
     environment:
-      - JOB_MANAGER_RPC_ADDRESS=jobmanager
-      - "FLINK_PROPERTIES=taskmanager.heap.size: 256m"
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager.flink-jobmanager
+      - "FLINK_PROPERTIES=taskmanager.heap.size: 384m \n taskmanager.numberOfTaskSlots: 2"
       - JAVA_OPTS=-Xmx512m -Xms256m
       - JVM_ARGS=-Xmx512m -Xms256m
