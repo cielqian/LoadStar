@@ -134,6 +134,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
             });
         }
         LinkEvent event = new LinkEvent(LinkEventType.UPDATE);
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setId(link.getId().toString());
         event.setObj(link);
 //        linkEventProducer.send(event);
@@ -158,6 +159,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         baseMapper.deleteById(linkId);
 
         LinkEvent event = new LinkEvent(LinkEventType.DELETE);
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setId(link.getId().toString());
         event.setObj(link);
         linkEventProducer.send(event);
@@ -359,6 +361,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         link.setFolderId(folderId);
         link.setUserId(accountId);
         LinkEvent event = new LinkEvent(LinkEventType.DELETE);
+        event.setProfile(ApplicationContextUtil.getActiveProfile());
         event.setId(link.getId().toString());
         event.setObj(link);
 //        linkEventProducer.send(event);
@@ -381,7 +384,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkRepository, Link> implement
         wrapper.eq("tag_id", tagId);
 
         Integer count = linkTagMapper.selectCount(wrapper);
-        if (count <= 1){
+        if (count < 1){
             LinkTag linkTag = new LinkTag();
             linkTag.setTagId(tagId);
             linkTag.setLinkId(linkId);

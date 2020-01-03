@@ -35,8 +35,7 @@
         }
       },
       "userId": {
-        "type": "text",
-        "index": false
+        "type": "keyword"
       }
     }
   }

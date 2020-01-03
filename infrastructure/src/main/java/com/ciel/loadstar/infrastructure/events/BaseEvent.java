@@ -25,7 +25,6 @@ public abstract class BaseEvent {
 
     public BaseEvent() {
         ts = System.currentTimeMillis();
-        profile = ApplicationContextUtil.getActiveProfile();
     }
 
     public String toJson(){
