@@ -49,6 +49,7 @@ public class AccountController {
         return ApiReturnUtil.ok("删除成功");
     }
 
+    @ApiOperation("当前用户信息")
     @RequestMapping(value = "/current",method = RequestMethod.GET)
     public ReturnModel<UserInfo> current(){
         Long accountId = SessionResourceUtil.getCurrentAccountId();

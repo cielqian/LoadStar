@@ -1,5 +1,6 @@
 package com.ciel.loadstar.user.service.impl;
 
+import com.ciel.loadstar.infrastructure.events.system.SystemEvent;
 import com.ciel.loadstar.infrastructure.events.web.PageEventTrack;
 import com.ciel.loadstar.user.mq.producer.EventTrackProducer;
 import com.ciel.loadstar.user.service.EventTrackService;
@@ -16,5 +17,10 @@ public class EventTrackServiceImpl implements EventTrackService {
     @Override
     public void track(PageEventTrack pageEventTrack) {
         eventTrackProducer.send(pageEventTrack);
+    }
+
+    @Override
+    public void track(SystemEvent event) {
+        eventTrackProducer.send(event);
     }
 }

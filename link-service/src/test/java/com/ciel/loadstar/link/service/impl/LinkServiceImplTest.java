@@ -85,7 +85,7 @@ public class LinkServiceImplTest {
     public void fullTextSearch() {
 
         QueryLinkListInput queryInput = new QueryLinkListInput();
-        queryInput.setKeyword("flink");
+        queryInput.setKeyword("有道云");
         PageOutput<Link> result = linkService.fullTextSearch(1199928125973499905L, queryInput);
         Assert.assertEquals(result.getTotal(), 35);
     }
